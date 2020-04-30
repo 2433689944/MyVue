@@ -1,13 +1,11 @@
 <template>
-	<div class="home">
-		<h1>首页</h1>
-	</div>
+	
 </template>
 
 <script>
-	//首页页面
+	//注册页面
 	export default {
-		name: 'Home',
+		name:"Register",
 		data(){
 			
 		}
