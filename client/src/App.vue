@@ -29,4 +29,7 @@
 	a {
 		text-decoration: none;
 	}
+	body{
+		background-color: #F4F4F4;
+	}
 </style>
