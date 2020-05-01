@@ -1,5 +1,7 @@
 <template>
-	
+	<div>
+		<p>详情页面</p>
+	</div>
 </template>
 
 <script>
@@ -7,7 +9,7 @@
 	export default {
 		name:"Details",
 		data(){
-			
+			return {}
 		}
 	}
 </script>

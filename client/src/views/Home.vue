@@ -1,5 +1,5 @@
 <template>
-	<div class="home">
+	<div>
 		<h1>首页</h1>
 	</div>
 </template>
@@ -9,11 +9,13 @@
 	export default {
 		name: 'Home',
 		data(){
-			
+			return {}
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	
+	.home{
+		background-color: salmon;
+	}
 </style>
