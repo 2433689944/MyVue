@@ -5,7 +5,7 @@
 <script>
 	//商品发布页面
 	export default {
-		name:"Grelease",
+		name:"Crelease",
 		data(){
 			
 		}
