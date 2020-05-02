@@ -58,8 +58,9 @@ module.exports = appInfo => {
 
   //跨域的配置
   config.cors = {
-    origin: '*',
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+    origin: 'http://localhost:8080',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    credentials: true
   };
 
   // use for cookie sign key, should change to your own and keep security

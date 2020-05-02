@@ -5,13 +5,14 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
-Vue.prototype.axios = axios
+axios.defaults.withCredentials = true //axios请求运行携带cookie
+Vue.prototype.$axios = axios
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#app')
