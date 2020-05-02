@@ -105,7 +105,7 @@
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						console.log(this.ruleForm)
+						console.log(this.ruleForm,"111")
 					} else {
 						return false;
 					}
