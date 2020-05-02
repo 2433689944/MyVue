@@ -1,19 +1,25 @@
 <template>
-	<div>
-		<p>商品发布页面</p>
+	<div class="w">
+	<Myform></Myform>
 	</div>
 </template>
 
 <script>
-	//商品发布页面
 	export default {
-		name:"Grelease",
-		data(){
-			return {}
-		}
+		data() {
+			return {
+				
+			};
+		},
+		methods: {
+			
+			},
+	components:{
+		Myform:()=>import("@/views/Grelease/Myform.vue")
 	}
+		}
 </script>
 
-<style scoped="scoped">
+<style>
 	
 </style>

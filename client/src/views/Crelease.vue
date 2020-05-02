@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<p>社区发布页面</p>
+		<p>动态发布页面</p>
 	</div>
 </template>
 
 <script>
-	//社区发布页面
+	//动态发布页面
 	export default {
-		name:"Crelease",
+		name:"Grelease",
 		data(){
 			return {}
 		}
