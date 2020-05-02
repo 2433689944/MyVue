@@ -2,7 +2,8 @@
 	<div class="register">
 		<div class="registerbox">
 			<p class="title">注册</p>
-			<p class="login">已有账号？<span>直接登录</span></p>
+			<p class="login">已有账号？<span @click="login">直接登录</span></p>
+			<Headpic @myclick="getheadpic"></Headpic>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" class="demo-ruleForm" size="small">
 				<el-form-item prop="name">
 					<el-input v-model="ruleForm.name" placeholder="请输入您的用户名"></el-input>
@@ -18,9 +19,10 @@
 				</el-form-item>
 				<el-form-item prop="verif">
 					<el-input v-model="ruleForm.verif" placeholder="请输入验证码"></el-input>
+					<span v-html="verifdata" @click="restverif" id="verifbtn"></span>
 				</el-form-item>
 				<el-form-item>
-					<el-button round @click="submitForm('ruleForm')">注册</el-button>
+					<el-button round @click="submitForm('ruleForm')" id="registerbtn">注册</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -31,6 +33,9 @@
 	//注册页面
 	export default {
 		name: "Register",
+		components: {
+			Headpic: () => import('./Register/Headpic.vue')
+		},
 		data() {
 			//密码验证规则
 			let validatePass = (rule, value, callback) => {
@@ -54,13 +59,16 @@
 				}
 			};
 			return {
+				imageUrl: '',
+				headpic: '',
 				ruleForm: {
 					name: '',
 					email: '',
 					pwd: '',
 					checkpwd: '',
-					verif: ''
+					verif: '',
 				},
+				verifdata: '',
 				rules: {
 					name: [{
 							required: true,
@@ -102,15 +110,49 @@
 			}
 		},
 		methods: {
+			//直接登录
+			login(){
+				this.$router.push({path:"/login"})
+			},
+			//获取从子组件传过来的头像数据
+			getheadpic(arg) {
+				this.headpic = arg;
+			},
+			//刷新验证码
+			restverif() {
+				this.$axios("http://localhost:81/getVerif")
+					.then((result) => {
+						this.verifdata = result.data;
+					})
+			},
+			//提交表单
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						console.log(this.ruleForm,"111")
+						let formdata = new FormData();
+						formdata.append("headpic", this.headpic);
+						formdata.append("name", this.ruleForm.name);
+						formdata.append("email", this.ruleForm.email);
+						formdata.append("pwd", this.ruleForm.pwd);
+						formdata.append("verif", this.ruleForm.verif);
+						let config = {
+							headers: {
+								"Content-Type": "multipart/form-data"
+							}
+						}
+						this.$axios.post("http://localhost:81/register", formdata, config)
+							.then((result) => {
+								console.log(result.data)
+							})
 					} else {
 						return false;
 					}
 				});
-			},
+			}
+		},
+		created() {
+			//首次加载自动获取验证码
+			this.restverif()
 		}
 	}
 </script>
@@ -139,8 +181,6 @@
 		font-size: 35px;
 		font-weight: bold;
 		font-family: "kaiTi";
-		/* margin-bottom: 5px; */
-		margin-bottom: 70px;
 	}
 
 	p,
@@ -159,7 +199,7 @@
 		cursor: default;
 	}
 
-	button {
+	#registerbtn {
 		width: 100%;
 		height: 32px;
 		border: 0;
@@ -169,7 +209,13 @@
 		font-size: 16px;
 	}
 
-	.el-button:hover span {
-		color: red !important;
+	.el-form-item:nth-of-type(5) .el-form-item__content>div {
+		width: 200px;
+	}
+
+	#verifbtn {
+		float: right;
+		margin-right: 2px;
+		height: 33px;
 	}
 </style>
