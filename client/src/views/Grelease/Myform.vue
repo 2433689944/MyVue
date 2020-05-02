@@ -64,8 +64,8 @@
     },
 
     methods: {
-      changetype() {
-        console.log(2222)
+      changetype(arg) {
+        console.log(arg)
       },
       onSubmit() {
         console.log(this.form)
