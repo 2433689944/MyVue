@@ -4,7 +4,8 @@
   action="https://jsonplaceholder.typicode.com/posts/"
   list-type="picture-card"
   :on-preview="handlePictureCardPreview"
-  :on-remove="handleRemove">
+  :on-remove="handleRemove"
+  :on-success="changeFile">
   <i class="el-icon-plus"></i>
 </el-upload>
 <el-dialog :visible.sync="dialogVisible">
@@ -27,10 +28,17 @@
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
-        console.log(file)
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
-      }
+      },
+	  changeFile:function(response, file, fileList) {
+		  // console.log(response, file, fileList)
+		  let arr = [];
+		  for(let i of fileList){
+			  arr.push(i.url)
+		  }
+		 this.$emit("mypic",arr)
+	  }
     }
   }
 </script>
