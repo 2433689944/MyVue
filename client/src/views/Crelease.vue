@@ -7,7 +7,7 @@
 <script>
 	//动态发布页面
 	export default {
-		name:"Grelease",
+		name:"Crelease",
 		data(){
 			return {}
 		}

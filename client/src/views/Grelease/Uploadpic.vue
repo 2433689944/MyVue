@@ -32,11 +32,12 @@
         this.dialogVisible = true;
       },
 	  changeFile:function(response, file, fileList) {
-		  // console.log(response, file, fileList)
-		  let arr = [];
-		  for(let i of fileList){
-			  arr.push(i.url)
-		  }
+		  // console.log(file)
+		  // let arr = [];
+		  // for(let i of fileList){
+			 //  arr.push(i.raw)
+		  // }
+		  let arr = file
 		 this.$emit("mypic",arr)
 	  }
     }

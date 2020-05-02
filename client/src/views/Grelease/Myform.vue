@@ -55,12 +55,11 @@
 					oldprice: '',
 					wechat: '',
 					delivery: false,
-					type: [],
+					type: '',
 					qq: '',
 					phone: '',
 					desc: '',
-					img: [],
-					tag1: []
+					tag1: ''
 				},
 				rules: {
 					title: [{
@@ -136,22 +135,34 @@
 
 		methods: {
 			changetype(arg) {
-				console.log(arg)
-				this.ruleForm.type = arg
+				// console.log(arg)
+				let types = arg.join('-')
+				this.ruleForm.type = types
 			},
 			changetag1(arg) {
-				console.log(arg)
-				this.ruleForm.tag1 = arg
+				// console.log(arg)
+				let tags = arg.join('-')
+				this.ruleForm.tag1 = tags
 			},
 			changepic(arg) {
 				console.log(arg)
-				this.ruleForm.img = arg
+				// let imgs=arg.join('-')
+				this.img = arg
+
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						alert('submit!');
-						axios.post("http://localhost:81/release", this.ruleForm)
+						let formData = new FormData();
+						let file = this.img.raw
+						formData.append("file",file);
+						console.log(formData.get("file"))
+						var config = {
+								headers: {
+									"Content-Type": "multipart/form-data"
+								}
+							}
+							this.axios.post("http://localhost:81/release",formData, config)
 							.then((result) => {
 								console.log(result)
 							})
