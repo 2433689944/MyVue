@@ -20,8 +20,7 @@
 </script>
 
 <style>
-	.tab div:nth-of-type(2) {
-		background-color: #F4F4F4;
+	.tab>div:nth-of-type(2) {
 		width: 1180px;
 		margin: 0 auto;
 	}
