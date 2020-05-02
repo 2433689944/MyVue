@@ -15,7 +15,7 @@
     methods: {
       handleChange(value) {
         console.log(value)
-        this.value=value
+		this.$emit("mytype",value)
       }
     },
 		data(){ 
