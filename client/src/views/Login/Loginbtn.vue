@@ -3,7 +3,7 @@
 		<el-button type="text" @click="centerDialogVisible = true" id="forgetpwd">忘记密码</el-button>
 		<el-button type="text" @click="register" id="register">立即注册</el-button>
 		<el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center>
-			<span>抱歉，暂无开通此功能</span>
+			<span>抱歉，暂未开通此功能！</span>
 			<span slot="footer" class="dialog-footer">
 				<el-button round @click="centerDialogVisible = false">确 定</el-button>
 			</span>

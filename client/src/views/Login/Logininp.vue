@@ -35,6 +35,7 @@
 									center: true,
 									duration: 1500
 								});
+								//跳转到首页
 								this.$router.push({
 									path: "/"
 								})

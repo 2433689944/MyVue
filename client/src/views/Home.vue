@@ -3,8 +3,7 @@
 		<h1>首页</h1>
 		<div class="goods" @click="fn(item.id)" v-for="(item) in goods" :key="item.id">
 			<img :src="item.img" class="goodsimg" />
-			<p>价格:{{item.price}}</p>
-			<h2>{{this.$store.state.headpic}}</h2>
+			<p v-html="item.price"></p>
 		</div>
 	</div>
 </template>
@@ -40,7 +39,7 @@
 					query: {
 						goodsid: goodsid
 					}
-				})
+				}).catch(err => {})
 			}
 		},
 	}

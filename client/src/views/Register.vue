@@ -162,7 +162,7 @@
 											type: 'success',
 											duration: 1500
 										});
-										this.$router.push({ //注册成功
+										this.$router.push({ //跳转到登录界面路由
 											path: "/login"
 										})
 									}

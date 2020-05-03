@@ -17,9 +17,14 @@
 					<router-link to="/crelease"><i class="el-icon-plus"></i>发布动态</router-link>
 				</el-menu-item>
 			</el-submenu>
-			<el-menu-item index="4" v-if="flag">
-				<router-link to="/pcenter">个人中心</router-link>
-			</el-menu-item>
+			<el-submenu index="4" v-if="flag">
+				<template slot="title">
+					<router-link to="/pcenter">个人中心</router-link>
+				</template>
+				<el-menu-item index="4-1" @click="loginout">
+					<router-link to="/">退出登录</router-link>
+				</el-menu-item>
+			</el-submenu>
 			<el-menu-item index="4" v-else>
 				<router-link to="/login">请登录</router-link>
 			</el-menu-item>
@@ -35,19 +40,25 @@
 			return {
 				activeIndex: '1',
 				flag: '',
-				headpic: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+			}
+		},
+		methods: {
+			//退出登录
+			loginout() {
+				this.flag = false;
+				this.$axios("http://localhost:81/loginout"); //清除服务器session缓存
+				window.localStorage.clear(); //清除本地缓存
+				this.$store.commit('loginout'); //清除仓库在用户名和头像
 			}
 		},
 		mounted() {
-			//用户已经登录
 			let email = window.localStorage.getItem("email");
 			if (email) {
 				this.flag = true;
 				this.$axios("http://localhost:81/getUserInfo")
 					.then((result) => {
-						this.headpic = result.data[0].headpic;
-						//将用户名和头像存入ModuleA仓库
-						this.$store.commit('getuserInfo', result.data[0])
+						//将用户名和头像存入仓库
+						this.$store.commit('getuserInfo', result.data.info[0]);
 					})
 			} else {
 				this.flag = false;
@@ -92,6 +103,11 @@
 		line-height: 54px !important;
 	}
 
+	.el-menu--collapse .el-menu .el-submenu,
+	.el-menu--popup {
+		min-width: 116px !important;
+	}
+
 	.el-menu--horizontal .el-menu-item a {
 		color: #fff;
 	}
@@ -109,6 +125,14 @@
 	}
 
 	.el-menu--horizontal .el-menu-item {
-		margin-left: 15px;
+		margin: 4px 10px;
+	}
+
+	.el-submenu .el-submenu__title a {
+		color: #fff;
+	}
+
+	.el-menu--horizontal .el-menu {
+		margin-top: 5px;
 	}
 </style>

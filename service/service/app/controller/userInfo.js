@@ -1,7 +1,7 @@
 'use strict';
 const Controller = require('egg').Controller;
 class UserInfoController extends Controller {
-    //加载登录页面时获取用缓存的邮箱和密码
+    //加载登录页面时获取用户缓存的邮箱和密码
     async getUserEmailpwd() {
         const { ctx } = this;
         if (ctx.session.email && ctx.session.pwd) {
@@ -11,11 +11,11 @@ class UserInfoController extends Controller {
         }
     }
 
-    //加载首页时获取用户名和头像
+    //获取用户名和头像
     async getUserInfo() {
         const { ctx } = this;
         let result = await this.ctx.service.userInfo.getUserInfo();
-        ctx.body = result;
+        ctx.body = { code: 2000, info: result }
     }
 }
 module.exports = UserInfoController;

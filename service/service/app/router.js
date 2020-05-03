@@ -13,6 +13,7 @@ module.exports = app => {
   router.post('/getUserEmailpwd', controller.userInfo.getUserEmailpwd);//加载登录页面时获取用户缓存的账号和密码
   router.post('/login', controller.login.login);//登录
 
-   //首页接口
-   router.get('/getUserInfo', controller.userInfo.getUserInfo);//加载首页时获取用户所有信息
+  //首页接口
+  router.get('/getUserInfo', controller.userInfo.getUserInfo);//获取用户名和头像
+  router.get('/loginout', controller.login.loginout);//退出登录
 };
