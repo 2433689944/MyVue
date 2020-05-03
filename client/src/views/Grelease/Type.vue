@@ -9,12 +9,11 @@
 </template>
 
 <script>
-	//购物车页面
 	export default {
 		name:"Type",
     methods: {
+		//当选中节点变化时触发/value：选中节点的值
       handleChange(value) {
-        console.log(value)
 		this.$emit("mytype",value)
       }
     },

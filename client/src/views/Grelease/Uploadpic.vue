@@ -24,20 +24,22 @@
       };
     },
     methods: {
+		//删除图片时触发
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
+	  //点击已上传文件时触发
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
+	  //图片上传成功时触发
 	  changeFile:function(response, file, fileList) {
-		  // console.log(file)
-		  // let arr = [];
-		  // for(let i of fileList){
-			 //  arr.push(i.raw)
-		  // }
-		  let arr = file
+		  //fileList上传的文件列表
+		  let arr = [];
+		  for(let i of fileList){
+			  arr.push(i.raw)
+		  }
 		 this.$emit("mypic",arr)
 	  }
     }

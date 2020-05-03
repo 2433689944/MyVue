@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p>动态发布页面</p>
+		<Dynamic></Dynamic>
 	</div>
 </template>
 
@@ -10,6 +10,9 @@
 		name:"Crelease",
 		data(){
 			return {}
+		},
+		components:{
+			Dynamic:()=>import("@/views/Crelease/Dynamic")
 		}
 	}
 </script>

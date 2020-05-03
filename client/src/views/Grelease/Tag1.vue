@@ -3,10 +3,6 @@
 		<el-tag :key="tag" v-for="tag in dynamicTags" closable :disable-transitions="false" @close="handleClose(tag)">
 			{{tag}}
 		</el-tag>
-		<el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small"
-		 @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
-		</el-input>
-		<el-button v-else class="button-new-tag" size="small" @click="showInput">确定标签</el-button>
 	</div>
 </template>
 <style scoped="scoped">
@@ -34,27 +30,21 @@
 		data() {
 			return {
 				dynamicTags: ['原装正品', '无拆无修', '如假包换', '价格可谈', '一口价', '欢迎来撩', '非诚勿扰'],
-				inputVisible: false,
-				inputValue: ''
+				inputVisible: false
 			};
 		},
 		methods: {
+			//移除标签
 			handleClose(tag) {
 				this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-				console.log(this.dynamicTags)
-			},
-			showInput() {
-				this.$emit("mytag1",this.dynamicTags)
-			},
-
-			handleInputConfirm() {
-				let inputValue = this.inputValue;
-				if (inputValue) {
-					this.dynamicTags.push(inputValue);
-				}
-				this.inputVisible = false;
-				this.inputValue = '';
+				//触发父组件自定义事件，并传值
+				this.$emit("mytag1", this.dynamicTags)
 			}
+		},
+		//mounted生命钩子
+		mounted() {
+			//触发父组件自定义事件，并传值
+			this.$emit("mytag1", this.dynamicTags)
 		}
 	}
 </script>
