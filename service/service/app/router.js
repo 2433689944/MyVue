@@ -8,4 +8,6 @@ module.exports = app => {
   //注册界面接口
   router.get('/getVerif', controller.verif.getVerif);//获取验证码
   router.post('/register', controller.register.register);//注册 
+  
+  router.post('/release', controller.release.release);//发布商品
 };

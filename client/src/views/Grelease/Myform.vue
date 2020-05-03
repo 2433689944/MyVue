@@ -36,6 +36,7 @@
 			</el-form-item>
 			<el-form-item label="图片">
 				<Uploadpic @mypic="changepic"></Uploadpic>
+				<div id="pictext" v-if="flag">请上传图片</div>
 			</el-form-item>
 			<el-form-item>
 				<el-button type="primary" @click="submitForm('ruleForm')">立即发布</el-button>
@@ -49,6 +50,7 @@
 	export default {
 		data() {
 			return {
+				flag:false,
 				ruleForm: {
 					title: '',
 					price: '',
@@ -135,44 +137,60 @@
 
 		methods: {
 			changetype(arg) {
-				// console.log(arg)
+				//分类：把分类数组打包成一个字符串
 				let types = arg.join('-')
 				this.ruleForm.type = types
 			},
 			changetag1(arg) {
-				// console.log(arg)
+				//标签：把标签数组打包成一个字符串
 				let tags = arg.join('-')
 				this.ruleForm.tag1 = tags
 			},
 			changepic(arg) {
-				console.log(arg)
-				// let imgs=arg.join('-')
-				this.img = arg
-
+				//图片文件
+				this.imgFile = arg
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
+					//验证title、WeChat、price...内容
 					if (valid) {
+						//验证是否上传商品图片
+						if(!this.imgFile){
+							this.flag=true
+						}
+						else{
+						//创建FormData对象用于给后端传文件
 						let formData = new FormData();
-						let file = this.img.raw
-						formData.append("file",file);
-						console.log(formData.get("file"))
+						for (let i = 0; i < this.imgFile.length; i++) {
+							formData.append("myfile" + i, (this.imgFile)[i])
+						}
+						formData.append("title", this.ruleForm.title);
+						formData.append("price", this.ruleForm.price);
+						formData.append("oldprice", this.ruleForm.oldprice);
+						formData.append("wechat", this.ruleForm.wechat);
+						formData.append("type", this.ruleForm.type);
+						formData.append("qq", this.ruleForm.qq);
+						formData.append("phone", this.ruleForm.phone);
+						formData.append("desc", this.ruleForm.desc);
+						formData.append("tag1", this.ruleForm.tag1);
 						var config = {
-								headers: {
-									"Content-Type": "multipart/form-data"
-								}
+							headers: {
+								"Content-Type": "multipart/form-data"
 							}
-							this.axios.post("http://localhost:81/release",formData, config)
+						}
+						this.$axios.post("http://localhost:81/release", formData, config)
 							.then((result) => {
 								console.log(result)
 							})
-
+							}
 					} else {
+						//前端验证没通过
 						console.log('error submit!!');
 						return false;
 					}
 				});
 			},
+			//取消按钮事件
 			resetForm(formName) {
 				this.$refs[formName].resetFields();
 			}
@@ -215,5 +233,8 @@
 	 } */
 	.contain .el-form div:nth-of-type(3) {
 		margin-top: 22px;
+	}
+	#pictext {
+		color: red;
 	}
 </style>
