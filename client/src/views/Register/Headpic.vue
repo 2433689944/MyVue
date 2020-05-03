@@ -1,6 +1,6 @@
 <template>
 	<div class="headbox">
-		<input type="file" name="headpic" id="headpic" @input="change" ref="myinput">
+		<input type="file" name="headpic" @input="change" ref="myinput">
 		<img v-if="imageUrl" :src="imageUrl" id="showpic">
 		<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 	</div>
@@ -17,7 +17,7 @@
 		methods: {
 			change() {
 				this.imageUrl = URL.createObjectURL(this.$refs.myinput.files[0]);
-				this.$emit("myclick",this.$refs.myinput.files[0])
+				this.$emit("myclick", this.$refs.myinput.files[0])
 			}
 		}
 	}
@@ -38,7 +38,7 @@
 		text-align: center;
 	}
 
-	#headpic {
+	input {
 		position: absolute;
 		opacity: 0;
 		width: 84px;

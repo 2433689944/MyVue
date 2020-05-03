@@ -1,14 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ModuleA from './ModuleA.js'
-import ModuleB from './ModuleB.js'
-import ModuleC from './ModuleC.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-	modules: {
-		a: ModuleA,
-		b: ModuleB,
-		c: ModuleC
+	namespaced: true,
+	state: {
+		username: '', //用户名
+		headpic: '' //头像
+	},
+	mutations: {
+		getuserInfo(state, userInfo) {
+			console.log(userInfo.username,userInfo.headpic)
+			state.username = userInfo.username;
+			state.headpic = userInfo.headpic;
+		}
+	},
+	actions: {
+
+	},
+	getters: {
+
 	}
 })

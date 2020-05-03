@@ -4,6 +4,7 @@
 			<p class="title">注册</p>
 			<p class="login">已有账号？<span @click="login">直接登录</span></p>
 			<Headpic @myclick="getheadpic"></Headpic>
+			<div id="errinfo" v-html="errinfo"></div>
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" class="demo-ruleForm" size="small">
 				<el-form-item prop="name">
 					<el-input v-model="ruleForm.name" placeholder="请输入您的用户名"></el-input>
@@ -22,7 +23,7 @@
 					<span v-html="verifdata" @click="restverif" id="verifbtn"></span>
 				</el-form-item>
 				<el-form-item>
-					<el-button round @click="submitForm('ruleForm')" id="registerbtn">注册</el-button>
+					<el-button round @click="submitForm('ruleForm')" id="registerbtn" :plain="true">注册</el-button>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -59,6 +60,7 @@
 				}
 			};
 			return {
+				errinfo: '',
 				imageUrl: '',
 				headpic: '',
 				ruleForm: {
@@ -106,13 +108,15 @@
 						message: '验证码不能为空',
 						trigger: 'blur'
 					}
-				}
+				},
 			}
 		},
 		methods: {
 			//直接登录
-			login(){
-				this.$router.push({path:"/login"})
+			login() {
+				this.$router.push({
+					path: "/login"
+				})
 			},
 			//获取从子组件传过来的头像数据
 			getheadpic(arg) {
@@ -129,26 +133,47 @@
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						let formdata = new FormData();
-						formdata.append("headpic", this.headpic);
-						formdata.append("name", this.ruleForm.name);
-						formdata.append("email", this.ruleForm.email);
-						formdata.append("pwd", this.ruleForm.pwd);
-						formdata.append("verif", this.ruleForm.verif);
-						let config = {
-							headers: {
-								"Content-Type": "multipart/form-data"
+						if (!this.headpic) {
+							this.errinfo = "请上传您的头像";
+						} else {
+							let formdata = new FormData();
+							formdata.append("headpic", this.headpic);
+							formdata.append("name", this.ruleForm.name);
+							formdata.append("email", this.ruleForm.email);
+							formdata.append("pwd", this.ruleForm.pwd);
+							formdata.append("verif", this.ruleForm.verif);
+							let config = {
+								headers: {
+									"Content-Type": "multipart/form-data"
+								}
 							}
+							this.$axios.post("http://localhost:81/register", formdata, config)
+								.then((result) => {
+									if (result.data.code == 4001) { //验证码错误
+										this.restverif();
+										this.errinfo = result.data.info;
+									} else if (result.data.code == 4002) { //邮箱已被注册
+										this.errinfo = result.data.info;
+									} else {
+										//本地缓存用户邮箱
+										window.localStorage.setItem("email", this.ruleForm.email);
+										this.$message({
+											message: '注册成功',
+											type: 'success',
+											duration: 1500
+										});
+										this.$router.push({ //注册成功
+											path: "/login"
+										})
+									}
+								})
 						}
-						this.$axios.post("http://localhost:81/register", formdata, config)
-							.then((result) => {
-								console.log(result.data)
-							})
 					} else {
 						return false;
 					}
 				});
-			}
+			},
+
 		},
 		created() {
 			//首次加载自动获取验证码
@@ -207,6 +232,15 @@
 		background: linear-gradient(to right, #a6c1ee, #fbc2eb);
 		color: #fff;
 		font-size: 16px;
+	}
+
+	#errinfo {
+		color: #F56C6C;
+		font-size: 12px;
+		line-height: 1;
+		margin: 4px 0;
+		position: absolute;
+		top: 122px;
 	}
 
 	.el-form-item:nth-of-type(5) .el-form-item__content>div {

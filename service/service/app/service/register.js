@@ -14,7 +14,7 @@ class RegisterService extends Service {
         let oldpath = files[0].filepath;
         let newpath = __dirname + "/../public/headpic/" + files[0].filename;
         fs.rename(oldpath, newpath, () => { });
-        params.headpic = "http://localhost:81/public/upload/" + files[0].filename;
+        params.headpic = "http://localhost:81/public/headpic/" + files[0].filename;
         const sql = `insert into user(username,email,pwd,headpic) values("${params.name}","${params.email}","${params.pwd}","${params.headpic}")`;
         this.app.mysql.query(sql);
     }

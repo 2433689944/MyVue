@@ -4,6 +4,7 @@
 		<div class="goods" @click="fn(item.id)" v-for="(item) in goods" :key="item.id">
 			<img :src="item.img" class="goodsimg" />
 			<p>价格:{{item.price}}</p>
+			<h2>{{this.$store.state.headpic}}</h2>
 		</div>
 	</div>
 </template>
@@ -41,7 +42,7 @@
 					}
 				})
 			}
-		}
+		},
 	}
 </script>
 

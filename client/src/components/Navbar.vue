@@ -1,7 +1,7 @@
 <template>
 	<div class="box">
 		<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff"
-		active-text-color="#ffd04b">
+		 active-text-color="#ffd04b">
 			<el-menu-item index="1">
 				<router-link to="/">首页</router-link>
 			</el-menu-item>
@@ -23,7 +23,7 @@
 			<el-menu-item index="4" v-else>
 				<router-link to="/login">请登录</router-link>
 			</el-menu-item>
-			<el-avatar :src="headpic"></el-avatar>
+			<el-avatar :src="this.$store.state.headpic"></el-avatar>
 		</el-menu>
 	</div>
 </template>
@@ -34,10 +34,25 @@
 		data() {
 			return {
 				activeIndex: '1',
-				flag: false,
-				headpic:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+				flag: '',
+				headpic: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
 			}
 		},
+		mounted() {
+			//用户已经登录
+			let email = window.localStorage.getItem("email");
+			if (email) {
+				this.flag = true;
+				this.$axios("http://localhost:81/getUserInfo")
+					.then((result) => {
+						this.headpic = result.data[0].headpic;
+						//将用户名和头像存入ModuleA仓库
+						this.$store.commit('getuserInfo', result.data[0])
+					})
+			} else {
+				this.flag = false;
+			}
+		}
 	}
 </script>
 
@@ -56,8 +71,8 @@
 		height: 50px;
 		line-height: 50px;
 	}
-	
-	.box .el-menu-demo>span{
+
+	.box .el-menu-demo>span {
 		float: right;
 		margin-top: 4px;
 	}
