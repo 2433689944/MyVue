@@ -17,10 +17,12 @@ class LoginService extends Service {
                 //密码错误
                 return { code: 4002, info: '密码输入错误' };
             } else {
-                //密码正确,缓存用户邮箱和密码,下次访问其他接口可以直接获取个邮箱的信息
+                //密码正确,缓存用户邮箱和密码,将用户名和头像发给前端
                 this.ctx.session.email = params.email;
                 this.ctx.session.pwd = params.pwd;
-                return { code: 2000, info: '登录成功' };
+                const sql3 = `select username,headpic from user where email="${params.email}"`
+                const data3 = await this.app.mysql.query(sql3);
+                return { code: 2000, info: data3 };
             }
         }
     }

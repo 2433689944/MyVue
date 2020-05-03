@@ -12,5 +12,7 @@
 </script>
 
 <style scoped="scoped">
-	
+	p{
+		height: 400px;
+	}
 </style>
