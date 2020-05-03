@@ -71,8 +71,8 @@
 						},
 						{
 							min: 2,
-							max: 8,
-							message: '长度在 2 到 8 个字符',
+							max: 40,
+							message: '长度在 2 到 40 个字符',
 							trigger: 'blur'
 						}
 					],
@@ -181,6 +181,9 @@
 						this.$axios.post("http://localhost:81/release", formData, config)
 							.then((result) => {
 								console.log(result)
+								// if(result.data.affectedRows){
+								// 	this.$router.push({path:"/"})
+								// }
 							})
 							}
 					} else {
