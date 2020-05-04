@@ -6,11 +6,11 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "579286",
+      "icon_id": "12713506",
       "name": "点赞",
-      "font_class": "dianzan",
-      "unicode": "e60c",
-      "unicode_decimal": 58892
+      "font_class": "zanpress",
+      "unicode": "e50a",
+      "unicode_decimal": 58634
     }
   ]
 }

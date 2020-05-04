@@ -19,4 +19,14 @@ module.exports = app => {
 
   //发布商品
   router.post('/release', controller.release.release);//发布商品 
+
+  //发布动态
+  router.post('/dynamic',controller.dynamic.dynamic);//发布动态
+
+  //社区页面初始化请求
+  router.get('/community',controller.community.community);
+
+  //社区页面获取用户信息
+  
+  router.post('/getUserInfo',controller.community.getUserInfo);
 };

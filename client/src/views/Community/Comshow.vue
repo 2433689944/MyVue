@@ -1,5 +1,6 @@
 <template>
 	<div class="contain">
+		<template v-for="(item) in mycommInfo">
 		<div class="touxiang">
 			<img src="https://tvax2.sinaimg.cn/crop.0.0.1080.1080.180/86a17422ly8gdi6x7xyifj20u00u0abl.jpg?KID=imgbed,tva&Expires=1588570356&ssig=xHmzqX0iaH" />
 		</div>
@@ -8,10 +9,10 @@
 				央视财经
 			</div>
 			<div class="WB_from S_txt2">
-				51分钟前
+				{{item.time}}
 			</div>
 			<div class="WB_text W_f14" node-type="feed_list_content">
-				【满屏的朝气！最美变装，致青春！】你的青春是什么模样？是活力无限的绽放，是只争朝夕的奔跑，是精益求精的坚守？青年的你，不止一面美丽！青年的你，最是拼搏动人心！今天，五四青年节。谨以此片，献给青年的你，愿你不负韶华，在奋斗中绽放青春光芒！</div>
+				{{item.content}}</div>
 			<div>
 				<div v-if="myimg.length==1">
 					<img :src="myimg[0]" />
@@ -36,12 +37,12 @@
 			
 			<div class="myicon">
 				<ul>
-					<li><i></i></li>
-					<li><i></i></li>
+					<li><i class="el-icon-edit"></i><span>评论</span></li>
+					<li :class="flag?'like':''" @click="changeColor"><i class="iconfont icon-zanpress"></i><span>{{likeNum}}</span></li>
 				</ul>
 			</div>
-			
 		</div>
+		</template>
 	</div>
 </template>
 
@@ -49,7 +50,35 @@
 	export default {
 		data() {
 			return {
-				myimg: ["//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg", "oqwjwnciqie"]
+				likeNum:0,
+				flag:false,
+				myimg: ["//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg", "oqwjwnciqie"],
+				comments:"",
+			}
+		},
+		props:["mycommInfo"],
+		methods:{
+			changeColor(){
+				if(!this.flag){
+					this.flag=!this.flag
+					this.likeNum+=1
+				}else if(this.flag){
+					this.flag=!this.flag
+					this.likeNum-=1
+				}
+				
+			}
+		},
+		async mounted() {
+			console.log(this.mycommInfo)
+			var commInfoList=this.mycommInfo
+			var that = this
+				for(let i =0;i<commInfoList.length;i++){
+				 var eamil = (commInfoList)[i].email
+				await that.$axios.post("http://localhost:81/getUserInfo",{email:eamil})
+				.then((reault)=>{
+					console.log(reault)
+				})
 			}
 		}
 	}
@@ -127,6 +156,17 @@
 	}
 	.myicon {
 		width: 500px;
+		color: #808080;
+		font-size: 12px;
 	}
-	
+	.myicon li{
+		width: 50%;
+		text-align: center;
+	}
+	.myicon li i {
+		margin-right: 8px;
+	}
+	.like {
+		color: red;
+	}
 </style>

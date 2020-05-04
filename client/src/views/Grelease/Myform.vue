@@ -181,9 +181,9 @@
 						this.$axios.post("http://localhost:81/release", formData, config)
 							.then((result) => {
 								console.log(result)
-								// if(result.data.affectedRows){
-								// 	this.$router.push({path:"/"})
-								// }
+								if(result.data.affectedRows){
+									this.$router.push({path:"/"})
+								}
 							})
 							}
 					} else {
