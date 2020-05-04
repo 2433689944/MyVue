@@ -16,4 +16,7 @@ module.exports = app => {
   //首页接口
   router.get('/getUserInfo', controller.userInfo.getUserInfo);//获取用户名和头像
   router.get('/loginout', controller.login.loginout);//退出登录
+
+  //发布商品
+  router.post('/release', controller.release.release);//发布商品 
 };

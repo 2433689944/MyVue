@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p>社区页面</p>
+	<Comshow></Comshow>
 	</div>
 </template>
 
@@ -10,6 +10,9 @@
 		name:"Community",
 		data(){
 			return {}
+		},
+		components:{
+			Comshow:()=>import("@/views/Community/Comshow.vue")
 		}
 	}
 </script>
