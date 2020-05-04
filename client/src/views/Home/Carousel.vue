@@ -1,27 +1,44 @@
 <template>
 	<div class="block">
 		<el-carousel height="400px">
-			<el-carousel-item v-for="item in 4" :key="item">
+			<el-carousel-item v-for="(item,index) in arr" :key="index">
 				<!-- <h3 class="small">{{ item }}</h3> -->
+				<img :src="item" />
 			</el-carousel-item>
 		</el-carousel>
 	</div>
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				arr: [
+					require("@/assets/home/ads1.jpg"),
+					require("@/assets/home/ads2.jpg"),
+					require("@/assets/home/ads3.jpg"),
+					require("@/assets/home/ads4.jpg"),
+				]
+			}
+		}
+	}
 </script>
 
 <style scoped="scoped">
-	.block{
-		margin-top: 50px;
+	.el-carousel__item img {
+		width: 100%;
+		height: 400px;
+		object-fit: cover;
 	}
-	.el-carousel__item h3 {
-		color: #475669;
-		font-size: 14px;
-		opacity: 0.75;
-		line-height: 150px;
-		margin: 0;
+
+	.block {
+		
 	}
+
+	.el-carousel {
+		border-radius: 0 7px 7px 0;
+	}
+
 
 	.el-carousel__item:nth-child(2n) {
 		background-color: #99a9bf;

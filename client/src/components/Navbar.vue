@@ -71,6 +71,10 @@
 	.box {
 		width: 100%;
 		background-color: #545c64;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
 	}
 
 	.box ul {
