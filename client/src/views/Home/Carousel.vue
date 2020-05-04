@@ -1,8 +1,7 @@
 <template>
 	<div class="block">
-		<el-carousel height="400px">
+		<el-carousel height="400px" :interval="4000">
 			<el-carousel-item v-for="(item,index) in arr" :key="index">
-				<!-- <h3 class="small">{{ item }}</h3> -->
 				<img :src="item" />
 			</el-carousel-item>
 		</el-carousel>
@@ -31,9 +30,7 @@
 		object-fit: cover;
 	}
 
-	.block {
-		
-	}
+	.block {}
 
 	.el-carousel {
 		border-radius: 0 7px 7px 0;
