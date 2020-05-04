@@ -1,5 +1,6 @@
 <template>
 	<div class="home">
+		<Carousel></Carousel>
 		<h1>首页</h1>
 		<div class="goods" @click="fn(item.id)" v-for="(item) in goods" :key="item.id">
 			<img :src="item.img" class="goodsimg" />
@@ -10,8 +11,12 @@
 
 <script>
 	//首页页面
+	import Carousel from './Home/Carousel.vue'
 	export default {
 		name: 'Home',
+		components:{
+			Carousel
+		},
 		data() {
 			return {
 				goods: [{
