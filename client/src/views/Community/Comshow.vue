@@ -13,12 +13,34 @@
 			<div class="WB_text W_f14" node-type="feed_list_content">
 				【满屏的朝气！最美变装，致青春！】你的青春是什么模样？是活力无限的绽放，是只争朝夕的奔跑，是精益求精的坚守？青年的你，不止一面美丽！青年的你，最是拼搏动人心！今天，五四青年节。谨以此片，献给青年的你，愿你不负韶华，在奋斗中绽放青春光芒！</div>
 			<div>
-				<div v-if="">
-					<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
+				<div v-if="myimg.length==1">
+					<img :src="myimg[0]" />
 				</div>
-				
+				<div v-else>
+					<ul class="listPic">
+						<li>
+							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
+						</li>
+						<li>
+							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
+						</li>
+						<li>
+							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
+						</li>
+						<li>
+							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
+						</li>
+					</ul>
+				</div>
 			</div>
-
+			
+			<div class="myicon">
+				<ul>
+					<li><i></i></li>
+					<li><i></i></li>
+				</ul>
+			</div>
+			
 		</div>
 	</div>
 </template>
@@ -27,11 +49,7 @@
 	export default {
 		data() {
 			return {
-				data() {
-					return {
-						
-					}
-				}
+				myimg: ["//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg", "oqwjwnciqie"]
 			}
 		}
 	}
@@ -82,4 +100,33 @@
 		font-size: 14px;
 		font-family: Arial;
 	}
+
+	.imgcard {
+		width: 500px;
+		height: 282px;
+	}
+
+	.listPic {
+		width: 500px;
+		margin: 0;
+		display: inline;
+		vertical-align: top;
+		list-style: none;
+	}
+
+	.listPic li {
+		overflow: hidden;
+		background-color: #fff;
+		border: 1px solid #c0ccda;
+		/* border-radius: 6px; */
+		box-sizing: border-box;
+		width: 148px;
+		height: 148px;
+		margin: 0 8px 8px 0;
+		display: inline-block;
+	}
+	.myicon {
+		width: 500px;
+	}
+	
 </style>

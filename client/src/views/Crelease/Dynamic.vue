@@ -50,7 +50,7 @@
 	.contain {
 		width: 800px;
 		margin: 0 auto;
-		margin-top: 50px;
+		margin-top: 101px;
 		margin-bottom: 50px;
 		background-color: white;
 		padding-top: 44px;

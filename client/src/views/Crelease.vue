@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="contain">
 		<Dynamic></Dynamic>
 	</div>
 </template>
@@ -18,5 +18,7 @@
 </script>
 
 <style scoped="scoped">
-	
+	/* .contain {
+		margin-top: 51px;
+	} */
 </style>
