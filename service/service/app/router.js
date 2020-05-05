@@ -16,7 +16,7 @@ module.exports = app => {
   //首页接口
   router.get('/getUserInfo', controller.userInfo.getUserInfo);//获取用户名和头像
   router.get('/loginout', controller.login.loginout);//退出登录
-  //  router.get('/loginout', controller.login.loginout);//退出登录
+  router.get('/getAllGoods', controller.goods.getAllGoods);//首页商品展示
 
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 
@@ -26,6 +26,5 @@ module.exports = app => {
 
   //社区页面界面
   router.get('/community',controller.community.community);//获取社区动态
-  router.post('/getUserInfo',controller.community.getUserInfo);
 
 };
