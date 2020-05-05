@@ -1,18 +1,11 @@
 <template>
 	<div class="home">
-		<div class="topbox">
-			
-		</div>
+		<div class="topbox">123</div>
 		<div class="adsbox">
 			<Sidebar></Sidebar>
 			<Carousel></Carousel>
 		</div>
-		
-		<h1>首页</h1>
-		<div class="goods" @click="fn(item.id)" v-for="(item) in goods" :key="item.id">
-			<img :src="item.img" class="goodsimg" />
-			<p v-html="item.price"></p>
-		</div>
+		<GoodsList></GoodsList>
 	</div>
 </template>
 
@@ -20,31 +13,13 @@
 	//首页页面
 	import Sidebar from './Home/Sidebar.vue'
 	import Carousel from './Home/Carousel.vue'
+	import GoodsList from './Home/GoodsList.vue'
 	export default {
 		name: 'Home',
 		components: {
 			Sidebar,
-			Carousel
-		},
-		data() {
-			return {
-				goods: [{
-						id: 0,
-						img: 'http://47.93.89.196/public/img/flower1.png',
-						price: 111
-					},
-					{
-						id: 4,
-						img: 'http://47.93.89.196/public/img/flower26.png',
-						price: 333
-					},
-					{
-						id: 2,
-						img: 'http://47.93.89.196/public/img/flower2.png',
-						price: 444
-					}
-				]
-			}
+			Carousel,
+			GoodsList
 		},
 		methods: {
 			fn(goodsid) {

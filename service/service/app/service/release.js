@@ -1,6 +1,7 @@
 const Service = require('egg').Service;
 const fs = require('fs');
 class UserService extends Service {
+	//发布商品
 	async release(params, files) {
 		// console.log(params,files)
 		let imgarr = []
@@ -8,7 +9,7 @@ class UserService extends Service {
 			//把上传的文件保存在public
 			let oldpath = files[i].filepath;
 			let newpath = __dirname + "/../public/goodsimg/" + files[i].filename;
-			fs.rename(oldpath, newpath, () => {});
+			fs.rename(oldpath, newpath, () => { });
 			imgarr.push("http://localhost:81/public/goodsimg/" + files[i].filename)
 		}
 		params.img = imgarr.join("-")
