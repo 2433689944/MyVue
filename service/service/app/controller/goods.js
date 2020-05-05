@@ -4,7 +4,7 @@ class GoodsController extends Controller {
     //首页商品展示
     async getAllGoods() {
         const { ctx } = this;
-        // let result = await ctx.service.goods.getAllGoods();
+        let result = await ctx.service.goods.getAllGoods();
         ctx.body = result;
     }
 }

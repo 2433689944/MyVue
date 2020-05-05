@@ -20,6 +20,7 @@ module.exports = app => {
 
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 
+  router.post('/uploadgoods', controller.release.uploadgoods);//图片上传地址 
 
   //发布动态页面接口
   router.post('/dynamic',controller.dynamic.dynamic);//发布动态

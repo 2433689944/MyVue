@@ -2,9 +2,9 @@
 	<div class="goodsbox">
 		<h2>好货广场</h2>
 		<div class="goodslist">
-			<div class="goods" @click="fn(item.id)" v-for="(item) in goods" :key="item.id">
+			<div class="goods" @click="fn(item.id)" v-for="(item) in this.$store.state.goodslist" :key="item.id">
 				<div class="imgbox">
-					<img :src="item.img" class="goodsimg" />
+					<img :src="item.img|imgtool" class="goodsimg" />
 				</div>
 				<p class="title" v-html="item.title"></p>
 				<p class="intro" v-html="item.intro"></p>
@@ -19,58 +19,11 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				goods: [{
-						id: 0,
-						img: 'http://localhost:81/public/goodsimg/erji2.png',
-						title: "黑鲨游戏手机2 Pro 全网通",
-						intro: "低价出售，学生党福利！有需者赶快联系！请勿乱拍，请私信联系，8+128G的！九成新！",
-						price: 1690,
-						oldprice: 5690
-					},
-					{
-						id: 1,
-						img: 'http://localhost:81/public/goodsimg/hanbingxie1.jpg',
-						title: "酷比魔方iwork8超级版双系统，安卓+windows8共2 G+32g",
-						intro: "入耳式 ，配件齐全，带麦，盒装行货，配件：收纳盒+硅胶套+线夹+说明书+外包装纸盒。线控完美兼容iphone/ipad等苹果设备，如用在安卓或黑莓系统的手机线控功能只能部分兼容！（不影响听歌）购买前可找根iphone线控耳机测试，它们的线",
-						price: 65,
-						oldprice: 160
-					},
-					{
-						id: 2,
-						img: 'http://localhost:81/public/goodsimg/huaban1.jpg',
-						title: "ipad 2017 32g 苹果平板电脑",
-						intro: "99新，诚意出，仅限同校交易。",
-						price: 7,
-						oldprice: 60
-					},
-					{
-						id: 3,
-						img: 'http://localhost:81/public/goodsimg/hzhf1.jpg',
-						title: "OPPOR17",
-						intro: "开本:16开 译者:管延圻 出版社:中信出版社 编者:柳川艳 85新",
-						price: 325,
-						oldprice: 690
-					},
-					{
-						id: 4,
-						img: 'http://localhost:81/public/goodsimg/ipad1.png',
-						title: "95新beat tour面条入耳式耳",
-						intro: "已消毒，闪发货直接拍就行除新疆西藏内蒙青海海南甘肃宁夏外包邮二手书，有使用痕迹，八成新左右库存大，书还有很多，择优发货很多书未上架，有需要可以私聊。",
-						price: 62,
-						oldprice: 125
-					},
-					{
-						id: 5,
-						img: 'http://localhost:81/public/goodsimg/ipad1.png',
-						title: "包邮雪中悍刀行全集全新全套小说4册无删节 玄幻烽火戏诸侯著",
-						intro: "全新带吊牌质量超好！仅剩一件，感兴趣的话点“我想要”和我私聊吧～",
-						price: 1,
-						oldprice: 9
-					},
-				]
-			}
+		created() {
+			this.$axios("http://localhost:81/getAllGoods")
+				.then((result) => {
+					this.$store.commit('getAllGoods', result.data)
+				})
 		},
 		methods: {
 			fn(goodsid) {
@@ -82,8 +35,12 @@
 				}).catch(err => {})
 			}
 		},
-		created() {
-			// this.$axios("http://localhost")
+		filters: {
+			//过滤图片地址，只要第一张图片
+			imgtool(arg) {
+				let imgArray = arg.split("-");
+				return imgArray[0]
+			}
 		}
 	}
 </script>
