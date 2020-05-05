@@ -16,7 +16,11 @@
 		methods: {
 			retrieval(e) {
 				if (e.target.dataset.types) {
-					console.log(this.typesdata.title + "-" + e.target.dataset.types)
+					let keystr = this.typesdata.title + "-" + e.target.dataset.types;
+					this.$axios("http://localhost:81/classify",{params:{keystr:keystr}})
+						.then((result) => {
+							this.$store.commit("getAllGoods",result.data)
+						})
 				}
 			}
 		}

@@ -17,6 +17,8 @@ module.exports = app => {
   router.get('/getUserInfo', controller.userInfo.getUserInfo);//获取用户名和头像
   router.get('/loginout', controller.login.loginout);//退出登录
   router.get('/getAllGoods', controller.goods.getAllGoods);//首页商品展示
+  router.get('/classify', controller.goods.classify);//按类别分类
+  router.get('/searchgoods', controller.goods.searchgoods);//搜索商品
 
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 

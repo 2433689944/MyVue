@@ -1,8 +1,14 @@
 <template>
 	<div class="goodsbox">
-		<h2>好货广场</h2>
-		<div class="goodslist">
-			<div class="goods" @click="fn(item.id)" v-for="(item) in this.$store.state.goodslist" :key="item.id">
+		<div class="titlebox">
+			<h2>好货广场</h2>
+			<div class="lookall" @click="lookall">
+				<span>查看所有</span>
+				<i class="el-icon-arrow-right"></i>
+			</div>
+		</div>
+		<div class="goodslist" v-if="this.$store.state.goodslist.length!=0">
+			<div class="goods" @click="choose(item.id)" v-for="(item) in this.$store.state.goodslist" :key="item.id">
 				<div class="imgbox">
 					<img :src="item.img|imgtool" class="goodsimg" />
 				</div>
@@ -13,6 +19,10 @@
 					<span class="oldprice" v-cloak>￥{{item.oldprice}}.00</span>
 				</div>
 			</div>
+		</div>
+		<div class="emptybox" v-else>
+			<img class="emptyimg" src="@/assets/home/blankbox.png">
+			<p class="emptytext">抱歉，暂无该商品，你可以看看其他商品</p>
 		</div>
 	</div>
 </template>
@@ -26,13 +36,21 @@
 				})
 		},
 		methods: {
-			fn(goodsid) {
+			//查看详情
+			choose(goodsid) {
 				this.$router.push({
 					path: "/details",
 					query: {
 						goodsid: goodsid
 					}
 				}).catch(err => {})
+			},
+			//查看所有
+			lookall() {
+				this.$axios("http://localhost:81/getAllGoods")
+					.then((result) => {
+						this.$store.commit('getAllGoods', result.data)
+					})
 			}
 		},
 		filters: {
@@ -41,25 +59,73 @@
 				let imgArray = arg.split("-");
 				return imgArray[0]
 			}
-		}
+		},
 	}
 </script>
 
 <style scoped="scoped">
 	.goodsbox {
-		margin: 10px 0 40px;
+		margin: 45px 0 40px;
 	}
 
-	.goodsbox h2 {
-		text-align: center;
-		margin: 25px 0 15px;
+	.titlebox {
+		margin: 0 0 15px;
+		position: relative;
+	}
+
+	.titlebox h2 {
 		font-size: 28px;
+		color: #333;
+		margin-left: 10px;
+	}
+
+	.titlebox .lookall {
+		position: absolute;
+		right: 0;
+		top: 0;
+		cursor: pointer;
+	}
+
+	.lookall {
+		position: absolute;
+		top: 20px !important;
+		width: 100px;
+		height: 20px;
+	}
+
+	.lookall span {
+		position: absolute;
+		right: 30px;
+		color: #666;
+		line-height: 20px;
+	}
+
+	.lookall i {
+		width: 12px;
+		height: 12px;
+		padding: 4px;
+		position: absolute;
+		right: 0;
+		border-radius: 16px;
+		font-size: 12px;
+		line-height: 12px;
+		background: #b0b0b0;
+		color: #fff;
+	}
+
+	.lookall:hover span {
+		color: #FF6700;
+	}
+
+	.lookall:hover i {
+		background-color: #FF6700;
 	}
 
 	.goodslist {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: flex-start;
+		cursor: pointer;
 	}
 
 	.goods {
@@ -151,5 +217,24 @@
 
 	[v-cloak] {
 		display: none;
+	}
+
+	.emptybox {
+		height: 360px;
+		background-color: white;
+	}
+
+	.emptyimg {
+		width: 280px;
+		height: 165px;
+		margin-left: 450px;
+		margin-top: 80px;
+	}
+
+	.emptytext {
+		font-size: 22px;
+		color: #8c8c8c;
+		text-align: center;
+		margin-top: 20px;
 	}
 </style>

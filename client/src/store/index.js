@@ -20,7 +20,6 @@ export default new Vuex.Store({
 		},
 		getAllGoods(state, allgoods) {
 			state.goodslist = allgoods;
-			console.log(state.goodslist);
 		}
 	},
 	actions: {

@@ -109,7 +109,7 @@
 							trigger: 'blur'
 						},
 						{
-							pattern: /^[1-9][0-9]{4,9}$/,
+							pattern: /^[1-9][0-9]{4,10}$/,
 							message: 'qq格式错误',
 							trigger: 'blur'
 						}
