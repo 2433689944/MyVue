@@ -52,7 +52,7 @@ const router = new VueRouter({
 })
 
 //全局守卫
-router.beforeEach((to, from, next) => {
+/* router.beforeEach((to, from, next) => {
 	//用户未登录只能访问首页、登录注册页面
 	if (to.path == "/" || to.path == "/login" || to.path == "/register") {
 		next();
@@ -72,6 +72,6 @@ router.beforeEach((to, from, next) => {
 			next("/");
 		}
 	}
-})
+}) */
 
 export default router

@@ -1,12 +1,12 @@
 <template>
-	<div>
-	<Rotation :goodsImage="img"></Rotation>
-	<p>名称</p>
+	<div id="Details">
+	<Rotation :imgList="img"></Rotation>
+<!-- 	<p>名称</p>
 	<p>价格</p>
 	<p>商品描述</p>
-	<button>加入购物车</button> <!-- 发送网络请求 将商品添加到数据库  通过localssion 得到用户邮箱,将用户邮箱与goodsid一起存起 -->
+	<button>加入购物车</button>  发送网络请求 将商品添加到数据库  通过localssion 得到用户邮箱,将用户邮箱与goodsid一起存起
 	<p>商品大图</p>
-	<p>商品评论</p>
+	<p>商品评论</p> -->
 	  </div>
 	
 	
@@ -19,7 +19,7 @@
 		name:"Details",
 		data(){
 			return {
-				img:"http://img2.imgtn.bdimg.com/it/u=3066180709,4210445459&fm=26&gp=0.jpg"
+				img:["http://47.93.89.196/public/img/flower1.png","http://47.93.89.196/public/img/flower2.png","http://47.93.89.196/public/img/flower2.png","http://47.93.89.196/public/img/flower2.png"]
 }
 		},
 		mounted(){
@@ -35,5 +35,7 @@
 </script>
 
 <style scoped="scoped">
-	
+	#Details {
+		margin-top:51px;
+	}
 </style>
