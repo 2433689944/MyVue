@@ -6,7 +6,7 @@
 			<div @mouseenter="clothes">衣鞋帽伞<i class="el-icon-arrow-right"></i></div>
 			<div @mouseenter="walktool">代步工具<i class="el-icon-arrow-right"></i></div>
 			<div @mouseenter="sports">体育健身<i class="el-icon-arrow-right"></i></div>
-			<div @mouseenter="electric">家用电器<i class="el-icon-arrow-right"></i></div>
+			<div @mouseenter="electric">小型电器<i class="el-icon-arrow-right"></i></div>
 			<div @mouseenter="daily">日常用品<i class="el-icon-arrow-right"></i></div>
 			<div @mouseenter="virtual">虚拟产品<i class="el-icon-arrow-right"></i></div>
 		</div>
@@ -21,7 +21,7 @@
 		data() {
 			return {
 				flag: false, //控制右侧详情的展示
-				com: ""
+				com: "",
 			}
 		},
 		components: {
@@ -46,25 +46,25 @@
 				this.com = "Digital";
 			},
 			book() {
-				this.com = "book";
+				this.com = "Book";
 			},
 			clothes() {
-				this.com = "clothes";
+				this.com = "Clothes";
 			},
 			walktool() {
-				this.com = "walktool";
+				this.com = "Walktool";
 			},
 			sports() {
 				this.com = "sports";
 			},
 			electric() {
-				this.com = "electric";
+				this.com = "Electric";
 			},
 			daily() {
-				this.com = "daily";
+				this.com = "Daily";
 			},
 			virtual() {
-				this.com = "virtual";
+				this.com = "Virtual";
 			}
 		}
 	}
@@ -111,7 +111,7 @@
 		left: 200px;
 		z-index: 20;
 		height: 400px;
-		width: 680px;
+		width: 640px;
 		background-color: #fff;
 	}
 </style>

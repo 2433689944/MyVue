@@ -165,26 +165,11 @@
 						}]
 					},
 					{
-						value: '家用电器',
-						label: '家用电器',
+						value: '小型电器',
+						label: '小型电器',
 						children: [{
-							value: '电磁炉',
-							label: '电磁炉',
-						}, {
-							value: '洗衣机',
-							label: '洗衣机',
-						}, {
-							value: '冰箱',
-							label: '冰箱',
-						}, {
 							value: '风扇',
 							label: '风扇',
-						}, {
-							value: '电饭煲',
-							label: '电饭煲',
-						}, {
-							value: '豆浆机',
-							label: '豆浆机',
 						}, {
 							value: '电吹风',
 							label: '电吹风',
