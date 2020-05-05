@@ -19,7 +19,7 @@
 		name:"Details",
 		data(){
 			return {
-				img:["http://47.93.89.196/public/img/flower1.png","http://47.93.89.196/public/img/flower2.png","http://47.93.89.196/public/img/flower2.png","http://47.93.89.196/public/img/flower2.png"]
+				img:["http://img0.imgtn.bdimg.com/it/u=3945791464,702872274&fm=15&gp=0.jpg","http://img0.imgtn.bdimg.com/it/u=2619788293,2896052895&fm=15&gp=0.jpg"]
 }
 		},
 		mounted(){

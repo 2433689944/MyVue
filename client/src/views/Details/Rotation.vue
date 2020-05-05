@@ -16,7 +16,7 @@
         <div class="show_box">
           <ul class="picture_container" ref="middlePicture">
             <li class="picture_item" @mouseover="tabPicture(item)" v-for="(item, index) in pictureList" :key="index">
-              <img :src="item.url" class="small_img" alt="">
+              <img :src="item" class="small_img" alt="">
             </li>
           </ul>
         </div>
@@ -71,7 +71,7 @@ export default {
     if (this.imgList && this.imgList.length) {
       this.pictureList = this.imgList
     }
-    this.middleImg = this.pictureList[0].url
+    this.middleImg = this.pictureList[0]
     // 计算缩略图的宽度,默认是显示4张图片,两边箭头的宽度和为50
     this.itemWidth = (this.middleImgWidth-50) / 4
   },
@@ -124,8 +124,6 @@ export default {
 	      },
 	      /**
 	      * 获取事件对象点击的点，相对于文档左上角的坐标
-	      * @param e
-	      * @returns {{pageX: *, pageY: *}}
 	      */
 	      getEventPage(e) {
 	        return {
@@ -202,7 +200,7 @@ export default {
     },
     // 切换图片
     tabPicture (item) {
-      this.middleImg = item.url
+      this.middleImg = item
     },
     // 点击左边箭头
     leftArrowClick () {
@@ -229,7 +227,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped="scoped">
 .magnify {
   position: relative;
 }
