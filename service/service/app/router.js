@@ -29,27 +29,23 @@ module.exports = app => {
   router.post('/uploadgoods', controller.release.uploadgoods);//图片上传地址 
 
   //发布动态页面接口
-  router.post('/dynamic',controller.dynamic.dynamic);//发布动态
+  router.post('/dynamic', controller.dynamic.dynamic);//发布动态
 
   //社区页面界面
-  router.get('/community',controller.community.community);//获取社区动态
+  router.get('/community', controller.community.community);//获取社区动态
 
   //动态评论
-  router.post('/comment',controller.dynamic.comment);
+  router.post('/comment', controller.dynamic.comment);
 
   //动态评论页面初始化
-  router.get('/getComment',controller.dynamic.getComment);
-<<<<<<< HEAD
-  
+  router.get('/getComment', controller.dynamic.getComment);
+
   // //获取点赞信息
   // router.get('/getLikeNum',controller.dynamic.getLikeNum);
-  
-  //动态点赞
-  router.post('/dynLike',controller.dynamic.dynLike);
 
-  
-//取消动态点赞
-router.get('/dynDisLike',controller.dynamic.dynDisLike);
-=======
->>>>>>> 7c6f48c4caa61f2d6d88610a64e4bf798cce5621
+  //动态点赞
+  router.post('/dynLike', controller.dynamic.dynLike);
+
+  //取消动态点赞
+  router.get('/dynDisLike', controller.dynamic.dynDisLike);
 };
