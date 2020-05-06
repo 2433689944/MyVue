@@ -19,9 +19,24 @@ class dynamicController extends Controller {
   
   async getComment() {
     const { ctx } = this;
-    console.log(ctx.request.query)
+    // console.log(ctx.request.query)
     const getCom = await ctx.service.dynamic.getComment(ctx.request.query)
     ctx.body = getCom;
+  }
+
+  //动态点赞
+  async dynLike() {
+    const { ctx } = this;
+    // console.log(ctx.request.body)
+    const dynLikeNum = await ctx.service.dynamic.dynLike(ctx.request.body)
+    ctx.body = dynLikeNum;
+  }
+  
+  async dynDisLike() {
+    const { ctx } = this;
+    console.log(ctx.request.query)
+    const dynDisLikeNum = await ctx.service.dynamic.dynDisLike(ctx.request.query)
+    ctx.body = dynDisLikeNum;
   }
 }
 module.exports = dynamicController;

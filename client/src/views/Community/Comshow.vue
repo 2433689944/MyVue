@@ -29,11 +29,11 @@
 			<div class="myicon">
 				<ul>
 					<li @click="changeCom(item.comid)"><i class="el-icon-edit"></i><span>评论</span></li>
-					<li :class="flag?'like':''" @click="changeColor"><i class="iconfont icon-zanpress"></i><span>{{likeNum}}</span></li>
+					<li :class="flag==item.comid?'like':''" @click="changeColor(item.comid,index)"><i class="iconfont icon-zanpress"></i><span>{{item.likenum}}</span></li>
 				</ul>
 			</div>
-			<Comment v-show="showNum==item.comid" :comid="item.comid"></Comment>
-			
+			<Comment v-if="showNum==item.comid" :comid="item.comid"></Comment>
+
 		</div>
 	</div>
 </template>
@@ -42,35 +42,49 @@
 	export default {
 		data() {
 			return {
-				likeNum: 0,
-				flag: false,
+				flag: "",
 				comments: "",
-				showNum:""
+				showNum: "",
+				showLike: ""
 			}
 		},
 		props: ["mycommInfo"],
 		methods: {
-			changeColor() {
-				if (!this.flag) {
-					this.flag = !this.flag
-					this.likeNum += 1
-				} else if (this.flag) {
-					this.flag = !this.flag
-					this.likeNum -= 1
+			changeColor(comid, index) {
+				if (this.flag != comid) {
+					this.$axios.post("http://localhost:81/dynLike", {
+							comid: comid
+						})
+						.then((res) => {
+							console.log(res)
+							if (res.data.likedata.affectedRows == 1 & res.data.changedata.affectedRows == 1) {
+								this.mycommInfo[index].likenum += 1;
+								this.flag = comid
+							}
+						})
+				} else {
+					this.$axios.get("http://localhost:81/dynDisLike", {
+							params: {
+								comid: comid
+							}
+						})
+						.then((res) => {
+							console.log(res)
+							if (res.data.Dislikedata.affectedRows == 1 & res.data.changedata1.affectedRows == 1) {
+								this.mycommInfo[index].likenum -= 1;
+								this.flag = ""
+							}
+						})
 				}
 			},
 			changeCom(comid) {
-				if(this.showNum!=comid){
-					this.showNum=comid
-					this.$axios("http://localhost:81/getComment",{params:{comid:comid}})
-					.then((result)=>{
-						console.log(result)
-					})
-				}else {
-					this.showNum=""
+				if (this.showNum != comid) {
+					this.showNum = comid
+				} else {
+					this.showNum = ""
 				}
-				
-				
+
+
 			}
 		},
 		components: {
@@ -88,10 +102,16 @@
 		margin: 50px auto 50px;
 		background-color: #F4F4F4;
 	}
+
 	.combox {
 		background-color: white;
 		margin-bottom: 20px;
 	}
+
+	.combox:last-child {
+		margin-bottom: 0;
+	}
+
 	.touxiang {
 		min-height: 70px;
 		float: left;
@@ -155,6 +175,12 @@
 		display: inline-block;
 	}
 
+	.listPic li img {
+		width: 148px;
+		height: 148px;
+		object-fit: cover;
+	}
+
 	.myicon {
 		/* width: 500px; */
 		color: #808080;
@@ -170,15 +196,19 @@
 		line-height: 38px;
 		cursor: pointer;
 	}
+
 	.myicon li:first-child:hover {
 		color: red;
 	}
+
 	.myicon li:last-child:hover span {
 		color: red;
 	}
-  .myicon li:first-child {
-	  border-right: 1px solid #F4F4F4;
-  }
+
+	.myicon li:first-child {
+		border-right: 1px solid #F4F4F4;
+	}
+
 	.myicon li i {
 		margin-right: 8px;
 	}

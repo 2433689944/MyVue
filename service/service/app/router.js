@@ -30,13 +30,19 @@ module.exports = app => {
   //社区页面界面
   router.get('/community',controller.community.community);//获取社区动态
 
-<<<<<<< HEAD
   //动态评论
   router.post('/comment',controller.dynamic.comment);
 
   //动态评论页面初始化
   router.get('/getComment',controller.dynamic.getComment);
+  
+  // //获取点赞信息
+  // router.get('/getLikeNum',controller.dynamic.getLikeNum);
+  
+  //动态点赞
+  router.post('/dynLike',controller.dynamic.dynLike);
 
-=======
->>>>>>> 3f7a1d73b72068abc6df262ccbdd164c6277b54a
+  
+//取消动态点赞
+router.get('/dynDisLike',controller.dynamic.dynDisLike);
 };
