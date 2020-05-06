@@ -34,18 +34,16 @@ module.exports = app => {
   //社区页面界面
   router.get('/community', controller.community.community);//获取社区动态
 
-  //动态评论
-  router.post('/comment', controller.dynamic.comment);
+  
+  router.post('/comment', controller.dynamic.comment);//动态评论
 
-  //动态评论页面初始化
-  router.get('/getComment', controller.dynamic.getComment);
+  
+  router.get('/getComment', controller.dynamic.getComment);//动态评论页面初始化
 
-  // //获取点赞信息
-  // router.get('/getLikeNum',controller.dynamic.getLikeNum);
+ 
+  router.post('/dynLike', controller.dynamic.dynLike); //动态点赞
 
-  //动态点赞
-  router.post('/dynLike', controller.dynamic.dynLike);
-
-  //取消动态点赞
-  router.get('/dynDisLike', controller.dynamic.dynDisLike);
+  
+  router.get('/dynDisLike', controller.dynamic.dynDisLike);//取消动态点赞
 };
+

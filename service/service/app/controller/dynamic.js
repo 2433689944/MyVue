@@ -33,7 +33,7 @@ class dynamicController extends Controller {
   
   async dynDisLike() {
     const { ctx } = this;
-    console.log(ctx.request.query)
+    // console.log(ctx.request.query)
     const dynDisLikeNum = await ctx.service.dynamic.dynDisLike(ctx.request.query)
     ctx.body = dynDisLikeNum;
   }

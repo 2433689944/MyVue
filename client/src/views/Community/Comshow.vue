@@ -52,6 +52,7 @@
 		methods: {
 			changeColor(comid, index) {
 				if (this.flag != comid) {
+					this.flag = comid
 					this.$axios.post("http://localhost:81/dynLike", {
 							comid: comid
 						})
@@ -59,7 +60,7 @@
 							console.log(res)
 							if (res.data.likedata.affectedRows == 1 & res.data.changedata.affectedRows == 1) {
 								this.mycommInfo[index].likenum += 1;
-								this.flag = comid
+								
 							}
 						})
 				} else {
@@ -69,10 +70,11 @@
 							}
 						})
 						.then((res) => {
+							this.flag = ""
 							console.log(res)
 							if (res.data.Dislikedata.affectedRows == 1 & res.data.changedata1.affectedRows == 1) {
 								this.mycommInfo[index].likenum -= 1;
-								this.flag = ""
+								
 							}
 						})
 				}
