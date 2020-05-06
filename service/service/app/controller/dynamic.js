@@ -11,7 +11,6 @@ class dynamicController extends Controller {
 
   async comment() {
     const { ctx } = this;
-    console.log(ctx.request.body)
     const mydata = await ctx.service.dynamic.comment(ctx.request.body)
     ctx.body = '';
   }
