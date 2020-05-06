@@ -50,7 +50,7 @@
 	export default {
 		data() {
 			return {
-				flag:false,
+				flag: false,
 				ruleForm: {
 					title: '',
 					price: '',
@@ -109,7 +109,7 @@
 							trigger: 'blur'
 						},
 						{
-							pattern: /^[1-9][0-9]{4,9}$/,
+							pattern: /^[1-9][0-9]{4,10}$/,
 							message: 'qq格式错误',
 							trigger: 'blur'
 						}
@@ -155,37 +155,43 @@
 					//验证title、WeChat、price...内容
 					if (valid) {
 						//验证是否上传商品图片
-						if(!this.imgFile){
-							this.flag=true
-						}
-						else{
-						//创建FormData对象用于给后端传文件
-						let formData = new FormData();
-						for (let i = 0; i < this.imgFile.length; i++) {
-							formData.append("myfile" + i, (this.imgFile)[i])
-						}
-						formData.append("title", this.ruleForm.title);
-						formData.append("price", this.ruleForm.price);
-						formData.append("oldprice", this.ruleForm.oldprice);
-						formData.append("wechat", this.ruleForm.wechat);
-						formData.append("type", this.ruleForm.type);
-						formData.append("qq", this.ruleForm.qq);
-						formData.append("phone", this.ruleForm.phone);
-						formData.append("desc", this.ruleForm.desc);
-						formData.append("tag1", this.ruleForm.tag1);
-						var config = {
-							headers: {
-								"Content-Type": "multipart/form-data"
+						if (!this.imgFile) {
+							this.flag = true
+						} else {
+							//创建FormData对象用于给后端传文件
+							let formData = new FormData();
+							for (let i = 0; i < this.imgFile.length; i++) {
+								formData.append("myfile" + i, (this.imgFile)[i])
 							}
-						}
-						this.$axios.post("http://localhost:81/release", formData, config)
-							.then((result) => {
-								console.log(result)
-								if(result.data.affectedRows){
-									this.$router.push({path:"/"})
+							formData.append("title", this.ruleForm.title);
+							formData.append("price", this.ruleForm.price);
+							formData.append("oldprice", this.ruleForm.oldprice);
+							formData.append("wechat", this.ruleForm.wechat);
+							formData.append("type", this.ruleForm.type);
+							formData.append("qq", this.ruleForm.qq);
+							formData.append("phone", this.ruleForm.phone);
+							formData.append("desc", this.ruleForm.desc);
+							formData.append("tag1", this.ruleForm.tag1);
+							var config = {
+								headers: {
+									"Content-Type": "multipart/form-data"
 								}
-							})
 							}
+							this.$axios.post("http://localhost:81/release", formData, config)
+								.then((result) => {
+									if (result.data.affectedRows) {
+										this.$message({
+											message: '发布成功',
+											type: 'success',
+											center: true,
+											duration: 1500
+										});
+										this.$router.push({
+											path: "/"
+										})
+									}
+								})
+						}
 					} else {
 						//前端验证没通过
 						console.log('error submit!!');
@@ -238,6 +244,7 @@
 	.contain .el-form div:nth-of-type(3) {
 		margin-top: 22px;
 	}
+
 	#pictext {
 		color: red;
 	}

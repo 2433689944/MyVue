@@ -16,20 +16,27 @@ module.exports = app => {
   //首页接口
   router.get('/getUserInfo', controller.userInfo.getUserInfo);//获取用户名和头像
   router.get('/loginout', controller.login.loginout);//退出登录
+  router.get('/getAllGoods', controller.goods.getAllGoods);//首页商品展示
+  router.get('/classify', controller.goods.classify);//按类别分类
+  router.get('/searchgoods', controller.goods.searchgoods);//搜索商品
 
-  //发布商品
+  //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 
+  router.post('/uploadgoods', controller.release.uploadgoods);//图片上传地址 
 
-  //发布动态
+  //发布动态页面接口
   router.post('/dynamic',controller.dynamic.dynamic);//发布动态
 
-  //社区页面初始化请求
-  router.get('/community',controller.community.community);
+  //社区页面界面
+  router.get('/community',controller.community.community);//获取社区动态
 
+<<<<<<< HEAD
   //动态评论
   router.post('/comment',controller.dynamic.comment);
 
   //动态评论页面初始化
   router.get('/getComment',controller.dynamic.getComment);
 
+=======
+>>>>>>> 3f7a1d73b72068abc6df262ccbdd164c6277b54a
 };
