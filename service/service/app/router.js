@@ -20,6 +20,10 @@ module.exports = app => {
   router.get('/classify', controller.goods.classify);//按类别分类
   router.get('/searchgoods', controller.goods.searchgoods);//搜索商品
 
+  //个人中心页面接口
+  router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息
+  router.get('/updateinfo', controller.pcenter.updateinfo);//修改用户信息
+
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 
   router.post('/uploadgoods', controller.release.uploadgoods);//图片上传地址 
@@ -30,6 +34,7 @@ module.exports = app => {
   //社区页面界面
   router.get('/community', controller.community.community);//获取社区动态
 
+<<<<<<< HEAD
   
   router.post('/comment', controller.dynamic.comment);//动态评论
 
@@ -42,3 +47,20 @@ module.exports = app => {
   
   router.get('/dynDisLike', controller.dynamic.dynDisLike);//取消动态点赞
 };
+=======
+  //动态评论
+  router.post('/comment', controller.dynamic.comment);
+
+  //动态评论页面初始化
+  router.get('/getComment', controller.dynamic.getComment);
+
+  // //获取点赞信息
+  // router.get('/getLikeNum',controller.dynamic.getLikeNum);
+
+  //动态点赞
+  router.post('/dynLike', controller.dynamic.dynLike);
+
+  //取消动态点赞
+  router.get('/dynDisLike', controller.dynamic.dynDisLike);
+};
+>>>>>>> 9bf72e97198646c36c2c6110a62b27ef9b02cc03
