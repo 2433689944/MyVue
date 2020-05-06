@@ -20,6 +20,10 @@ module.exports = app => {
   router.get('/classify', controller.goods.classify);//按类别分类
   router.get('/searchgoods', controller.goods.searchgoods);//搜索商品
 
+  //个人中心页面接口
+  router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息
+  router.get('/updateinfo', controller.pcenter.updateinfo);//修改用户信息
+
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 
   router.post('/uploadgoods', controller.release.uploadgoods);//图片上传地址 
