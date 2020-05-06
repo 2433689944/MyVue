@@ -11,7 +11,7 @@
 				</div>
 				<div class="grid-content">
 					<div class="WB_info">
-						<span style="color:#eb7350;;">{{item.username}}</span>:{{item.content}}
+						<span style="color:#eb7350;">{{item.username}}</span>:{{item.content}}
 					</div>
 
 					<div class="WB_from S_txt2">
