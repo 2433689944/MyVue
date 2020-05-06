@@ -39,4 +39,17 @@ module.exports = app => {
 
   //动态评论页面初始化
   router.get('/getComment',controller.dynamic.getComment);
+<<<<<<< HEAD
+  
+  // //获取点赞信息
+  // router.get('/getLikeNum',controller.dynamic.getLikeNum);
+  
+  //动态点赞
+  router.post('/dynLike',controller.dynamic.dynLike);
+
+  
+//取消动态点赞
+router.get('/dynDisLike',controller.dynamic.dynDisLike);
+=======
+>>>>>>> 7c6f48c4caa61f2d6d88610a64e4bf798cce5621
 };

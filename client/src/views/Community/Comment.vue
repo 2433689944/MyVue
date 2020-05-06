@@ -5,19 +5,18 @@
 			<el-button @click="clickCom" size="medium" type="success" :disabled="isdisabled">评论</el-button>
 		</div>
 		<div class="contain">
-			<div class="commentList">
+			<div class="commentList" v-for="(item,index) in comlist" :key="index">
 				<div class="touxiang">
-					<!-- <img :src="item.headpic" /> -->
-					<img src="http://localhost:81/public/headpic/dongman.jpg" />
+					<img :src="item.headpic" />
 				</div>
 				<div class="grid-content">
 					<div class="WB_info">
-						<span style="color:#eb7350;;">有约123</span>:做梦
+						<span style="color:#eb7350;;">{{item.username}}</span>:{{item.content}}
 					</div>
 
 					<div class="WB_from S_txt2">
-						<!-- {{item.time}} -->
-						2020-5-5 12:06
+						{{item.time}}
+
 					</div>
 				</div>
 			</div>
@@ -30,10 +29,11 @@
 		data() {
 			return {
 				input: '',
-				isdisabled: true
+				isdisabled: true,
+				comlist: []
 			}
 		},
-		props:["comid"],
+		props: ["comid"],
 		methods: {
 			comInput() {
 				if (this.input) {
@@ -50,15 +50,32 @@
 					`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
 				let params = {
 					comid: this.comid,
-					content:this.input,
+					content: this.input,
 					time: time
 				}
 				console.log(params)
-				this.$axios.post("http://localhost:81/comment",params)
-				.then((result) => {
-				console.log(result)
-				})
+				let params1 = {
+					comid: this.comid,
+					content: this.input,
+					time:time,
+					username:this.$store.state.username,
+					headpic:this.$store.state.headpic
+				}
+				this.comlist.push(params1)
+				this.$axios.post("http://localhost:81/comment", params)
+					.then((result) => {})
 			}
+		},
+		mounted() {
+			this.$axios("http://localhost:81/getComment", {
+					params: {
+						comid: this.comid
+					}
+				})
+				.then((result) => {
+					console.log(result)
+					this.comlist = result.data
+				})
 		}
 	}
 </script>
@@ -80,9 +97,13 @@
 	.commentList {
 		margin: 0 0 -1px;
 		padding: 5px 0 7px;
-		border-bottom-width: 1px;
+		/* border-bottom-width: 1px;
 		border-bottom-style: solid;
-		border-color: #d9d9d9;
+		border-color: #d9d9d9; */
+		border-bottom:1px solid #d9d9d9;
+	}
+	.commentList:last-child {
+		border: none;
 	}
 
 	.touxiang {
