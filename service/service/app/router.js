@@ -33,10 +33,6 @@ module.exports = app => {
 
   //社区页面界面
   router.get('/community', controller.community.community);//获取社区动态
-<<<<<<< HEAD
-
-=======
->>>>>>> 4fe7bb57eb684206d371acbc314bc04d1d8d5542
   
   router.post('/comment', controller.dynamic.comment);//动态评论
 
@@ -49,7 +45,3 @@ module.exports = app => {
   
   router.get('/dynDisLike', controller.dynamic.dynDisLike);//取消动态点赞
 };
-<<<<<<< HEAD
-
-=======
->>>>>>> 4fe7bb57eb684206d371acbc314bc04d1d8d5542
