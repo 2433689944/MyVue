@@ -19,7 +19,6 @@
 		mounted() {
 			this.$axios("http://localhost:81/community")
 			.then((result)=>{
-				console.log(result)
 				this.commInfo=result.data
 			})
 		}

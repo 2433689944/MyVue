@@ -26,7 +26,10 @@ module.exports = app => {
   //社区页面初始化请求
   router.get('/community',controller.community.community);
 
-  //社区页面获取用户信息
-  
-  router.post('/getUserInfo',controller.community.getUserInfo);
+  //动态评论
+  router.post('/comment',controller.dynamic.comment);
+
+  //动态评论页面初始化
+  router.get('/getComment',controller.dynamic.getComment);
+
 };

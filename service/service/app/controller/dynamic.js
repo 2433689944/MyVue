@@ -7,5 +7,20 @@ class dynamicController extends Controller {
     const mydata = await ctx.service.dynamic.dynamic(ctx.request.body,ctx.request.files)
     ctx.body = '';
   }
+
+  async comment() {
+    const { ctx } = this;
+    console.log(ctx.request.body)
+    const mydata = await ctx.service.dynamic.comment(ctx.request.body)
+    ctx.body = '';
+  }
+  
+  
+  async getComment() {
+    const { ctx } = this;
+    console.log(ctx.request.query)
+    const getCom = await ctx.service.dynamic.getComment(ctx.request.query)
+    ctx.body = getCom;
+  }
 }
 module.exports = dynamicController;

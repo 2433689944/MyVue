@@ -19,5 +19,23 @@ class UserService extends Service {
 		const data = await this.app.mysql.query(sql);
 		return data;
 	}
+
+	async comment(com){
+		const { ctx } = this;
+		let cemail = ctx.session.email
+		const comsql =`insert into comdiscuss (comid,cemail,content,time) values("${com.comid}","${cemail}","${com.content}","${com.time}")`;
+		const comdata = await this.app.mysql.query(comsql);
+		return comdata;
+	}
+	
+	async getComment(cid){
+		const { ctx } = this;
+		const sql1=`select * from comdiscuss where comid="${cid.comid}"`
+		const comdata1=await this.app.mysql.query(sql1)
+		console.log(comdata1)
+		// const getComsql =`select * from user inner join comdiscuss on comdiscuss.cemail = user.email`;
+		// const getComdata = await this.app.mysql.query(getComsql);
+		return "getComdata";
+	}
 }
 module.exports = UserService;

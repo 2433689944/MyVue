@@ -1,48 +1,40 @@
 <template>
 	<div class="contain">
-		<template v-for="(item) in mycommInfo">
-		<div class="touxiang">
-			<img src="https://tvax2.sinaimg.cn/crop.0.0.1080.1080.180/86a17422ly8gdi6x7xyifj20u00u0abl.jpg?KID=imgbed,tva&Expires=1588570356&ssig=xHmzqX0iaH" />
-		</div>
-		<div class="grid-content">
-			<div class="WB_info">
-				央视财经
+		<div class="combox" v-for="(item,index) in mycommInfo" :key="index">
+			<div class="touxiang">
+				<img :src="item.headpic" />
 			</div>
-			<div class="WB_from S_txt2">
-				{{item.time}}
-			</div>
-			<div class="WB_text W_f14" node-type="feed_list_content">
-				{{item.content}}</div>
-			<div>
-				<div v-if="myimg.length==1">
-					<img :src="myimg[0]" />
+			<div class="grid-content">
+				<div class="WB_info">
+					{{item.username}}
 				</div>
-				<div v-else>
-					<ul class="listPic">
-						<li>
-							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
-						</li>
-						<li>
-							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
-						</li>
-						<li>
-							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
-						</li>
-						<li>
-							<img src="//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg" />
-						</li>
-					</ul>
+				<div class="WB_from S_txt2">
+					{{item.time}}
+				</div>
+				<div class="WB_text W_f14" node-type="feed_list_content">
+					{{item.content}}</div>
+				<div>
+					<div v-if="item.imgarr.length==1">
+						<img class="imgcard" :src="item.img" />
+					</div>
+					<div v-else>
+						<ul class="listPic">
+							<li v-for="(item1,index) in item.imgarr" :key="index">
+								<img :src="item1" />
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
-			
 			<div class="myicon">
 				<ul>
-					<li><i class="el-icon-edit"></i><span>评论</span></li>
+					<li @click="changeCom(item.comid)"><i class="el-icon-edit"></i><span>评论</span></li>
 					<li :class="flag?'like':''" @click="changeColor"><i class="iconfont icon-zanpress"></i><span>{{likeNum}}</span></li>
 				</ul>
 			</div>
+			<Comment v-show="showNum==item.comid" :comid="item.comid"></Comment>
+			
 		</div>
-		</template>
 	</div>
 </template>
 
@@ -50,36 +42,39 @@
 	export default {
 		data() {
 			return {
-				likeNum:0,
-				flag:false,
-				myimg: ["//wx3.sinaimg.cn/orj360/006D5nCUly1gefq2m25gpj30zk0k0151.jpg", "oqwjwnciqie"],
-				comments:"",
+				likeNum: 0,
+				flag: false,
+				comments: "",
+				showNum:""
 			}
 		},
-		props:["mycommInfo"],
-		methods:{
-			changeColor(){
-				if(!this.flag){
-					this.flag=!this.flag
-					this.likeNum+=1
-				}else if(this.flag){
-					this.flag=!this.flag
-					this.likeNum-=1
+		props: ["mycommInfo"],
+		methods: {
+			changeColor() {
+				if (!this.flag) {
+					this.flag = !this.flag
+					this.likeNum += 1
+				} else if (this.flag) {
+					this.flag = !this.flag
+					this.likeNum -= 1
 				}
+			},
+			changeCom(comid) {
+				if(this.showNum!=comid){
+					this.showNum=comid
+					this.$axios("http://localhost:81/getComment",{params:{comid:comid}})
+					.then((result)=>{
+						console.log(result)
+					})
+				}else {
+					this.showNum=""
+				}
+				
 				
 			}
 		},
-		async mounted() {
-			console.log(this.mycommInfo)
-			var commInfoList=this.mycommInfo
-			var that = this
-				for(let i =0;i<commInfoList.length;i++){
-				 var eamil = (commInfoList)[i].email
-				await that.$axios.post("http://localhost:81/getUserInfo",{email:eamil})
-				.then((reault)=>{
-					console.log(reault)
-				})
-			}
+		components: {
+			Comment: () => import("@/views/Community/Comment.vue")
 		}
 	}
 </script>
@@ -90,8 +85,13 @@
 		width: 600px;
 		overflow: hidden;
 		padding: 20px 20px 4px;
+		margin: 50px auto 50px;
+		background-color: #F4F4F4;
 	}
-
+	.combox {
+		background-color: white;
+		margin-bottom: 20px;
+	}
 	.touxiang {
 		min-height: 70px;
 		float: left;
@@ -154,18 +154,35 @@
 		margin: 0 8px 8px 0;
 		display: inline-block;
 	}
+
 	.myicon {
-		width: 500px;
+		/* width: 500px; */
 		color: #808080;
 		font-size: 12px;
+		height: 38px;
+		border-top: 1px solid #F4F4F4;
+		border-bottom: 1px solid #F4F4F4;
 	}
-	.myicon li{
-		width: 50%;
+
+	.myicon li {
+		width: 298px;
 		text-align: center;
+		line-height: 38px;
+		cursor: pointer;
 	}
+	.myicon li:first-child:hover {
+		color: red;
+	}
+	.myicon li:last-child:hover span {
+		color: red;
+	}
+  .myicon li:first-child {
+	  border-right: 1px solid #F4F4F4;
+  }
 	.myicon li i {
 		margin-right: 8px;
 	}
+
 	.like {
 		color: red;
 	}
