@@ -30,7 +30,7 @@ class GoodsController extends Controller {
     async getgood() {
         const { ctx } = this;
         const mydata = await ctx.service.goods.getgood(ctx.query.goodsid)
-        // console.log(mydata)y
+        // console.log(mydata)
         ctx.body = mydata;
     }
 }
