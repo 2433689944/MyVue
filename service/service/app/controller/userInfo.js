@@ -24,5 +24,21 @@ class UserInfoController extends Controller {
         let result = await this.ctx.service.userInfo.getAllinfo();
         ctx.body = result
     }
+
+    //修改用户信息
+    async updateinfo() {
+        const { ctx } = this;
+        let upinfo = JSON.parse(ctx.request.query.form);
+        await ctx.service.userInfo.updateinfo(upinfo);
+        ctx.body = '';
+    }
+
+    //获取我的商品
+    async getmygoods() {
+        const { ctx } = this;
+        let result = await this.ctx.service.userInfo.getmygoods();
+        ctx.body = result
+    }
+
 }
 module.exports = UserInfoController;
