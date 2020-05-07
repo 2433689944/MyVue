@@ -23,11 +23,12 @@ module.exports = app => {
   //详情页面接口
   router.get('/getgood', controller.goods.getgood);  //获取商品详情
   router.get('/addcar', controller.car.addcar);//添加商品到购物车
-  
+
 
   //个人中心页面接口
   router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息
-  router.get('/updateinfo', controller.pcenter.updateinfo);//修改用户信息
+  router.get('/updateinfo', controller.userInfo.updateinfo);//修改用户信息
+  router.get('/getmygoods', controller.userInfo.getmygoods);//获取我的商品
 
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 
