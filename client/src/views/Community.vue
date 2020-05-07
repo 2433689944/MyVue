@@ -30,6 +30,10 @@
 
 <style scoped="scoped">
 	.contain {
-		margin-top: 51px;
+		width: 600px;
+		overflow: hidden;
+		margin-top: 101px;
+		background-color: #F4F4F4;
 	}
+	
 </style>

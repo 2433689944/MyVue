@@ -1,5 +1,4 @@
 <template>
-	<div class="contain1">
 		<div class="combox">
 			<div class="touxiang">
 				<img :src="mycommInfo.headpic" />
@@ -35,20 +34,19 @@
 			<Comment v-if="showNum==mycommInfo.comid" :comid="mycommInfo.comid"></Comment>
 
 		</div>
-	</div>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				like:"",
+				like: "",
 				comments: "",
 				showNum: "",
 				showLike: "",
 			}
 		},
-		props: ["mycommInfo","mycomidInfo"],
+		props: ["mycommInfo", "mycomidInfo"],
 		methods: {
 			changeColor(comid) {
 				if (!this.like) {
@@ -74,7 +72,7 @@
 							}
 						})
 				}
-				this.like=!this.like
+				this.like = !this.like
 			},
 			changeCom(comid) {
 				if (this.showNum != comid) {
@@ -89,39 +87,32 @@
 		components: {
 			Comment: () => import("@/views/Community/Comment.vue")
 		},
-		created(){
+		created() {
 			var comidArr = []
-			for(let m of this.mycomidInfo){
-				comidArr.push((m.comid))
+			for (let m of this.mycomidInfo) {
+				comidArr.push(Number(m.comid))
 			}
-			console.log(comidArr)
-			console.log(String(this.mycommInfo.comid))
-			console.log(comidArr.includes(4))
-			if(comidArr.includes(this.mycommInfo.comid)){
-				this.like=true
-			}else {
-				this.like=false
+			console.log(comidArr.includes(this.mycommInfo.comid))
+			if (comidArr.includes(this.mycommInfo.comid)) {
+				this.like = true
+			} else {
+				this.like = false
 			}
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	.contain1 {
-		/* height: 500px; */
-		width: 600px;
-		overflow: hidden;
-		margin: 101px auto 50px;
-		background-color: #F4F4F4;
-
-	}
-
+	
 	.combox {
 		background-color: white;
 		margin-bottom: 20px;
 		/* width: 500px; */
 		/* margin: 0 auto; */
 		padding: 20px 20px 0;
+		width: 600px;
+		margin: 0 auto;
+		/* background-color: #F4F4F4; */
 
 	}
 
@@ -208,6 +199,17 @@
 		height: 38px;
 		border-top: 1px solid #F4F4F4;
 		border-bottom: 1px solid #F4F4F4;
+		-moz-user-select: none;
+		/*火狐*/
+
+		-webkit-user-select: none;
+		/*webkit浏览器*/
+		-ms-user-select: none;
+		/*IE10*/
+		-khtml-user-select: none;
+		/*早期浏览器*/
+		user-select: none;
+
 	}
 
 	.myicon li {
