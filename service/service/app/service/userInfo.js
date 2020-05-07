@@ -21,9 +21,46 @@ class GetUserInfoService extends Service {
         this.app.mysql.query(sql);
     }
 
+    //获取未读消息
+    async getmymsg() {
+        const sql = `select id,cemail,comdiscuss.content as ct2,comdiscuss.time,community.content from comdiscuss inner join community 
+        on comdiscuss.comid = community.comid and email = "${this.ctx.session.email}" and lookflag="0" order by id DESC`;
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
+
+    //获取已读消息
+    async getmymsg2() {
+        const sql = `select id,cemail,comdiscuss.content as ct2,comdiscuss.time,community.content from comdiscuss inner join community 
+        on comdiscuss.comid = community.comid and email = "${this.ctx.session.email}" and lookflag="1" order by id DESC`;
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
+
+     //用户已读消息
+     async updatamsg(cont) {
+        const sql = ` update comdiscuss set lookflag="1" where content ="${cont}"`;
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
+
     //获取我的商品
     async getmygoods() {
-        const sql = `select * from goods where email="${this.ctx.session.email}"`
+        const sql = `select * from goods where email="${this.ctx.session.email}" order by id DESC`
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
+
+    //获取我的订单
+    async getmyorders() {
+        const sql = `select addressname,addphone,title,price,img from orders inner join goods on orders.goodsid = goods.id and orders.email ="${this.ctx.session.email}"`
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
+
+    //获取我的动态
+    async getmydyn() {
+        const sql = `select * from community where email="${this.ctx.session.email}" order by comid DESC`
         const data = await this.app.mysql.query(sql);
         return data;
     }

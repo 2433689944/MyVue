@@ -13,7 +13,7 @@ class UserService extends Service {
 		}
 		params.img = imgarr.join("-")
 		params.email = this.ctx.session.email
-		console.log(this.ctx.session.email)
+		// console.log(this.ctx.session.email)
 		//把前端请求的信息存入数据并回应
 		const sql =
 			`insert into community(email,time,content,img,likenum) values("${params.email}","${params.time}","${params.desc}","${params.img}",0)`
@@ -24,7 +24,8 @@ class UserService extends Service {
 	async comment(com){
 		const { ctx } = this;
 		let cemail = ctx.session.email
-		const comsql =`insert into comdiscuss (comid,cemail,content,time) values("${com.comid}","${cemail}","${com.content}","${com.time}")`;
+		const comsql =`insert into comdiscuss (comid,cemail,content,time,lookflag) values("${com.comid}","${cemail}","${com.content}","${com.time}",0)`;
+		console.log(comsql)
 		const comdata = await this.app.mysql.query(comsql);
 		return comdata;
 	}

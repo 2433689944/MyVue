@@ -5,7 +5,6 @@
 				<div class="face">
 					<img :src="mycommInfo.headpic" />
 				</div>
-
 			</div>
 			<div class="grid-content">
 				<div class="WB_info" v-cloak v-html="mycommInfo.username">
@@ -34,11 +33,12 @@
 				<li @click="changeCom(mycommInfo.comid)">
 					<span class="pos">
 						<span class="line">
-						<i class="el-icon-edit">
-					</i><span>评论</span></span>
+							<i class="el-icon-edit">
+							</i><span>评论</span></span>
 					</span>
-					</li>
-				<li :class="like?'like':''" @click="changeColor(mycommInfo.comid)"><i class="iconfont icon-zanpress"></i><span v-cloak v-html="mycommInfo.likenum"></span></li>
+				</li>
+				<li :class="like?'like':''" @click="changeColor(mycommInfo.comid)"><i class="iconfont icon-zanpress"></i><span
+					 v-cloak v-html="mycommInfo.likenum"></span></li>
 			</ul>
 		</div>
 		<Comment v-cloak v-if="showNum==mycommInfo.comid" :comid="mycommInfo.comid"></Comment>
@@ -60,12 +60,10 @@
 		methods: {
 			changeColor(comid) {
 				if (!this.like) {
-					// localStorage.setItem("comid",comid)
 					this.$axios.post("http://localhost:81/dynLike", {
 							comid: comid
 						})
 						.then((res) => {
-							console.log(res)
 							if (res.data.likedata.affectedRows == 1 & res.data.changedata.affectedRows == 1) {
 								this.mycommInfo.likenum += 1;
 							}
@@ -90,8 +88,6 @@
 				} else {
 					this.showNum = ""
 				}
-
-
 			}
 		},
 		components: {
@@ -102,7 +98,6 @@
 			for (let m of this.mycomidInfo) {
 				comidArr.push(Number(m.comid))
 			}
-			console.log(comidArr.includes(this.mycommInfo.comid))
 			if (comidArr.includes(this.mycommInfo.comid)) {
 				this.like = true
 			} else {
@@ -194,7 +189,7 @@
 		margin: 0 8px 8px 0;
 		display: inline-block;
 	}
-  
+
 	.listPic li img {
 		width: 148px;
 		height: 148px;
@@ -228,15 +223,17 @@
 		line-height: 38px;
 		cursor: pointer;
 	}
-  .pos {
+
+	.pos {
 		display: block;
 		height: 22px;
-		    margin: 7px 0;
-		    border-right:1px solid #D9D9D9;
-		    
-		    line-height: 22px;
+		margin: 7px 0;
+		border-right: 1px solid #D9D9D9;
+
+		line-height: 22px;
 	}
-	.myicon li:first-child:hover .pos .line  {
+
+	.myicon li:first-child:hover .pos .line {
 		color: red;
 	}
 

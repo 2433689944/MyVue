@@ -33,12 +33,46 @@ class UserInfoController extends Controller {
         ctx.body = '';
     }
 
+    //获取未读消息
+    async getmymsg() {
+        const { ctx } = this;
+        let result = await this.ctx.service.userInfo.getmymsg();
+        ctx.body = result;
+    }
+
+    //获取已读消息
+    async getmymsg2() {
+        const { ctx } = this;
+        let result = await this.ctx.service.userInfo.getmymsg2();
+        ctx.body = result;
+    }
+
+    //用户已读消息
+    async updatamsg() {
+        const { ctx } = this;
+        await this.ctx.service.userInfo.updatamsg(ctx.request.query.cont);
+        ctx.body = { code: 2000, info: "消息已读" };
+    }
+
     //获取我的商品
     async getmygoods() {
         const { ctx } = this;
         let result = await this.ctx.service.userInfo.getmygoods();
-        ctx.body = result
+        ctx.body = result;
     }
 
+    //获取我的订单
+    async getmyorders() {
+        const { ctx } = this;
+        let result = await this.ctx.service.userInfo.getmyorders();
+        ctx.body = result;
+    }
+
+    //获取我的动态
+    async getmydyn() {
+        const { ctx } = this;
+        let result = await this.ctx.service.userInfo.getmydyn();
+        ctx.body = result;
+    }
 }
 module.exports = UserInfoController;
