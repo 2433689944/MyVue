@@ -20,5 +20,12 @@ class GoodsService extends Service {
         const data = await this.app.mysql.query(sql);
         return data;
     }
+
+    //获取商品详情
+    async getgood(id) {
+        const sql = `select * from goods where id = "${id}";`
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
 }
 module.exports = GoodsService;
