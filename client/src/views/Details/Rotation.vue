@@ -1,17 +1,12 @@
 <template>
 	<div class="magnify">
-		<!-- 左边产品图片区域 -->
 		<div class="left_contaner">
 			<div class="middle_img" @mouseover="boxMouseOver" @mouseleave="boxMouseLeave">
-				<!-- 产品图片 -->
-				<img :src="middleImg" alt="">
-				<!-- 阴影盒子 -->
-				<div class="shade" @mouseover="shadeMouseOver" @mousemove="shadeMouseMove" ref="shade" v-show="isShade"></div>
+				<img :src="middleImg" />
+				<div class="shade" @mouseover="shadeMouseOver" @mousemove="shadeMouseMove" ref="shade" v-show="isshow"></div>
 			</div>
 			<!-- 缩略图容器 -->
 			<div class="carousel">
-				<!-- 左箭头 -->
-				<div class="left_arrow arrow" @click="leftArrowClick"></div>
 				<!-- 缩略图展示盒子 -->
 				<div class="show_box">
 					<ul class="picture_container" ref="middlePicture">
@@ -20,14 +15,35 @@
 						</li>
 					</ul>
 				</div>
-				<!-- 向右箭头 -->
-				<div class="right_arrow arrow" @click="rightArrowClick"></div>
 			</div>
 		</div>
 		<!-- 右边放大区域 -->
-		<div class="right_contanier" v-show="isBig">
-			<img :src="middleImg" ref="bigImg" class="big_img" alt="">
+		<div class="right_contanier" v-show="isshow">
+			<img :src="middleImg" class="big_img" />
 		</div>
+
+
+		<!-- 		<div class="goodsinfo">
+			<ul>
+				<li class="title" v-html="goodsinfo.title"></li>
+				<li v-html="goodsinfo.intro"></li>
+				<li>
+					<span v-for="(item,index) in label" class="labels" v-html="item"></span>
+				</li>
+				<li>
+					<span class="oldprice" v-cloak>原价:{{goodsinfo.oldprice}}</span>
+					<span class="price" v-cloak>现价:{{goodsinfo.price}}</span>
+				</li>
+				<li>
+					<button v-for="(item,index) in types" class="type" v-html="item"></button>
+				</li>
+				<li v-cloak>qq:{{goodsinfo.qq}}</li>
+				<li v-cloak>微信:{{goodsinfo.wechat}}</li>
+				<li v-cloak>电话:{{goodsinfo.phone}}</li>
+			</ul>
+			<button class="car" @click="intocar">查看购物车</button>
+			<button class="car" @click="putintocar">加入购物车</button>
+		</div> -->
 	</div>
 </template>
 
@@ -35,19 +51,19 @@
 	import $ from 'jquery'
 	export default {
 		props: {
+			good: Object,
 			middleImgWidth: {
-				default: 350,
+				default: 300,
 				type: Number
 			}, // 产品图片宽
 			middleImgHeight: {
-				default: 400,
+				default: 300,
 				type: Number
 			}, // 产品图片高
 			thumbnailHeight: {
 				default: 100,
 				type: Number
 			}, // 缩略图容器高度
-			imgList: Array, // 图片数据
 			zoom: {
 				default: 2, // 缩略比例,放大比例
 				type: Number
@@ -55,65 +71,52 @@
 		},
 		data() {
 			return {
-				middleImg: '', // 中图图片地址
-				bigImg: '', // 大图图片地址
-				isShade: false, // 控制阴影显示与否
-				isBig: false, // 控制放大图显示与否
-				initX: 0, // 初始clientX值
-				initY: 0, // 初始clientY值
-				leftX: 0, // 初始定位left
-				topY: 0, // 初始定位top
-				middleLeft: 0, // 当前放置小图盒子的定位left值,
+				goodsinfo: {},
+				label: [],
+				types: [],
+				pictureList: [],
+				middleImg: '', // 选中图片
+				isshow: false, // 控制选取图片显示
 				itemWidth: 80, // 缩略图每张的宽度
 			}
 		},
-		created() {
-			if (this.imgList && this.imgList.length) {
-				this.pictureList = this.imgList
-			}
-			this.middleImg = this.pictureList[0]
-			// 计算缩略图的宽度,默认是显示4张图片,两边箭头的宽度和为50
-			this.itemWidth = (this.middleImgWidth - 50) / 4
-		},
 		mounted() {
-			this.$nextTick(() => {
-				// 容器的高
-				const imgWidth = this.middleImgHeight + this.thumbnailHeight + 20
-				// 设置容器宽高
-				$('.magnify').css({
-					width: this.middleImgWidth,
-					height: imgWidth
+			this.$axios("http://localhost:81/getgood", {
+					params: {
+						goodsid: this.$route.query.goodsid
+					}
 				})
-				// 设置产品图宽高
-				$('.middle_img').css({
-					width: this.middleImgWidth,
-					height: this.middleImgHeight
+				.then((result) => {
+					this.goodsinfo = result.data[0];
+					console.log(this.goodsinfo)
+					this.pictureList = result.data[0].img.split("-");
+					this.label = result.data[0].label.split("-");
+					this.types = result.data[0].types.split("-");
+					this.middleImg = this.pictureList[0];
+
+
+					// 计算缩略图的宽度,默认是显示4张图片,两边箭头的宽度和为50
+					this.itemWidth = (this.middleImgWidth - 50) / 4
+					this.$nextTick(() => {
+						// 容器的高
+						const imgWidth = this.middleImgHeight + this.thumbnailHeight + 20
+						console.log(imgWidth)
+						// 设置缩略图容器高
+						$('.carousel').css({
+							height: this.thumbnailHeight
+						})
+						// 设置每个缩略图宽
+						$('.picture_item').css({
+							width: this.itemWidth
+						})
+
+						// 设置放大图片的宽高(图片的放大倍数)
+						$('.right_contanier .big_img').css({
+							width: imgWidth * this.zoom,
+							height: imgWidth * this.zoom
+						})
+					})
 				})
-				// 设置移动阴影图宽高
-				$('.middle_img .shade').css({
-					width: this.middleImgWidth / this.zoom,
-					height: this.middleImgHeight / this.zoom
-				})
-				// 设置缩略图容器高
-				$('.carousel').css({
-					height: this.thumbnailHeight
-				})
-				// 设置每个缩略图宽
-				$('.picture_item').css({
-					width: this.itemWidth
-				})
-				// 设置放大后图片容器的宽高,left
-				$('.right_contanier').css({
-					left: this.middleImgWidth,
-					width: imgWidth,
-					height: imgWidth
-				})
-				// 设置放大图片的宽高(图片的放大倍数)
-				$('.right_contanier .big_img').css({
-					width: imgWidth * this.zoom,
-					height: imgWidth * this.zoom
-				})
-			})
 		},
 		methods: {
 			getPageScroll() {
@@ -122,26 +125,19 @@
 					scrollLeft: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
 				}
 			},
-			/**
-			 * 获取事件对象点击的点，相对于文档左上角的坐标
-			 */
+			// 获取事件对象点击的点，相对于文档左上角的坐标
 			getEventPage(e) {
 				return {
 					pageX: e.clientX + this.getPageScroll().scrollLeft,
 					pageY: e.clientY + this.getPageScroll().scrollTop
 				}
 			},
-			// 产品图片鼠标移入事件,显示阴影,显示大图
+			// 鼠标移入,显示放大镜和大图
 			boxMouseOver(e) {
-				console.log(9999, e)
-				e.preventDefault();
-				e.stopPropagation();
-				this.isShade = true
-				this.isBig = true
-				// 计算阴影的位置
-				let x = e.offsetX - $('.shade').width() / 2
-				let y = e.offsetY - $('.shade').height() / 2
-				let maxLeft = $('.middle_img').width() - $('.shade').width()
+				this.isshow = true;
+				let x = e.offsetX - $('.shade').width() / 2;
+				let y = e.offsetY - $('.shade').height() / 2;
+				let maxLeft = $('.middle_img').width() - $('.shade').width();
 				let maxTop = $('.middle_img').height() - $('.shade').height()
 				x = x <= 0 ? 0 : x
 				x = x >= maxLeft ? maxLeft : x
@@ -152,20 +148,20 @@
 					top: y
 				})
 			},
-			// 鼠标在阴影移动
+			// 鼠标移除,隐藏放大镜和大图
+			boxMouseLeave() {
+				this.isshow = false
+			},
+			// 鼠标移动
 			shadeMouseMove(e) {
-				e.preventDefault();
-				e.stopPropagation();
 				//用页面x - 父盒子的offsetLeft - 父盒子的左边框宽度 标红的两个方法补在下面
-				var x = this.getEventPage(e).pageX - $('.middle_img')[0].offsetParent.offsetLeft - $('.middle_img')[0].offsetParent
+				let x = this.getEventPage(e).pageX - $('.middle_img')[0].offsetParent.offsetLeft - $('.middle_img')[0].offsetParent
 					.clientLeft;
 				//用页面y - 父盒子的offsetTop - 父盒子的上边框宽度
-				var y = this.getEventPage(e).pageY - $('.middle_img')[0].offsetParent.offsetTop - $('.middle_img')[0].offsetParent.clientTop;
-
+				let y = this.getEventPage(e).pageY - $('.middle_img')[0].offsetParent.offsetTop - $('.middle_img')[0].offsetParent.clientTop;
 				//让阴影的坐标居中
 				x -= $('.shade').width() / 2;
 				y -= $('.shade').height() / 2;
-
 				// 移动边界限制
 				let maxLeft = $('.middle_img').width() - $('.shade').width()
 				let maxTop = $('.middle_img').height() - $('.shade').height()
@@ -186,44 +182,34 @@
 					left: -x * xRate,
 					top: -y * yRate
 				})
-				// console.log(e, x, y, xRate, yRate, 66677)
 			},
 			// 鼠标移入阴影,去除自定义事件
 			shadeMouseOver(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				// console.log(88888, e)
 			},
-			// 图片移出隐藏阴影和大图
-			boxMouseLeave(e) {
-				this.isShade = false
-				this.isBig = false
-			},
+			
+			
+			
+			
 			// 切换图片
 			tabPicture(item) {
 				this.middleImg = item
 			},
-			// 点击左边箭头
-			leftArrowClick() {
-				if (this.middleLeft < 0) {
-					// 每次向右平移一个图片盒子的宽度
-					this.middleLeft += this.itemWidth
-					$('.picture_container').animate({
-						left: this.middleLeft
-					}, 500)
-				}
+
+
+
+
+
+			intocar() {
+				this.$router.push({
+					path: "/car",
+				});
 			},
-			// 点击右边箭头
-			rightArrowClick() {
-				// 每次向左平移一个盒子的宽度,最多移动的宽度为(图片数组长度-4)*每张缩略图的宽度
-				if (this.middleLeft > -this.itemWidth * (this.pictureList.length - 4)) {
-					this.middleLeft -= this.itemWidth
-					$('.picture_container').animate({
-						left: this.middleLeft
-					}, 500)
-				}
-				console.log(this.middleLeft)
-			}
+
+			putintocar() {
+				//得到session中的邮箱 id 再加上goodsid 一并放入数据库
+			},
 		}
 	}
 </script>
@@ -231,15 +217,43 @@
 <style scoped="scoped">
 	.magnify {
 		position: relative;
+		width: 1180px;
+		padding: 30px;
+		box-sizing: border-box;
+		background-color: #fff;
+		border-radius: 7px;
 	}
 
 	.left_contaner {
-		width: 100%;
-		height: 100%;
+		width: 350px;
 	}
 
+	.right_contanier {
+		overflow: hidden;
+		position: absolute;
+		top: 30px;
+		left: 335px;
+		width: 420px;
+		height: 420px;
+	}
+
+	.right_contanier .big_img {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+	}
+
+	.big_img {
+		z-index: 100;
+	}
+
+
+
+
+
 	.left_contaner .middle_img {
-		border: 1px solid #ccc;
+		width: 300px;
+		height: 300px;
 		box-sizing: border-box;
 		position: relative;
 	}
@@ -250,6 +264,8 @@
 		top: 0;
 		left: 0;
 		cursor: move;
+		width: 150px;
+		height: 150px;
 	}
 
 	.left_contaner .middle_img img {
@@ -272,16 +288,6 @@
 	.left_contaner .carousel .arrow {
 		flex-basis: 25px;
 		cursor: pointer;
-	}
-
-	.left_contaner .carousel .left_arrow {
-		background: url('http://www.jq22.com/demo/jQuery-fdj201705051102/images/btn_prev.png') no-repeat;
-		background-position: center center;
-	}
-
-	.left_contaner .carousel .right_arrow {
-		background: url('http://www.jq22.com/demo/jQuery-fdj201705051102/images/btn_next.png') no-repeat;
-		background-position: center right;
 	}
 
 	.left_contaner .carousel .picture_container {
@@ -309,16 +315,69 @@
 		height: 100%;
 	}
 
-	.right_contanier {
-		overflow: hidden;
+
+	.goodsinfo {
+		background-color: #F0F0F0;
+		width: 400px;
+		height: 400px;
+		display: inline-block;
 		position: absolute;
-		top: 0;
-		border: 1px solid #ccc;
+		top: 20px;
+		left: 319px;
+
+
 	}
 
-	.right_contanier .big_img {
-		position: absolute;
-		top: 0px;
-		left: 0px;
+
+	.goodsinfo li {
+		background-color: #F4F4F4;
+		display: block;
+		height: 30px;
+		margin-top: 20px;
+	}
+
+	.goodsinfo li img {
+		height: 20px;
+		width: 20px;
+		margin-top: 5px;
+	}
+
+	.goodsinfo li span {
+		line-height: 30px;
+	}
+
+	.title {
+		font-size: 15px;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.labels {
+		margin-right: 5px;
+	}
+
+	.type {
+		background-color: #00D6B2;
+		border-radius: 1px;
+		margin-right: 20px;
+	}
+
+	.oldprice {
+		margin-right: 10px;
+		text-decoration: line-through;
+	}
+
+	.price {
+		color: red;
+	}
+
+	.car {
+		width: 200px;
+		height: 50px;
+		background-color: orangered;
+	}
+
+	[v-cloak] {
+		display: none
 	}
 </style>

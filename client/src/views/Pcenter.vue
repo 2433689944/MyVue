@@ -29,8 +29,10 @@
 		},
 		data() {
 			return {
-				ind: 1, //切换右侧选中状态
-				com: "Myinfo",
+				// ind: 1, //切换右侧选中状态
+				// com: "Myinfo",
+				ind: 3, //切换右侧选中状态
+				com: "Mygoods",
 			}
 		},
 		methods: {
@@ -39,11 +41,11 @@
 				this.ind = 1;
 			},
 			mymessage() {
-				this.com = "Mygoods";
+				this.com = "Mymessage";
 				this.ind = 2;
 			},
 			mygoods() {
-				this.com = "Mymessage";
+				this.com = "Mygoods";
 				this.ind = 3;
 			},
 			mydynamic() {

@@ -25,5 +25,13 @@ class GoodsController extends Controller {
             ctx.body = { code: 4001, info: [] }
         }
     }
+
+    //获取商品详情
+    async getgood() {
+        const { ctx } = this;
+        const mydata = await ctx.service.goods.getgood(ctx.query.goodsid)
+        // console.log(mydata)y
+        ctx.body = mydata;
+    }
 }
 module.exports = GoodsController;

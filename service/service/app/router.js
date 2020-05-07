@@ -20,6 +20,9 @@ module.exports = app => {
   router.get('/classify', controller.goods.classify);//按类别分类
   router.get('/searchgoods', controller.goods.searchgoods);//搜索商品
 
+  //详情页面接口
+  router.get('/getgood', controller.goods.getgood);  //获取商品详情
+
   //个人中心页面接口
   router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息
   router.get('/updateinfo', controller.pcenter.updateinfo);//修改用户信息
@@ -33,15 +36,8 @@ module.exports = app => {
 
   //社区页面界面
   router.get('/community', controller.community.community);//获取社区动态
-  
   router.post('/comment', controller.dynamic.comment);//动态评论
-
-  
   router.get('/getComment', controller.dynamic.getComment);//动态评论页面初始化
-
- 
   router.post('/dynLike', controller.dynamic.dynLike); //动态点赞
-
-  
   router.get('/dynDisLike', controller.dynamic.dynDisLike);//取消动态点赞
 };
