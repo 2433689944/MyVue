@@ -5,6 +5,7 @@ class communityController extends Controller {
   async community() {
     const { ctx } = this;
     const mydata = await ctx.service.community.community()
+    console.log(mydata)
     ctx.body = mydata;
   }
 }

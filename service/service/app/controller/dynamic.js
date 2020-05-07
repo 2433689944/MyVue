@@ -6,7 +6,7 @@ class dynamicController extends Controller {
     const { ctx } = this;
     // console.log(ctx.request.body,ctx.request.files)
     const mydata = await ctx.service.dynamic.dynamic(ctx.request.body, ctx.request.files)
-    ctx.body = '';
+    ctx.body = mydata;
   }
 
   async comment() {

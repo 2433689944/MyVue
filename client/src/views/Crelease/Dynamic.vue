@@ -68,14 +68,24 @@
 						}
 						this.$axios.post("http://localhost:81/dynamic", formData, config)
 							.then((result) => {
-								console.log(result)
-								// if(result.data.affectedRows){
-								// 	this.$router.push({path:"/"})
-								// }
+								if(result.data.affectedRows){
+									this.$message({
+										message: '发布成功',
+										type: 'success',
+										center: true,
+										duration: 1500
+									});
+									this.$router.push({path:"/community"})
+								}
 							})
 						}
 			          } else {
-			            console.log('error submit!!');
+			           this.$message({
+			           	message: '请检查信息填写是否有误',
+			           	type: 'warning',
+			           	center: true,
+			           	duration: 1500
+			           });
 			            return false;
 			          }
 			        });

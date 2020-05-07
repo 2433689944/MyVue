@@ -4,7 +4,7 @@
 			<input class="comInput" placeholder="请输入内容" v-model="input" @input="comInput" />
 			<el-button @click="clickCom" size="medium" type="success" :disabled="isdisabled">评论</el-button>
 		</div>
-		<div class="contain">
+		<div class="contain2">
 			<div class="commentList" v-for="(item,index) in comlist" :key="index">
 				<div class="touxiang">
 					<img :src="item.headpic" />
@@ -82,17 +82,19 @@
 
 <style scoped="scoped">
 	.com {
-		background-color: #F4F4F4;
+		/* background-color: #F4F4F4; */
 		padding-top: 20px;
+		width: 100%;
+		/* margin-left: 60px; */
 	}
 
-	.contain {
+	.contain2 {
 		/* height: 500px; */
-		width: 600px;
+		width:100%;
 		overflow: hidden;
 		padding: 20px 20px 4px;
 		margin-left: -20px;
-	}
+		}
 
 	.commentList {
 		margin: 0 0 -1px;
@@ -145,7 +147,7 @@
 
 	.comInput {
 		height: 32px;
-		width: 480px;
+		width: 475px;
 		margin-right: 10px;
 	}
 </style>

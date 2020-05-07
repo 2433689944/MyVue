@@ -1,25 +1,25 @@
 <template>
-	<div class="contain">
-		<div class="combox" v-for="(item,index) in mycommInfo" :key="index">
+	<div class="contain1">
+		<div class="combox">
 			<div class="touxiang">
-				<img :src="item.headpic" />
+				<img :src="mycommInfo.headpic" />
 			</div>
 			<div class="grid-content">
 				<div class="WB_info">
-					{{item.username}}
+					{{mycommInfo.username}}
 				</div>
 				<div class="WB_from S_txt2">
-					{{item.time}}
+					{{mycommInfo.time}}
 				</div>
 				<div class="WB_text W_f14" node-type="feed_list_content">
-					{{item.content}}</div>
+					{{mycommInfo.content}}</div>
 				<div>
-					<div v-if="item.imgarr.length==1">
-						<img class="imgcard" :src="item.img" />
+					<div v-if="mycommInfo.imgarr.length==1">
+						<img class="imgcard" :src="mycommInfo.img" />
 					</div>
 					<div v-else>
 						<ul class="listPic">
-							<li v-for="(item1,index) in item.imgarr" :key="index">
+							<li v-for="(item1,index1) in mycommInfo.imgarr" :key="index1">
 								<img :src="item1" />
 							</li>
 						</ul>
@@ -28,11 +28,11 @@
 			</div>
 			<div class="myicon">
 				<ul>
-					<li @click="changeCom(item.comid)"><i class="el-icon-edit"></i><span>评论</span></li>
-					<li :class="flag==item.comid?'like':''" @click="changeColor(item.comid,index)"><i class="iconfont icon-zanpress"></i><span>{{item.likenum}}</span></li>
+					<li @click="changeCom(mycommInfo.comid)"><i class="el-icon-edit"></i><span>评论</span></li>
+					<li :class="like?'like':''" @click="changeColor(mycommInfo.comid)"><i class="iconfont icon-zanpress"></i><span>{{mycommInfo.likenum}}</span></li>
 				</ul>
 			</div>
-			<Comment v-if="showNum==item.comid" :comid="item.comid"></Comment>
+			<Comment v-if="showNum==mycommInfo.comid" :comid="mycommInfo.comid"></Comment>
 
 		</div>
 	</div>
@@ -42,25 +42,24 @@
 	export default {
 		data() {
 			return {
-				flag: "",
+				like:"",
 				comments: "",
 				showNum: "",
-				showLike: ""
+				showLike: "",
 			}
 		},
-		props: ["mycommInfo"],
+		props: ["mycommInfo","mycomidInfo"],
 		methods: {
-			changeColor(comid, index) {
-				if (this.flag != comid) {
-					this.flag = comid
+			changeColor(comid) {
+				if (!this.like) {
+					// localStorage.setItem("comid",comid)
 					this.$axios.post("http://localhost:81/dynLike", {
 							comid: comid
 						})
 						.then((res) => {
 							console.log(res)
 							if (res.data.likedata.affectedRows == 1 & res.data.changedata.affectedRows == 1) {
-								this.mycommInfo[index].likenum += 1;
-								
+								this.mycommInfo.likenum += 1;
 							}
 						})
 				} else {
@@ -70,14 +69,12 @@
 							}
 						})
 						.then((res) => {
-							this.flag = ""
-							console.log(res)
 							if (res.data.Dislikedata.affectedRows == 1 & res.data.changedata1.affectedRows == 1) {
-								this.mycommInfo[index].likenum -= 1;
-								
+								this.mycommInfo.likenum -= 1;
 							}
 						})
 				}
+				this.like=!this.like
 			},
 			changeCom(comid) {
 				if (this.showNum != comid) {
@@ -91,23 +88,41 @@
 		},
 		components: {
 			Comment: () => import("@/views/Community/Comment.vue")
+		},
+		created(){
+			var comidArr = []
+			for(let m of this.mycomidInfo){
+				comidArr.push((m.comid))
+			}
+			console.log(comidArr)
+			console.log(String(this.mycommInfo.comid))
+			console.log(comidArr.includes(4))
+			if(comidArr.includes(this.mycommInfo.comid)){
+				this.like=true
+			}else {
+				this.like=false
+			}
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	.contain {
+	.contain1 {
 		/* height: 500px; */
 		width: 600px;
 		overflow: hidden;
-		padding: 20px 20px 4px;
-		margin: 50px auto 50px;
+		margin: 101px auto 50px;
 		background-color: #F4F4F4;
+
 	}
 
 	.combox {
 		background-color: white;
 		margin-bottom: 20px;
+		/* width: 500px; */
+		/* margin: 0 auto; */
+		padding: 20px 20px 0;
+
 	}
 
 	.combox:last-child {
@@ -184,7 +199,10 @@
 	}
 
 	.myicon {
-		/* width: 500px; */
+		/* width: 500px;
+		margin-left: 60px; */
+		width: 100%;
+		background-color: F4F4F4;
 		color: #808080;
 		font-size: 12px;
 		height: 38px;
@@ -193,7 +211,7 @@
 	}
 
 	.myicon li {
-		width: 298px;
+		width: 240px;
 		text-align: center;
 		line-height: 38px;
 		cursor: pointer;

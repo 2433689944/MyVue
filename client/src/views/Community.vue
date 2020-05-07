@@ -1,6 +1,6 @@
 <template>
 	<div class="contain">
-	<Comshow :mycommInfo="commInfo"></Comshow>
+	<Comshow v-for="(item,index) in commInfo" :mycommInfo="item" :mycomidInfo="comidInfo" :key="index"></Comshow>
 	</div>
 </template>
 
@@ -10,7 +10,8 @@
 		name:"Community",
 		data(){
 			return {
-				commInfo:[]
+				commInfo:[],
+				comidInfo:[]
 			}
 		},
 		components:{
@@ -19,8 +20,9 @@
 		mounted() {
 			this.$axios("http://localhost:81/community")
 			.then((result)=>{
-				// console.log(result)
-				this.commInfo=result.data
+				console.log(result)
+				this.commInfo=result.data.data
+				this.comidInfo=result.data.data1
 			})
 		}
 	}
