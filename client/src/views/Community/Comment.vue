@@ -1,24 +1,28 @@
 <template>
 	<div class="com">
-		<div class="intValue">
-			<input class="comInput" placeholder="请输入内容" v-model="input" @input="comInput" />
-			<el-button @click="clickCom" size="medium" type="success" :disabled="isdisabled">评论</el-button>
-		</div>
-		<div class="contain2">
-			<div class="commentList" v-for="(item,index) in comlist" :key="index">
-				<div class="touxiang">
-					<img :src="item.headpic" />
-				</div>
-				<div class="grid-content">
-					<div class="WB_info">
-						<span style="color:#eb7350;">{{item.username}}</span>:{{item.content}}
+		<div class="com1">
+			<div class="intValue">
+				<input class="comInput" placeholder="请输入内容" v-model="input" @input="comInput" />
+				<el-button @click="clickCom" size="medium" type="success" :disabled="isdisabled">评论</el-button>
+			</div>
+
+			<div class="contain2">
+				<div class="commentList" v-for="(item,index) in comlist" :key="index">
+					<div class="touxiang">
+						<img :src="item.headpic" />
 					</div>
 
-					<div class="WB_from S_txt2">
-						{{item.time}}
+					<div class="grid-content">
+						<div class="WB_info" v-cloak>
+							<span v-cloak style="color:#eb7350;">{{item.username}}</span>:{{item.content}}
+						</div>
 
+						<div class="WB_from S_txt2" v-cloak>
+							{{item.time}}
+						</div>
 					</div>
 				</div>
+				<!-- <router-link to=""></router-link> -->
 			</div>
 		</div>
 	</div>
@@ -45,7 +49,6 @@
 			},
 			clickCom() {
 				let d = new Date()
-				// console.log(this.comid)
 				let time =
 					`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
 				let params = {
@@ -53,13 +56,12 @@
 					content: this.input,
 					time: time
 				}
-				console.log(params)
 				let params1 = {
 					comid: this.comid,
 					content: this.input,
-					time:time,
-					username:this.$store.state.username,
-					headpic:this.$store.state.headpic
+					time: time,
+					username: this.$store.state.username,
+					headpic: this.$store.state.headpic
 				}
 				this.comlist.push(params1)
 				this.$axios.post("http://localhost:81/comment", params)
@@ -73,7 +75,6 @@
 					}
 				})
 				.then((result) => {
-					console.log(result)
 					this.comlist = result.data
 				})
 		}
@@ -81,31 +82,39 @@
 </script>
 
 <style scoped="scoped">
+	[v-cloak] {
+		display: none !important;
+	}
+
 	.com {
-		/* background-color: #F4F4F4; */
+		width: 660px;
+		background-color: #F4F4F4;
+	}
+
+	.com1 {
+		width: 620px;
+		margin: 0 auto;
 		padding-top: 20px;
-		width: 100%;
-		/* margin-left: 60px; */
+	}
+
+	.comInput {
+		height: 32px;
+		width: 530px;
+		margin-right: 10px;
 	}
 
 	.contain2 {
-		/* height: 500px; */
-		width:100%;
-		overflow: hidden;
-		padding: 20px 20px 4px;
+		width: 100%;
+		/* overflow: hidden; */
+		padding: 20px 20px;
 		margin-left: -20px;
-		}
+	}
 
 	.commentList {
+		width: 100%;
 		margin: 0 0 -1px;
 		padding: 5px 0 7px;
-		/* border-bottom-width: 1px;
-		border-bottom-style: solid;
-		border-color: #d9d9d9; */
-		border-bottom:1px solid #d9d9d9;
-	}
-	.commentList:last-child {
-		border: none;
+		border-bottom: 1px solid #d9d9d9;
 	}
 
 	.touxiang {
@@ -143,11 +152,5 @@
 		text-decoration: none;
 		font-size: 12px;
 		font-family: arial;
-	}
-
-	.comInput {
-		height: 32px;
-		width: 475px;
-		margin-right: 10px;
 	}
 </style>

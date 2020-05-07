@@ -1,6 +1,7 @@
 <template>
 	<div id="details">
 		<Rotation></Rotation>
+		<goodsComment></goodsComment>
 	</div>
 </template>
 
@@ -9,7 +10,8 @@
 	export default {
 		name: "Details",
 		components: {
-			Rotation: () => import("@/views/Details/Rotation.vue")
+			Rotation: () => import("@/views/Details/Rotation.vue"),
+			goodsComment:()=>import("@/views/Details/goodsComment.vue"),
 		},
 	}
 </script>

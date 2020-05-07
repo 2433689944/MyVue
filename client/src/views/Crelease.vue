@@ -6,13 +6,14 @@
 
 <script>
 	//动态发布页面
+	import Dynamic from "@/views/Crelease/Dynamic.vue"
 	export default {
 		name:"Crelease",
 		data(){
 			return {}
 		},
 		components:{
-			Dynamic:()=>import("@/views/Crelease/Dynamic")
+			Dynamic
 		}
 	}
 </script>

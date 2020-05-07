@@ -243,9 +243,6 @@
 		width: 674px;
 	}
 
-	/* .contain .el-form div:first-of-type {
-	 		 margin-top: 44px;
-	 } */
 	.contain .el-form div:nth-of-type(3) {
 		margin-top: 22px;
 	}

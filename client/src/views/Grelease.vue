@@ -1,27 +1,28 @@
 <template>
 	<div class="w">
-	<Myform></Myform>
+		<Myform></Myform>
 	</div>
 </template>
 
 <script>
 	//发布商品
+	import Myform from "@/views/Grelease/Myform.vue"
 	export default {
 		data() {
 			return {
-				
+
 			};
 		},
 		methods: {
-			
-			},
-	components:{
-		//发布商品表单组件
-		Myform:()=>import("@/views/Grelease/Myform.vue")
-	}
+
+		},
+		components: {
+			//发布商品表单组件
+			Myform
 		}
+	}
 </script>
 
 <style>
-	
+
 </style>

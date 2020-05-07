@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<el-upload action="http://localhost:81/uploadgoods" list-type="picture-card" :on-preview="handlePictureCardPreview" 
-		:on-remove="handleRemove" :on-success="changeFile">
+		<el-upload action="http://localhost:81/uploadgoods" list-type="picture-card" :on-preview="handlePictureCardPreview"
+		 :on-remove="handleRemove" :on-success="changeFile">
 			<i class="el-icon-plus"></i>
 		</el-upload>
 		<el-dialog :visible.sync="dialogVisible">
@@ -22,7 +22,7 @@
 		methods: {
 			//删除图片时触发
 			handleRemove(file, fileList) {
-				console.log(file, fileList);
+				// console.log(file, fileList);
 			},
 			//点击已上传文件时触发
 			handlePictureCardPreview(file) {

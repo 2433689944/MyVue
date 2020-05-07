@@ -1,17 +1,19 @@
 <template>
+	<div class="comitem" v-cloak>
 		<div class="combox">
 			<div class="touxiang">
-				<img :src="mycommInfo.headpic" />
+				<div class="face">
+					<img :src="mycommInfo.headpic" />
+				</div>
+
 			</div>
 			<div class="grid-content">
-				<div class="WB_info">
-					{{mycommInfo.username}}
+				<div class="WB_info" v-cloak v-html="mycommInfo.username">
 				</div>
-				<div class="WB_from S_txt2">
-					{{mycommInfo.time}}
+				<div class="WB_from S_txt2" v-cloak v-html="mycommInfo.time">
 				</div>
-				<div class="WB_text W_f14" node-type="feed_list_content">
-					{{mycommInfo.content}}</div>
+				<div class="WB_text W_f14" v-cloak node-type="feed_list_content" v-html="mycommInfo.content">
+				</div>
 				<div>
 					<div v-if="mycommInfo.imgarr.length==1">
 						<img class="imgcard" :src="mycommInfo.img" />
@@ -25,18 +27,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="myicon">
-				<ul>
-					<li @click="changeCom(mycommInfo.comid)"><i class="el-icon-edit"></i><span>评论</span></li>
-					<li :class="like?'like':''" @click="changeColor(mycommInfo.comid)"><i class="iconfont icon-zanpress"></i><span>{{mycommInfo.likenum}}</span></li>
-				</ul>
-			</div>
-			<Comment v-if="showNum==mycommInfo.comid" :comid="mycommInfo.comid"></Comment>
 
 		</div>
+		<div class="myicon">
+			<ul>
+				<li @click="changeCom(mycommInfo.comid)">
+					<span class="pos">
+						<span class="line">
+						<i class="el-icon-edit">
+					</i><span>评论</span></span>
+					</span>
+					</li>
+				<li :class="like?'like':''" @click="changeColor(mycommInfo.comid)"><i class="iconfont icon-zanpress"></i><span v-cloak v-html="mycommInfo.likenum"></span></li>
+			</ul>
+		</div>
+		<Comment v-cloak v-if="showNum==mycommInfo.comid" :comid="mycommInfo.comid"></Comment>
+	</div>
 </template>
 
 <script>
+	import Comment from "@/views/Community/Comment.vue"
 	export default {
 		data() {
 			return {
@@ -85,7 +95,7 @@
 			}
 		},
 		components: {
-			Comment: () => import("@/views/Community/Comment.vue")
+			Comment
 		},
 		created() {
 			var comidArr = []
@@ -103,21 +113,22 @@
 </script>
 
 <style scoped="scoped">
-	
-	.combox {
-		background-color: white;
-		margin-bottom: 20px;
-		/* width: 500px; */
-		/* margin: 0 auto; */
-		padding: 20px 20px 0;
-		width: 600px;
-		margin: 0 auto;
-		/* background-color: #F4F4F4; */
+	[v-cloak] {
+		display: none;
+	}
 
+	.comitem {
+		background-color: #fff;
+		margin: 0 0 10px 0;
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
 	}
-	.combox:first-child {
-		margin-top: 101px;
+
+	.combox {
+		width: 100%;
+		padding: 20px 20px 4px;
 	}
+
 	.combox:last-child {
 		margin-bottom: 0;
 	}
@@ -177,14 +188,13 @@
 		overflow: hidden;
 		background-color: #fff;
 		border: 1px solid #c0ccda;
-		/* border-radius: 6px; */
 		box-sizing: border-box;
 		width: 148px;
 		height: 148px;
 		margin: 0 8px 8px 0;
 		display: inline-block;
 	}
-
+  
 	.listPic li img {
 		width: 148px;
 		height: 148px;
@@ -192,8 +202,6 @@
 	}
 
 	.myicon {
-		/* width: 500px;
-		margin-left: 60px; */
 		width: 100%;
 		background-color: F4F4F4;
 		color: #808080;
@@ -215,22 +223,25 @@
 	}
 
 	.myicon li {
-		width: 240px;
+		width: 320px;
 		text-align: center;
 		line-height: 38px;
 		cursor: pointer;
 	}
-
-	.myicon li:first-child:hover {
+  .pos {
+		display: block;
+		height: 22px;
+		    margin: 7px 0;
+		    border-right:1px solid #D9D9D9;
+		    
+		    line-height: 22px;
+	}
+	.myicon li:first-child:hover .pos .line  {
 		color: red;
 	}
 
 	.myicon li:last-child:hover span {
 		color: red;
-	}
-
-	.myicon li:first-child {
-		border-right: 1px solid #F4F4F4;
 	}
 
 	.myicon li i {
