@@ -194,7 +194,12 @@
 						}
 					} else {
 						//前端验证没通过
-						console.log('error submit!!');
+						this.$message({
+							message: '检查信息填写是否有误',
+							type: 'warning',
+							center: true,
+							duration: 1500
+						});
 						return false;
 					}
 				});
