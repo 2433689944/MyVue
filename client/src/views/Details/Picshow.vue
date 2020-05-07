@@ -1,21 +1,21 @@
 <template>
-	<div>
+	<div class="picshow">
 		<div class="left_contaner">
 			<!-- 展示图 -->
 			<div class="middle_img" @mouseover="boxMouseOver" @mouseleave="boxMouseLeave">
-				<img :src="this.middleImg" />
+				<img :src="middleImg" />
 				<div class="shade" @mouseover="shadeMouseOver" @mousemove="shadeMouseMove" ref="shade" v-show="isshow"></div>
 			</div>
 			<!-- 缩略图 -->
-			<ul class="carousel" >
-				<li class="picture_item" v-for="(item, index) in this.pictureList" :key="index"  @mouseover="tabPicture(item)">
+			<ul class="carousel">
+				<li class="picture_item" v-for="(item, index) in pictureList" :key="index" @mouseover="tabPicture(item)">
 					<img :src="item" />
 				</li>
 			</ul>
 		</div>
 		<!-- 放大图 -->
 		<div class="right_contanier" v-show="isshow">
-			<img :src="this.middleImg" class="big_img" />
+			<img :src="middleImg" class="big_img" />
 		</div>
 	</div>
 </template>
@@ -25,13 +25,19 @@
 	export default {
 		data() {
 			return {
+				pictureList: [],
+				middleImg: '', // 选中图片
 				isshow: false, // 控制选取图片显示
 			}
 		},
 		props: [
-			"pictureList",
-			"middleImg"
+			"pictureL",
+			"middleI"
 		],
+		mounted() {
+			this.pictureList = this.pictureL;
+			this.middleImg = this.middleI;
+		},
 		methods: {
 			getPageScroll() {
 				return {
@@ -106,23 +112,15 @@
 			tabPicture(item) {
 				this.middleImg = item;
 			},
-
-
-
-			intocar() {
-				this.$router.push({
-					path: "/car",
-				});
-			},
-
-			putintocar() {
-				//得到session中的邮箱 id 再加上goodsid 一并放入数据库
-			},
 		}
 	}
 </script>
 
 <style scoped="scoped">
+	.picshow{
+		width: 350px;
+	}
+	
 	.left_contaner {
 		width: 350px;
 	}
@@ -130,8 +128,9 @@
 	.right_contanier {
 		overflow: hidden;
 		position: absolute;
-		top: 30px;
-		left: 385px;
+		border: 1px solid #eee;
+		top: 40px;
+		left: 400px;
 		width: 450px;
 		height: 450px;
 	}
@@ -151,7 +150,7 @@
 	.left_contaner .middle_img {
 		width: 350px;
 		height: 350px;
-		box-sizing: border-box;
+		border: 1px solid #eee;
 		position: relative;
 	}
 

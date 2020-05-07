@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Tab from '../views/Tab.vue'
-import { Message } from 'element-ui';
+import {
+	Message
+} from 'element-ui';
 Vue.prototype.$message = Message;
 
 Vue.use(VueRouter)
@@ -72,6 +74,10 @@ router.beforeEach((to, from, next) => {
 			next("/");
 		}
 	}
+})
+//控制路由跳转后页面回到顶部
+router.afterEach(() => {
+	window.scrollTo(0, 0)
 })
 
 export default router

@@ -1,29 +1,8 @@
 <template>
 	<div class="magnify">
-		<Picshow :pictureList="pictureList" :middleImg="middleImg"></Picshow>
-		<!-- 	<div class="goodsinfo">
-			<ul>
-				<li class="title" v-html="goodsinfo.title"></li>
-				<li v-html="goodsinfo.intro"></li>
-				<li>
-					<span v-for="(item,index) in label" class="labels" v-html="item"></span>
-				</li>
-				<li>
-					<span class="oldprice" v-cloak>原价:{{goodsinfo.oldprice}}</span>
-					<span class="price" v-cloak>现价:{{goodsinfo.price}}</span>
-				</li>
-				<li>
-					<button v-for="(item,index) in types" class="type" v-html="item"></button>
-				</li>
-				<li v-cloak>qq:{{goodsinfo.qq}}</li>
-				<li v-cloak>微信:{{goodsinfo.wechat}}</li>
-				<li v-cloak>电话:{{goodsinfo.phone}}</li>
-			</ul>
-			<button class="car" @click="intocar">查看购物车</button>
-			<button class="car" @click="putintocar">加入购物车</button>
-		</div> -->
-
-
+		<span @click="goback" class="goback"><i class="el-icon-arrow-left"></i><span v-cloak>返回</span></span>
+		<Picshow :pictureL="pictureList" :middleI="middleImg" v-if="this.pictureList.length!=0"></Picshow>
+		<GoodsInfo :goodsinfo="goodsinfo" :label="label" :types="types" :userinfo="userinfo"></GoodsInfo>
 	</div>
 </template>
 
@@ -33,11 +12,16 @@
 		data() {
 			return {
 				goodsinfo: {},
+				userinfo: {},
 				label: [],
 				types: [],
 				pictureList: [],
 				middleImg: '', // 选中图片
 			}
+		},
+		components: {
+			Picshow: () => import("./Picshow.vue"),
+			GoodsInfo: () => import("./GoodsInfo.vue")
 		},
 		mounted() {
 			this.$axios("http://localhost:81/getgood", {
@@ -46,15 +30,19 @@
 					}
 				})
 				.then((result) => {
-					this.goodsinfo = result.data[0];
-					this.pictureList = result.data[0].img.split("-");
-					this.label = result.data[0].label.split("-");
-					this.types = result.data[0].types.split("-");
+					this.goodsinfo = result.data.info[0];
+					this.userinfo = result.data.info2[0];
+					this.pictureList = result.data.info[0].img.split("-");
+					this.label = result.data.info[0].label.split("-");
+					this.types = result.data.info[0].types.split("-");
 					this.middleImg = this.pictureList[0];
 				})
-		},	
-		components:{
-			Picshow:()=>import("./Picshow.vue")
+		},
+		methods: {
+			//返回首页
+			goback() {
+				this.$router.go(-1)
+			}
 		}
 	}
 </script>
@@ -62,74 +50,28 @@
 <style scoped="scoped">
 	.magnify {
 		position: relative;
-		width: 1180px;
-		padding: 30px;
+		width: 1100px;
+		height: 530px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 40px;
 		box-sizing: border-box;
 		background-color: #fff;
 		border-radius: 7px;
+		position: relative;
 	}
 
-
-
-
-
-	.goodsinfo {
-		background-color: #F0F0F0;
-		width: 400px;
-		height: 400px;
-		display: inline-block;
+	.goback {
 		position: absolute;
+		right: 50px;
 		top: 20px;
-		left: 319px;
-	}
-
-
-	.goodsinfo li {
-		background-color: #F4F4F4;
-		display: block;
-		height: 30px;
-		margin-top: 20px;
-	}
-
-	.goodsinfo li img {
-		height: 20px;
-		width: 20px;
-		margin-top: 5px;
-	}
-
-	.goodsinfo li span {
-		line-height: 30px;
-	}
-
-	.title {
-		font-size: 15px;
-		text-align: center;
+		cursor: pointer;
+		font-size: 18px;
 		font-weight: bold;
 	}
 
-	.labels {
-		margin-right: 5px;
-	}
-
-	.type {
-		background-color: #00D6B2;
-		border-radius: 1px;
-		margin-right: 20px;
-	}
-
-	.oldprice {
-		margin-right: 10px;
-		text-decoration: line-through;
-	}
-
-	.price {
+	.goback:hover {
 		color: red;
-	}
-
-	.car {
-		width: 200px;
-		height: 50px;
-		background-color: orangered;
 	}
 
 	[v-cloak] {

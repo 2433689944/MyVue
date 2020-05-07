@@ -25,7 +25,10 @@ class GoodsService extends Service {
     async getgood(id) {
         const sql = `select * from goods where id = "${id}";`
         const data = await this.app.mysql.query(sql);
-        return data;
+        let email = data[0].email;
+        const sql2 = `select username,headpic from user where email= "${email}";`
+        const data2 = await this.app.mysql.query(sql2);
+        return {info:data,info2:data2};
     }
 }
 module.exports = GoodsService;
