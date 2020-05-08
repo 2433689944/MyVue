@@ -32,7 +32,9 @@ module.exports = app => {
   router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息
   router.get('/updateinfo', controller.userInfo.updateinfo);//修改用户信息
   router.get('/getmymsg', controller.userInfo.getmymsg);//获取消息
+  router.get('/getmycom', controller.userInfo.getmycom);//获取评论
   router.get('/updatamsg', controller.userInfo.updatamsg);//用户已读消息
+  router.get('/updatacom', controller.userInfo.updatacom);//用户已读评论
   router.get('/getmygoods', controller.userInfo.getmygoods);//获取我的商品
   router.get('/getmyorders', controller.userInfo.getmyorders);//获取我的订单
   router.get('/getmydyn', controller.userInfo.getmydyn);//获取我的动态

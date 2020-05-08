@@ -34,9 +34,29 @@ class GetUserInfoService extends Service {
         return { info: data, info2: data2 };
     }
 
+    //获取评论
+    async getmycom() {
+        //获取未读消息
+        const sql = `select goodsdiscuss.id,cemail,content,time,title from goodsdiscuss inner join goods 
+        on goodsdiscuss.goodsid = goods.id and email="${this.ctx.session.email}" and lookflag="0" order by id DESC`;
+        const data = await this.app.mysql.query(sql);
+        //获取已读消息
+        const sql2 = `select goodsdiscuss.id,cemail,content,time,title from goodsdiscuss inner join goods 
+        on goodsdiscuss.goodsid = goods.id and email="${this.ctx.session.email}" and lookflag="1" order by id DESC`;
+        const data2 = await this.app.mysql.query(sql2);
+        return { info: data, info2: data2 };
+    }
+
     //用户已读消息
-    async updatamsg(cont) {
-        const sql = ` update comdiscuss set lookflag="1" where content ="${cont}"`;
+    async updatamsg(id) {
+        const sql = ` update comdiscuss set lookflag="1" where id ="${id}"`;
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
+
+    //用户已读评论
+    async updatacom(id) {
+        const sql = ` update goodsdiscuss set lookflag="1" where id ="${id}"`;
         const data = await this.app.mysql.query(sql);
         return data;
     }

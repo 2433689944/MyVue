@@ -3,7 +3,7 @@ class UserService extends Service {
   //把商品评论信息添加到数据库
   async pugoodcom(parames) {
     parames.cemail=this.ctx.session.email
-    const sql=`insert into goodsdiscuss (goodsid,cemail,content,time) values("${parames.goodsid}","${parames.cemail}","${parames.comvalue}","${parames.time}")`
+    const sql=`insert into goodsdiscuss (goodsid,cemail,content,time,lookflag) values("${parames.goodsid}","${parames.cemail}","${parames.comvalue}","${parames.time}",0)`
     const data = await this.app.mysql.query(sql);
     return data;
   }

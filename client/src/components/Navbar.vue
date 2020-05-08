@@ -28,7 +28,7 @@
 			<el-menu-item index="4" v-else>
 				<router-link to="/login">请登录</router-link>
 			</el-menu-item>
-			<el-badge :is-dot="this.$store.state.unreadmsg.length!=0" class="badges">
+			<el-badge :is-dot="this.$store.state.unreadmsg.length!=0||this.$store.state.unreadcom.length!=0" class="badges">
 				<el-avatar :src="this.$store.state.headpic"></el-avatar>
 			</el-badge>
 		</el-menu>
@@ -65,8 +65,13 @@
 					})
 				this.$axios("http://localhost:81/getmymsg")
 					.then((result) => {
-						//将用户消息存入仓库
+						//将动态消息存入仓库
 						this.$store.commit('updatamsg', result.data)
+					})
+				this.$axios("http://localhost:81/getmycom")
+					.then((result) => {
+						//将评论消息存入仓库
+						this.$store.commit('updatacom', result.data)
 					})
 			} else {
 				this.flag = false;
@@ -102,7 +107,6 @@
 	}
 
 	.box .el-menu-demo .el-avatar {
-		/* float: right; */
 		margin-top: 4px;
 		position: absolute;
 		top: -9px;
