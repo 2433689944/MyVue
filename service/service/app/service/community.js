@@ -9,9 +9,15 @@ class UserService extends Service {
       let imgarr = data[i].img.split('-')
       data[i].imgarr = imgarr
     }
-    const sql1 = `select comid from dynlike where cemail="${ctx.session.email}"`
-    const data1 = await this.app.mysql.query(sql1)
-    return { data: data, data1: data1 };
+    return data
+  }
+  
+  async getislike(parames) {
+    const { ctx } = this;
+    parames.cemail=ctx.session.email
+    const sql1 = `select islike from dynlike where comid="${parames.comid}" and cemail="${parames.cemail}"`
+    const islike = await this.app.mysql.query(sql1);
+    return islike
   }
 }
 module.exports = UserService;

@@ -23,6 +23,9 @@ module.exports = app => {
   //详情页面接口
   router.get('/getgood', controller.goods.getgood);  //获取商品详情
   router.get('/addcar', controller.car.addcar);//添加商品到购物车
+  router.get('/pugoodcom', controller.goodscom.pugoodcom);//将商品评论存入数据库
+  router.get('/getgoodscom', controller.goodscom.getgoodscom);//根据商品id取评论信息
+  
 
 
   //个人中心页面接口
@@ -41,6 +44,7 @@ module.exports = app => {
   router.get('/community', controller.community.community);//获取社区动态
   router.post('/comment', controller.dynamic.comment);//动态评论
   router.get('/getComment', controller.dynamic.getComment);//动态评论页面初始化
+  router.get('/getislike', controller.community.getislike);//获取当前用户对当前动态点赞情况
   router.post('/dynLike', controller.dynamic.dynLike); //动态点赞
   router.get('/dynDisLike', controller.dynamic.dynDisLike);//取消动态点赞
 };

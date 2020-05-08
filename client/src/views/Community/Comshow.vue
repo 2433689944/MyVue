@@ -56,7 +56,7 @@
 				showLike: "",
 			}
 		},
-		props: ["mycommInfo", "mycomidInfo"],
+		props: ["mycommInfo"],
 		methods: {
 			changeColor(comid) {
 				if (!this.like) {
@@ -98,16 +98,22 @@
 			Comment
 		},
 		created() {
-			var comidArr = []
-			for (let m of this.mycomidInfo) {
-				comidArr.push(Number(m.comid))
-			}
-			console.log(comidArr.includes(this.mycommInfo.comid))
-			if (comidArr.includes(this.mycommInfo.comid)) {
-				this.like = true
-			} else {
-				this.like = false
-			}
+			// var comidArr = []
+			// for (let m of this.mycomidInfo) {
+			// 	comidArr.push(Number(m.comid))
+			// }
+			// if (comidArr.includes(this.mycommInfo.comid)) {
+			// 	this.like = true
+			// } else {
+			// 	this.like = false
+			// }
+			this.$axios("http://localhost:81/getislike",{
+				parames:{
+					comid:this.mycommInfo.comid
+				}
+			}).then((res)=>{
+				console.log(res)
+			})
 		}
 	}
 </script>

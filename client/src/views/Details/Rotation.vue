@@ -58,7 +58,7 @@
 		box-sizing: border-box;
 		background-color: #fff;
 		border-radius: 7px;
-		position: relative;
+		
 	}
 
 	.goback {
