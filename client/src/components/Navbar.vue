@@ -65,10 +65,12 @@
 					.then((result) => {
 						//将用户消息存入仓库
 						this.$store.commit('updatamsg', result.data)
+						console.log(this.$store.state.readmsg.length)
 					})
 			} else {
 				this.flag = false;
 			}
+			
 		}
 	}
 </script>
