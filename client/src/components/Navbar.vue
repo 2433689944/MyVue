@@ -55,13 +55,13 @@
 		},
 		mounted() {
 			let email = window.localStorage.getItem("email");
+			//已经登录
 			if (email) {
 				this.flag = true;
 				this.$axios("http://localhost:81/getUserInfo")
 					.then((result) => {
 						//将用户名和头像存入仓库
 						this.$store.commit('getuserInfo', result.data.info[0]);
-
 					})
 				this.$axios("http://localhost:81/getmymsg")
 					.then((result) => {
@@ -74,6 +74,7 @@
 						this.$store.commit('updatacom', result.data)
 					})
 			} else {
+				//未登录
 				this.flag = false;
 			}
 		}

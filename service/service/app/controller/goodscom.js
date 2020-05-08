@@ -7,6 +7,7 @@ class pugoodcomController extends Controller {
     const pudata = await ctx.service.goodscom.pugoodcom(ctx.request.query)
     ctx.body = pudata;
   }
+
   //获取商品评论信息
   async getgoodscom() {
     const { ctx } = this;

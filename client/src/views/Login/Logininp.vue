@@ -29,16 +29,16 @@
 						.then((result) => {
 							window.localStorage.setItem("email", this.email);
 							if (result.data.code == 2000) {
+								//跳转到首页
+								this.$router.push({
+									path: "/"
+								})
 								this.$message({
 									message: '登录成功',
 									type: 'success',
 									center: true,
 									duration: 1500
 								});
-								//跳转到首页
-								this.$router.push({
-									path: "/"
-								})
 							} else {
 								this.$emit("mylogin", result.data.info);
 							}

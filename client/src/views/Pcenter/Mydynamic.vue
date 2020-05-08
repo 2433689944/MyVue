@@ -18,6 +18,7 @@
 
 <script>
 	export default {
+		//我的动态组件
 		data() {
 			return {
 				dynamicArray: []

@@ -4,7 +4,6 @@
 			商品评价
 			<div class="com-fr">
 				<el-button type="primary" size="mini" @click="dialogFormVisible = true" icon="el-icon-s-comment">发表评论</el-button>
-
 				<el-dialog title="发表评论" :visible.sync="dialogFormVisible">
 					<el-form :model="form">
 						<el-input autocomplete="off" v-model="form.input" type="textarea" placeholder="输入评论内容"></el-input>
@@ -23,17 +22,12 @@
 					<img :src="item.headpic" alt="">
 				</div>
 				<div class="user">
-					<div class="name" v-html="item.username">
-
-					</div>
-					<div class="time" v-html="item.time">
-
-					</div>
+					<div class="name" v-html="item.username"></div>
+					<div class="time" v-html="item.time"></div>
 				</div>
 			</div>
 			<div class="right">
-				<div class="user-text" v-text="item.content">
-				</div>
+				<div class="user-text" v-text="item.content"></div>
 			</div>
 		</div>
 	</div>
@@ -48,7 +42,6 @@
 				form: {
 					input: '',
 					delivery: false,
-
 				},
 				goodsComArr: []
 			}
@@ -92,7 +85,6 @@
 					goodsid: this.$route.query.goodsid,
 				}
 			}).then((result) => {
-				console.log(result)
 				this.goodsComArr = result.data
 			})
 		}

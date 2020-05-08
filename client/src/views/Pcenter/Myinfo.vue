@@ -38,6 +38,7 @@
 
 <script>
 	export default {
+		//我的资料组件
 		data() {
 			return {
 				disabled: true,
@@ -48,11 +49,13 @@
 		},
 		methods: {
 			onSubmit() {
+				//点击修改
 				if (this.disabled) {
 					this.disabled = false;
 					this.btntext = '保存';
 					this.btntype = 'warning'
 				} else {
+					//点击保存
 					this.disabled = true;
 					this.btntext = '修改';
 					this.btntype = 'primary';
@@ -71,6 +74,7 @@
 			this.$axios("http://localhost:81/getAllinfo")
 				.then((result) => {
 					this.form = result.data[0];
+					//默认性别为保密
 					if (result.data[0].sex == "") {
 						this.form.sex = "保密";
 					}

@@ -25,6 +25,7 @@
 			}
 		},
 		methods: {
+			//搜索商品
 			searchgoods() {
 				if (this.setext != "") {
 					this.$axios("http://localhost:81/searchgoods", {
@@ -37,8 +38,11 @@
 						})
 				}
 			},
-			findmycar(){
-				this.$router.push({path:"/car"})
+			//查看购物车
+			findmycar() {
+				this.$router.push({
+					path: "/car"
+				})
 			}
 		}
 	}

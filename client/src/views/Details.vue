@@ -11,7 +11,7 @@
 		name: "Details",
 		components: {
 			Rotation: () => import("@/views/Details/Rotation.vue"),
-				goodsComment:()=>import("@/views/Details/goodsComment.vue"),
+			goodsComment: () => import("@/views/Details/goodsComment.vue"),
 		},
 	}
 </script>

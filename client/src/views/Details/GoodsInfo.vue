@@ -42,6 +42,7 @@
 	export default {
 		props: ["goodsinfo", "label", "types", "userinfo"],
 		methods: {
+			//加入购物车
 			addcar() {
 				this.$axios("http://localhost:81/addcar", {
 						params: {
@@ -49,7 +50,6 @@
 						}
 					})
 					.then((result) => {
-						console.log(result.data)
 						if (result.data.code == 2000) {
 							this.$message({
 								message: '添加成功',
@@ -67,6 +67,7 @@
 						}
 					})
 			},
+			//查看购物车
 			findcar() {
 				this.$router.push({
 					path: "/car",

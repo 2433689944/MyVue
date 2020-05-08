@@ -24,6 +24,7 @@
 
 <script>
 	export default {
+		//我的商品组件
 		data() {
 			return {
 				goodsArray: []

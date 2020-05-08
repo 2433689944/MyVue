@@ -22,15 +22,12 @@
 			<el-form-item label="标签">
 				<Tag1 @mytag1="changetag1"></Tag1>
 			</el-form-item>
-
 			<el-form-item label="微信" prop="wechat">
 				<el-input v-model="ruleForm.wechat" placeholder="请输入微信"></el-input>
 			</el-form-item>
-
 			<el-form-item label="手机" prop="phone">
 				<el-input v-model="ruleForm.phone" placeholder="请输入手机号"></el-input>
 			</el-form-item>
-
 			<el-form-item label="qq" prop="qq">
 				<el-input v-model="ruleForm.qq" placeholder="请输入qq"></el-input>
 			</el-form-item>
@@ -40,7 +37,7 @@
 			</el-form-item>
 			<el-form-item>
 				<el-button type="primary" @click="submitForm('ruleForm')">立即发布</el-button>
-				<el-button @click="resetForm('ruleForm')">取消</el-button>
+				<el-button @click="resetForm('ruleForm')">重置</el-button>
 			</el-form-item>
 		</el-form>
 	</div>

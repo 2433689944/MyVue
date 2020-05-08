@@ -74,6 +74,7 @@
 	.titlebox div:nth-of-type(2) {
 		position: relative;
 	}
+
 	.titlebox div:nth-of-type(3) {
 		position: relative;
 	}

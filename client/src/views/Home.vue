@@ -54,10 +54,13 @@
 	.goodsimg {
 		width: 100%;
 	}
-	.el-backtop{
+
+	.el-backtop {
 		background-color: #36302C;
 	}
-	.el-backtop, .el-calendar-table td.is-today {
+
+	.el-backtop,
+	.el-calendar-table td.is-today {
 		color: #fff;
 	}
 </style>

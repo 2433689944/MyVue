@@ -28,13 +28,14 @@
 
 <script>
 	export default {
+		//评论消息组件
 		data() {
 			return {
 				flag: true
 			}
 		},
 		methods: {
-			//查看该消息之后在未读消息里面进行删除
+			//查看该评论之后在未读消息里面进行删除
 			lookit(index, id) {
 				//更新仓库数据
 				this.$store.state.readcom.unshift(this.$store.state.unreadcom[index]);

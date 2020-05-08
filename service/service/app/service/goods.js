@@ -28,7 +28,7 @@ class GoodsService extends Service {
         let email = data[0].email;
         const sql2 = `select username,headpic from user where email= "${email}";`
         const data2 = await this.app.mysql.query(sql2);
-        return {info:data,info2:data2};
+        return { info: data, info2: data2 };
     }
 }
 module.exports = GoodsService;

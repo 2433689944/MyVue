@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Tab from '../views/Tab.vue'
-import {
-	Message
-} from 'element-ui';
+import {Message} from 'element-ui';
 Vue.prototype.$message = Message;
 
 Vue.use(VueRouter)
@@ -25,9 +23,8 @@ const routes = [{
 				component: () => import('../views/Settlement.vue'),
 			}, {
 				path: 'success',
-				component: () => import('@/views/Settlement/Success.vue')
-			},
-			{
+				component: () => import('../views/Success.vue')
+			}, {
 				path: 'grelease',
 				component: () => import('../views/Grelease.vue'),
 			}, {

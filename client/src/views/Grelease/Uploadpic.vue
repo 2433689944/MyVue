@@ -8,7 +8,6 @@
 			<img width="100%" :src="dialogImageUrl" alt="">
 		</el-dialog>
 	</div>
-
 </template>
 
 <script>

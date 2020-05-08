@@ -13,8 +13,7 @@ class UserService extends Service {
 			imgarr.push("http://localhost:81/public/goodsimg/" + files[i].filename)
 		}
 		params.img = imgarr.join("-")
-		// params.email=this.ctx.session.email
-		params.email = "821331350@qq.com"
+		params.email = this.ctx.session.email;
 		//把前端请求的信息存入数据并回应
 		const sql =
 			`insert into goods(email,title,intro,price,oldprice,label,types,qq,wechat,phone,img) values("${params.email}","${params.title}","${params.desc}","${params.price}","${params.oldprice}","${params.tag1}","${params.type}","${params.qq}","${params.wechat}","${params.phone}","${params.img}")`

@@ -32,8 +32,9 @@
 				<li @click="changeCom(mycommInfo.comid)">
 					<span class="pos">
 						<span class="line">
-							<i class="el-icon-edit">
-							</i><span>评论</span></span>
+							<i class="el-icon-edit"></i>
+							<span>评论</span>
+						</span>
 					</span>
 				</li>
 				<li :class="like?'like':''" @click="changeColor(mycommInfo.comid)"><i class="iconfont icon-zanpress"></i><span
@@ -85,7 +86,7 @@
 				this.like = !this.like
 			},
 			changeCom(comid) {
-				//区分打开评论区的动态
+				//显示和隐藏评论区
 				if (this.showNum != comid) {
 					this.showNum = comid
 				} else {

@@ -29,8 +29,7 @@ class GoodsController extends Controller {
     //获取商品详情
     async getgood() {
         const { ctx } = this;
-        const mydata = await ctx.service.goods.getgood(ctx.query.goodsid)
-        // console.log(mydata)
+        let mydata = await ctx.service.goods.getgood(ctx.query.goodsid)
         ctx.body = mydata;
     }
 }

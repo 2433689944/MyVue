@@ -28,6 +28,7 @@
 
 <script>
 	export default {
+		//动态消息组件
 		data() {
 			return {
 				flag: true

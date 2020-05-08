@@ -10,7 +10,7 @@ export default new Vuex.Store({
 		goodslist: [], //商品数据
 		unreadmsg: [], //未读消息
 		readmsg: [], //已读消息
-		unreadcom:[],//未读评论
+		unreadcom: [], //未读评论
 		readcom: [], //已读评论
 	},
 	mutations: {

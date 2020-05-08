@@ -1,10 +1,11 @@
 'use strict';
 const Controller = require('egg').Controller;
-class addtoorderController extends Controller {
+class SettlementController extends Controller {
+  //提交订单
   async addtoorder() {
     const { ctx } = this;
-    const order = await ctx.service.settlement.addtoorder(ctx.request.body)
-    ctx.body = order;
+    await ctx.service.settlement.addtoorder(ctx.request.body);
+    ctx.body = '';
   }
 }
-module.exports = addtoorderController;
+module.exports = SettlementController;

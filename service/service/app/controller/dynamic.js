@@ -7,13 +7,14 @@ class dynamicController extends Controller {
     const mydata = await ctx.service.dynamic.dynamic(ctx.request.body, ctx.request.files)
     ctx.body = mydata;
   }
+
   //上传动态评论
   async comment() {
     const { ctx } = this;
     const mydata = await ctx.service.dynamic.comment(ctx.request.body)
     ctx.body = mydata;
   }
-  
+
   //获取动态评论
   async getComment() {
     const { ctx } = this;
@@ -27,6 +28,7 @@ class dynamicController extends Controller {
     const dynLikeNum = await ctx.service.dynamic.dynLike(ctx.request.body)
     ctx.body = dynLikeNum;
   }
+  
   //取消点赞
   async dynDisLike() {
     const { ctx } = this;

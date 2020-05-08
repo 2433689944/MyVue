@@ -26,6 +26,7 @@
 
 <script>
 	export default {
+		//我的订单组件
 		data() {
 			return {
 				ordersArray: []

@@ -1,13 +1,5 @@
 const Service = require('egg').Service;
 class CarService extends Service {
-    //请求购物车商品数量
-    // async goodstotalnum() {
-    //     const sql = `select * from car where email="${this.ctx.session.email}"`
-    //     const data = await this.app.mysql.query(sql);
-    //     return data;
-    // }
-
-
     //添加商品到购物车
     async addcar(id) {
         const sql = `select * from car where email="${this.ctx.session.email}" and goodsid = "${id}"`;
