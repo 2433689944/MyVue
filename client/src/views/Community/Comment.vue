@@ -5,24 +5,20 @@
 				<input class="comInput" placeholder="请输入内容" v-model="input" @input="comInput" />
 				<el-button @click="clickCom" size="medium" type="success" :disabled="isdisabled">评论</el-button>
 			</div>
-
 			<div class="contain2">
 				<div class="commentList" v-for="(item,index) in comlist" :key="index">
 					<div class="touxiang">
 						<img :src="item.headpic" />
 					</div>
-
 					<div class="grid-content">
 						<div class="WB_info" v-cloak>
 							<span v-cloak style="color:#eb7350;">{{item.username}}</span>:{{item.content}}
 						</div>
-
 						<div class="WB_from S_txt2" v-cloak>
 							{{item.time}}
 						</div>
 					</div>
 				</div>
-				<!-- <router-link to=""></router-link> -->
 			</div>
 		</div>
 	</div>
@@ -40,14 +36,16 @@
 		props: ["comid"],
 		methods: {
 			comInput() {
+				//表单里面有内容，按钮禁用状态关闭
 				if (this.input) {
 					this.isdisabled = false
+					//表单里面没有内容，按钮禁用状态打开
 				} else {
 					this.isdisabled = true
 				}
-
 			},
 			clickCom() {
+				//点击评论按钮，触发点击事件，把当前时间，comid，评论内容打包params
 				let d = new Date()
 				let time =
 					`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
@@ -56,19 +54,27 @@
 					content: this.input,
 					time: time
 				}
-				let params1 = {
-					comid: this.comid,
-					content: this.input,
-					time: time,
-					username: this.$store.state.username,
-					headpic: this.$store.state.headpic
-				}
-				this.comlist.push(params1)
+				//点击评论按钮，触发点击事件，把params发给后端
 				this.$axios.post("http://localhost:81/comment", params)
-					.then((result) => {})
+					.then((result) => {
+						if (result.data.affectedRows == 1) {
+							//发表成功，则把当前时间，comid，评论内容打包添加进this.comlist，展示在也页面
+							let params1 = {
+								comid: this.comid,
+								content: this.input,
+								time: time,
+								username: this.$store.state.username,
+								headpic: this.$store.state.headpic
+							}
+							this.comlist.push(params1)
+							this.input = ""
+							this.isdisabled = true
+						}
+					})
 			}
 		},
 		mounted() {
+			//根据动态id向服务器请求评论信息
 			this.$axios("http://localhost:81/getComment", {
 					params: {
 						comid: this.comid

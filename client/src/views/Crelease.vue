@@ -8,18 +8,16 @@
 	//动态发布页面
 	import Dynamic from "@/views/Crelease/Dynamic.vue"
 	export default {
-		name:"Crelease",
-		data(){
+		name: "Crelease",
+		data() {
 			return {}
 		},
-		components:{
+		components: {
 			Dynamic
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	/* .contain {
-		margin-top: 51px;
-	} */
+
 </style>

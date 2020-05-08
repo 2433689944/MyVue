@@ -24,16 +24,15 @@
 				</div>
 				<div class="user">
 					<div class="name" v-html="item.username">
-					
+
 					</div>
 					<div class="time" v-html="item.time">
-						
+
 					</div>
 				</div>
 			</div>
 			<div class="right">
 				<div class="user-text" v-text="item.content">
-					
 				</div>
 			</div>
 		</div>
@@ -51,11 +50,12 @@
 					delivery: false,
 
 				},
-				goodsComArr:[]
+				goodsComArr: []
 			}
 		},
 		methods: {
 			Upgoodscom() {
+				//发表商品评论
 				let d = new Date()
 				let time =
 					`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`
@@ -86,13 +86,14 @@
 			}
 		},
 		mounted() {
+			//根据路由商品id向服务器请求评论信息
 			this.$axios("http://localhost:81/getgoodscom", {
 				params: {
 					goodsid: this.$route.query.goodsid,
 				}
-			}).then((result)=>{
+			}).then((result) => {
 				console.log(result)
-				this.goodsComArr=result.data
+				this.goodsComArr = result.data
 			})
 		}
 	}
@@ -123,7 +124,6 @@
 	*,
 	:after,
 	:before {
-		/* -webkit-box-sizing: border-box; */
 		box-sizing: border-box;
 	}
 
@@ -195,7 +195,6 @@
 
 	.comment-item .right .user-text {
 		width: 100%;
-		/* height: 50px; */
 		overflow: hidden;
 		text-align: left;
 		line-height: 25px;

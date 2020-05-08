@@ -11,11 +11,11 @@ class UserService extends Service {
     }
     return data
   }
-  
+  //获取动态点赞情况
   async getislike(parames) {
-    const { ctx } = this;
+    const {ctx} = this
     parames.cemail=ctx.session.email
-    const sql1 = `select islike from dynlike where comid="${parames.comid}" and cemail="${parames.cemail}"`
+    const sql1 = `select * from dynlike where comid="${parames.comid}" and cemail="${parames.cemail}"`
     const islike = await this.app.mysql.query(sql1);
     return islike
   }

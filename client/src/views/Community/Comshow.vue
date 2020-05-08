@@ -26,7 +26,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 		<div class="myicon">
 			<ul>
@@ -59,7 +58,9 @@
 		props: ["mycommInfo"],
 		methods: {
 			changeColor(comid) {
+				//判断对当前动态的点赞情况
 				if (!this.like) {
+					//没点赞，就点赞，并把点赞信息发送给服务器，点赞数+1
 					this.$axios.post("http://localhost:81/dynLike", {
 							comid: comid
 						})
@@ -69,6 +70,7 @@
 							}
 						})
 				} else {
+					//已点赞，就取消点赞，并向后端请求删除数据库的点赞记录，点赞数-1
 					this.$axios.get("http://localhost:81/dynDisLike", {
 							params: {
 								comid: comid
@@ -83,6 +85,7 @@
 				this.like = !this.like
 			},
 			changeCom(comid) {
+				//区分打开评论区的动态
 				if (this.showNum != comid) {
 					this.showNum = comid
 				} else {
@@ -93,35 +96,17 @@
 		components: {
 			Comment
 		},
-		created() {
-<<<<<<< HEAD
-			// var comidArr = []
-			// for (let m of this.mycomidInfo) {
-			// 	comidArr.push(Number(m.comid))
-			// }
-			// if (comidArr.includes(this.mycommInfo.comid)) {
-			// 	this.like = true
-			// } else {
-			// 	this.like = false
-			// }
-			this.$axios("http://localhost:81/getislike",{
-				parames:{
-					comid:this.mycommInfo.comid
+		mounted() {
+			//向服务器请求动态的点赞情况
+			this.$axios.post("http://localhost:81/getislike", {
+				comid: this.mycommInfo.comid
+			}).then((res) => {
+				if (res.data.length == 1) {
+					this.like = true
+				} else {
+					this.like = ""
 				}
-			}).then((res)=>{
-				console.log(res)
 			})
-=======
-			var comidArr = []
-			for (let m of this.mycomidInfo) {
-				comidArr.push(Number(m.comid))
-			}
-			if (comidArr.includes(this.mycommInfo.comid)) {
-				this.like = true
-			} else {
-				this.like = false
-			}
->>>>>>> 91c1fd88597a3880493d186996c2facce2ad04ee
 		}
 	}
 </script>
@@ -136,6 +121,10 @@
 		margin: 0 0 10px 0;
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 		border-radius: 4px;
+	}
+
+	.comitem:last-child {
+		margin-bottom: 0;
 	}
 
 	.combox {
@@ -225,7 +214,6 @@
 		border-bottom: 1px solid #F4F4F4;
 		-moz-user-select: none;
 		/*火狐*/
-
 		-webkit-user-select: none;
 		/*webkit浏览器*/
 		-ms-user-select: none;
@@ -233,7 +221,6 @@
 		-khtml-user-select: none;
 		/*早期浏览器*/
 		user-select: none;
-
 	}
 
 	.myicon li {
@@ -248,7 +235,6 @@
 		height: 22px;
 		margin: 7px 0;
 		border-right: 1px solid #D9D9D9;
-
 		line-height: 22px;
 	}
 

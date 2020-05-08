@@ -134,7 +134,6 @@
 				}
 			}
 		},
-
 		methods: {
 			changetype(arg) {
 				//分类：把分类数组打包成一个字符串

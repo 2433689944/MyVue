@@ -8,14 +8,6 @@
 	//发布商品
 	import Myform from "@/views/Grelease/Myform.vue"
 	export default {
-		data() {
-			return {
-
-			};
-		},
-		methods: {
-
-		},
 		components: {
 			//发布商品表单组件
 			Myform

@@ -20,6 +20,7 @@
 			Comshow
 		},
 		mounted() {
+			//向服务器请求动态信息
 			this.$axios("http://localhost:81/community")
 			.then((result)=>{
 				this.commInfo=result.data
@@ -41,5 +42,6 @@
 		width: 660px;
 		margin: 50px auto 0;
 		padding-top: 15px;
+		padding-bottom: 15px;
 	}
 </style>

@@ -7,10 +7,12 @@ class communityController extends Controller {
     let mydata = await ctx.service.community.community()
     ctx.body = mydata;
   }
-  
+
+  //获取动态点赞情况
   async getislike() {
     const { ctx } = this;
-    let islike = await ctx.service.community.getislike(ctx.request.query)
+    console.log(ctx.request.body)
+    let islike = await ctx.service.community.getislike(ctx.request.body)
     ctx.body = islike;
   }
 }
