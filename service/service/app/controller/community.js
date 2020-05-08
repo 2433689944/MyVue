@@ -11,7 +11,6 @@ class communityController extends Controller {
   //获取动态点赞情况
   async getislike() {
     const { ctx } = this;
-    console.log(ctx.request.body)
     let islike = await ctx.service.community.getislike(ctx.request.body)
     ctx.body = islike;
   }

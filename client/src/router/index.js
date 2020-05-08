@@ -12,30 +12,35 @@ const routes = [{
 		path: '/',
 		component: Tab,
 		children: [{
-			path: '/',
-			component: () => import('../views/Home.vue'),
-		}, {
-			path: 'details',
-			component: () => import('../views/Details.vue'),
-		}, {
-			path: 'car',
-			component: () => import('../views/Car.vue'),
-		}, {
-			path: 'settlement',
-			component: () => import('../views/Settlement.vue'),
-		}, {
-			path: 'grelease',
-			component: () => import('../views/Grelease.vue'),
-		}, {
-			path: 'crelease',
-			component: () => import('../views/Crelease.vue'),
-		}, {
-			path: 'community',
-			component: () => import('../views/Community.vue'),
-		}, {
-			path: 'pcenter',
-			component: () => import('../views/Pcenter.vue'),
-		}, ]
+				path: '/',
+				component: () => import('../views/Home.vue'),
+			}, {
+				path: 'details',
+				component: () => import('../views/Details.vue'),
+			}, {
+				path: 'car',
+				component: () => import('../views/Car.vue'),
+			}, {
+				path: 'settlement',
+				component: () => import('../views/Settlement.vue'),
+			}, {
+				path: 'success',
+				component: () => import('@/views/Settlement/Success.vue')
+			},
+			{
+				path: 'grelease',
+				component: () => import('../views/Grelease.vue'),
+			}, {
+				path: 'crelease',
+				component: () => import('../views/Crelease.vue'),
+			}, {
+				path: 'community',
+				component: () => import('../views/Community.vue'),
+			}, {
+				path: 'pcenter',
+				component: () => import('../views/Pcenter.vue'),
+			},
+		]
 	},
 	{
 		path: '/login',

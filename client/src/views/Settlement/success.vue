@@ -1,6 +1,6 @@
 <template>
 	 <div class="successbox w">
-	        <img src="img/paysuccess.png" alt="">
+	        <img src="@/assets/paysuccess.png" alt="">
 	        <p id="success">支付成功</p>
 	        <p id="tips">你可能需要进行下列操作</p>
 	        <button @click="toorder" id="order">查看订单</button>

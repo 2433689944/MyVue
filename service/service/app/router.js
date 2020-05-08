@@ -51,4 +51,7 @@ module.exports = app => {
   router.post('/getislike', controller.community.getislike);//获取当前用户对当前动态点赞情况
   router.post('/dynLike', controller.dynamic.dynLike); //动态点赞
   router.get('/dynDisLike', controller.dynamic.dynDisLike);//取消动态点赞
+
+  
+  router.post('/addtoorder', controller.settlement.addtoorder);//取消动态点赞
 }

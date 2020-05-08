@@ -96,7 +96,6 @@
 		components: {
 			Comment
 		},
-
 		mounted() {
 			//向服务器请求动态的点赞情况
 			this.$axios.post("http://localhost:81/getislike", {
