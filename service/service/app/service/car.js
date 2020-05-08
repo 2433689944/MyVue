@@ -24,24 +24,17 @@ class CarService extends Service {
     }
 
     //获取用户购物车商品
-    // async getcar() {
-    //     const sql = `select * from car where email="${this.ctx.session.email}"`
-    //     const data = await this.app.mysql.query(sql);//查询购物车是否有商品
-    //     if (data[0]) {
-    //         //购物车有商品,进行多表连接查询,将商品数量拼上
-    //         const sql2 = `select * from goods inner join car on goods.id = car.goodsid and email ="${this.ctx.session.email}"`;
-    //         const data2 = await this.app.mysql.query(sql2);
-    //         return { code: 2000, info: data2 };
-    //     } else {
-    //         //购物车为空
-    //         return { code: 4001, info: "购物车为空" };
-    //     }
-    // }
+    async getfromcar() {
+        const sql = `select * from car inner join goods on car.goodsid=goods.id and car.email = "${this.ctx.session.email}"`
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
 
     //删除购物车中指定id的商品
-    // async deletegoods(goodsid) {
-    //     const sql = `delete from car where goodsid=${goodsid} and email="${this.ctx.session.email}"`;
-    //     this.app.mysql.query(sql);
-    // }
+    async removegood(id) {
+        const sql = `delete from car where goodsid = "${id}" and email="${this.ctx.session.email}" `
+        const data = await this.app.mysql.query(sql);
+        return data;
+    }
 }
 module.exports = CarService;

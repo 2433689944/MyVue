@@ -94,24 +94,13 @@
 			Comment
 		},
 		created() {
-<<<<<<< HEAD
-			// var comidArr = []
-			// for (let m of this.mycomidInfo) {
-			// 	comidArr.push(Number(m.comid))
-			// }
-			// if (comidArr.includes(this.mycommInfo.comid)) {
-			// 	this.like = true
-			// } else {
-			// 	this.like = false
-			// }
-			this.$axios("http://localhost:81/getislike",{
-				parames:{
-					comid:this.mycommInfo.comid
+			this.$axios("http://localhost:81/getislike", {
+				parames: {
+					comid: this.mycommInfo.comid
 				}
-			}).then((res)=>{
+			}).then((res) => {
 				console.log(res)
 			})
-=======
 			var comidArr = []
 			for (let m of this.mycomidInfo) {
 				comidArr.push(Number(m.comid))
@@ -121,7 +110,6 @@
 			} else {
 				this.like = false
 			}
->>>>>>> 91c1fd88597a3880493d186996c2facce2ad04ee
 		}
 	}
 </script>

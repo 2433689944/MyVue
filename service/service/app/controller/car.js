@@ -21,18 +21,18 @@ class CarController extends Controller {
         ctx.body = result;
     }
 
-    // //获取用户购物车商品
-    // async getcar() {
-    //     const { ctx } = this;
-    //     let result = await ctx.service.car.getcar();
-    //     ctx.body = result;
-    // }
+    //获取用户购物车商品
+    async getfromcar() {
+        const { ctx } = this;
+        let mydata = await ctx.service.car.getfromcar()
+        ctx.body = mydata;
+    }
 
-    // //删除购物车中指定id的商品
-    // async deletegoods() {
-    //     const { ctx } = this;
-    //     await ctx.service.car.deletegoods(ctx.request.query.goodsid);
-    //     ctx.body = { code: 2000, info: "删除成功" };
-    // }
+    //删除购物车中指定id的商品
+    async removegood() {
+        const { ctx } = this;
+        await ctx.service.car.removegood(ctx.request.query.goodsid)
+        ctx.body = '';
+    }
 }
 module.exports = CarController;

@@ -104,6 +104,7 @@
 		margin: 30px 40px;
 		background-color: #fff;
 		padding: 20px 40px;
+		border-radius: 5px;
 	}
 
 	.com-nav {
