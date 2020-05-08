@@ -1,24 +1,24 @@
 <template>
 	<div class="mymsg">
-		<h3 class="boxtitle">动态消息</h3>
+		<h3 class="boxtitle">评论消息</h3>
 		<el-collapse accordion>
-			<!-- 未读消息 -->
-			<el-collapse-item title="未读消息" name="1">
-				<el-card class="box-card" shadow="hover" v-for="(item,index) in this.$store.state.unreadmsg" :key="index">
+			<!-- 未读评论 -->
+			<el-collapse-item title="未读评论" name="1">
+				<el-card class="box-card" shadow="hover" v-for="(item,index) in this.$store.state.unreadcom" :key="index">
 					<div @click="lookit(index,item.id)">
 						<el-badge :is-dot="flag" class="item">
-							<p v-cloak>用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你的动态“{{item.content}}”：
-								<span v-cloak>{{item.ct2}}</span>
+							<p v-cloak>用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你发布的商品“{{item.title}}”：
+								<span v-cloak>{{item.content}}</span>
 							</p>
 						</el-badge>
 					</div>
 				</el-card>
 			</el-collapse-item>
-			<!-- 已读消息 -->
-			<el-collapse-item title="已读消息" name="2">
-				<el-card class="box-card" shadow="hover" v-for="(item,index) in this.$store.state.readmsg" :key="index">
-					<p v-cloak class="readmsg">用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你的动态“{{item.content}}”：
-						<span v-cloak>{{item.ct2}}</span>
+			<!-- 已读评论 -->
+			<el-collapse-item title="已读评论" name="2">
+				<el-card class="box-card" shadow="hover" v-for="(item,index) in this.$store.state.readcom" :key="index">
+					<p v-cloak class="readmsg">用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你发布的商品“{{item.title}}”：
+						<span v-cloak>{{item.content}}</span>
 					</p>
 				</el-card>
 			</el-collapse-item>
@@ -37,10 +37,10 @@
 			//查看该消息之后在未读消息里面进行删除
 			lookit(index, id) {
 				//更新仓库数据
-				this.$store.state.readmsg.unshift(this.$store.state.unreadmsg[index]);
-				this.$store.state.unreadmsg.splice(index, 1);
+				this.$store.state.readcom.unshift(this.$store.state.unreadcom[index]);
+				this.$store.state.unreadcom.splice(index, 1);
 				//更新数据库数据
-				this.$axios("http://localhost:81/updatamsg", {
+				this.$axios("http://localhost:81/updatacom", {
 					params: {
 						id: id
 					}

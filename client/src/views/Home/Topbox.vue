@@ -11,10 +11,7 @@
 					<li v-for="(item,index) in arr" :key="index">{{item}}</li>
 				</ul>
 			</div>
-			<!-- 			<div class="shopcar1" onclick="shopcar()">
-				<i class="iconfont icon-gouwuchekong1"></i>我的购物车
-				<span id="goodsnum">0</span>
-			</div> -->
+			<el-button type="info" plain icon="el-icon-shopping-cart-2" @click="findmycar">购物车</el-button>
 		</div>
 	</div>
 </template>
@@ -24,17 +21,24 @@
 		data() {
 			return {
 				setext: '',
-				arr:["热搜词汇 :","手机","平板","笔记本","单反相机","充电宝","耳机","路由器"]
+				arr: ["热搜词汇 :", "手机", "平板", "笔记本", "单反相机", "充电宝", "耳机", "路由器"]
 			}
 		},
 		methods: {
 			searchgoods() {
 				if (this.setext != "") {
-					 this.$axios("http://localhost:81/searchgoods", { params: { setext: this.setext } })
-					 .then((result)=>{
-						 this.$store.commit('getAllGoods', result.data.info)
-					 })
+					this.$axios("http://localhost:81/searchgoods", {
+							params: {
+								setext: this.setext
+							}
+						})
+						.then((result) => {
+							this.$store.commit('getAllGoods', result.data.info)
+						})
 				}
+			},
+			findmycar(){
+				this.$router.push({path:"/car"})
 			}
 		}
 	}
@@ -127,18 +131,16 @@
 		color: #FF6700;
 	}
 
-	/* .shopcar1 {
-		height: 32px;
-		width: 130px;
-		font-size: 13px;
-		border: 2px solid #F0F0F0;
-		background-color: #FAFAFA;
+	.el-button {
+		border-radius: 0;
+		font-size: 15px;
+		width: 120px;
 		color: #E1251B;
 		position: absolute;
 		right: 70px;
-		top: 50px;
-		text-align: center;
-		line-height: 32px;
-		cursor: pointer;
-	} */
+		top: 46px;
+		height: 35px;
+		padding: 0;
+		line-height: 35px;
+	}
 </style>

@@ -40,11 +40,25 @@ class UserInfoController extends Controller {
         ctx.body = result;
     }
     
+    //获取评论
+    async getmycom() {
+        const { ctx } = this;
+        let result = await this.ctx.service.userInfo.getmycom();
+        ctx.body = result;
+    }
+    
     //用户已读消息
     async updatamsg() {
         const { ctx } = this;
-        await this.ctx.service.userInfo.updatamsg(ctx.request.query.cont);
+        await this.ctx.service.userInfo.updatamsg(ctx.request.query.id);
         ctx.body = { code: 2000, info: "消息已读" };
+    }
+
+    //用户已读评论
+    async updatacom() {
+        const { ctx } = this;
+        await this.ctx.service.userInfo.updatacom(ctx.request.query.id);
+        ctx.body = { code: 2000, info: "评论已读" };
     }
 
     //获取我的商品
