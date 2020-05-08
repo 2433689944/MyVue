@@ -71,7 +71,6 @@
 			} else {
 				this.flag = false;
 			}
-console.log(this.$store.state.unreadmsg.length)
 		}
 	}
 </script>

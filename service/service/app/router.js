@@ -25,9 +25,14 @@ module.exports = app => {
   router.get('/addcar', controller.car.addcar);//添加商品到购物车
   router.get('/pugoodcom', controller.goodscom.pugoodcom);//将商品评论存入数据库
   router.get('/getgoodscom', controller.goodscom.getgoodscom);//根据商品id取评论信息
+<<<<<<< HEAD
 
   //
   
+=======
+  router.get("/getfromcar",controller.car.getfromcar) //获取用户购物车商品
+  router.get("/removegood",controller.car.removegood) //删除购物车中指定id的商品
+>>>>>>> a578b41006d9bfec3362e520f5b56bb6e4416bda
 
   //个人中心页面接口
   router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息

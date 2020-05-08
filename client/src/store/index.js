@@ -19,6 +19,8 @@ export default new Vuex.Store({
 		loginout(state) {
 			state.username = '';
 			state.headpic = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png';
+			state.unreadmsg = [];
+			state.readmsg = [];
 		},
 		getAllGoods(state, allgoods) {
 			state.goodslist = allgoods;

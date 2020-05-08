@@ -57,8 +57,7 @@
 		padding: 40px;
 		box-sizing: border-box;
 		background-color: #fff;
-		border-radius: 7px;
-		
+		border-radius: 5px;
 	}
 
 	.goback {
