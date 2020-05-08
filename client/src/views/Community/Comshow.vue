@@ -96,7 +96,6 @@
 		components: {
 			Comment
 		},
-<<<<<<< HEAD
 		mounted() {
 			//向服务器请求动态的点赞情况
 			this.$axios.post("http://localhost:81/getislike", {
@@ -108,25 +107,6 @@
 					this.like = ""
 				}
 			})
-=======
-		created() {
-			this.$axios("http://localhost:81/getislike", {
-				parames: {
-					comid: this.mycommInfo.comid
-				}
-			}).then((res) => {
-				console.log(res)
-			})
-			var comidArr = []
-			for (let m of this.mycomidInfo) {
-				comidArr.push(Number(m.comid))
-			}
-			if (comidArr.includes(this.mycommInfo.comid)) {
-				this.like = true
-			} else {
-				this.like = false
-			}
->>>>>>> a578b41006d9bfec3362e520f5b56bb6e4416bda
 		}
 	}
 </script>
