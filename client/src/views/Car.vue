@@ -1,11 +1,12 @@
 <template>
 	<div class="car">
+		<h2>我的购物车</h2>
 		<div class="itemlist">
 			<div class="listtit">
-				<div id="goods">商品名称</div>
-				<div id="oldgprice">原价</div>
-				<div id="gprice">定价</div>
-				<div id="operate">操作</div>
+				<div id="goods" v-cloak>商品名称</div>
+				<div id="oldgprice" v-cloak>原价</div>
+				<div id="gprice" v-cloak>定价</div>
+				<div id="operate" v-cloak>操作</div>
 			</div>
 			<div class="listcon">
 				<div v-if="tableData.length!=0">
@@ -18,12 +19,22 @@
 						<div class="opera" v-cloak @click="deleteRow(index,item.goodsid)">删除</div>
 					</div>
 				</div>
-				<!-- <div v-else> -->
-				<!-- <Empty></Empty> -->
-				<!-- </div> -->
+				<div v-else>
+					<div id="emptycar" style="display: block;">
+						<img src="@/assets/shopcar.png" alt="">
+						<p>您的购物车还是空的，赶快去挑选商品吧！</p>
+					</div>
+				</div>
+			</div>
+			<div class="listbom">
+				<span v-cloak>
+					<i class="el-icon-back"></i>
+					<span @click="goback">继续挑选</span>
+				</span>
+				<button @click="payfor" v-cloak>结算</button>
+				<span v-cloak>应付金额 :<span id="totalpri" v-cloak>{{price}}.00</span></span>
 			</div>
 		</div>
-		<button @click="payfor">结算</button>
 	</div>
 </template>
 
@@ -35,9 +46,6 @@
 			return {
 				tableData: []
 			}
-		},
-		components: {
-			// Empty:()=>import("./Empty.vue")
 		},
 		methods: {
 			//删除商品
@@ -71,8 +79,23 @@
 				});
 			},
 			//结算购物车
-			payfor(){
-				this.$router.push("/Settlement")
+			payfor() {
+				if (this.tableData.length == 0) {
+					this.$message({
+						message: '购物车为空，快去挑选几件商品吧！',
+						type: 'warning',
+						center: true,
+						duration: 1500
+					});
+				} else {
+					this.$router.push("/Settlement");
+				}
+			},
+			//继续挑选
+			goback() {
+				this.$router.push({
+					path: "/"
+				})
 			}
 		},
 		mounted() {
@@ -89,48 +112,40 @@
 				return imgArray[0]
 			}
 		},
+		computed: {
+			//计算总价
+			price: function() {
+				let sum = 0;
+				for (let value of this.tableData) {
+					sum += value.price;
+				}
+				return sum;
+			}
+		}
 
-		// methods: {
-		// 	deleteRow(index, rows) {
-		// 		this.$axios.get("http://localhost:81/removegood?goodsid=" + rows[index].id).then(res => {
 
-		// 		})
-		// 		rows.splice(index, 1);
-		// 	},
 		// 	goBack() {
 		// 		this.$router.go(-1);
 		// 	},
-		// 	payfor() {
-		// 		if (this.tableData.length != 0) {
-		// 			this.$router.push("/Settlement")
-		// 		} else {
-		// 			this.$message({
-		// 				message: "购物车为空",
-		// 				type: "warning",
-		// 				center: true,
-		// 				duration: 1500
-		// 			});
-		// 		}
-		// 	}
-		// },
-		// computed: {
-		// 	price: function() {
-		// 		let sum = 0;
-		// 		for (let value of this.tableData) {
-		// 			sum += value.price;
-		// 		}
-		// 		return sum;
-		// 	}
-		// }
 	}
 </script>
 
 <style scoped="scoped">
+	[v-cloak] {
+		display: none;
+	}
+
+	h2 {
+		margin: 80px 0 10px 5px;
+		font-weight: normal;
+		color: #5A5555;
+	}
+
 	.itemlist {
-		margin: 101px 0 50px;
+		margin-bottom: 50px;
 		background-color: #fff;
 		box-sizing: border-box;
-		border-radius: 5px;
+		border-radius: 5px 5px 0 0;
 	}
 
 	.listtit {
@@ -170,6 +185,10 @@
 		border-bottom: 1px solid #EBEEF5;
 		display: flex;
 		position: relative;
+	}
+
+	.boxcontent:last-of-type {
+		border-bottom: 0;
 	}
 
 	.boxcontent img {
@@ -239,5 +258,96 @@
 		color: red;
 		cursor: default;
 		text-decoration: underline;
+	}
+
+	.listbom {
+		border-top: 1px solid #EBEEF5;
+		border-bottom: 0;
+		height: 50px;
+		line-height: 50px;
+		background-color: #fff;
+	}
+
+	.listbom i {
+		border: 1px solid #737373;
+		font-size: 20px;
+		margin-left: 30px;
+		color: #737373;
+		border-radius: 50%;
+	}
+
+	.listbom span {
+		color: #737373;
+	}
+
+	.listbom>span:first-of-type {
+		color: #737373;
+		font-size: 15px;
+		position: relative;
+		display: inline-block;
+		width: 150px;
+		cursor: pointer;
+	}
+
+	.listbom>span:first-of-type span {
+		position: absolute;
+		top: -2px;
+		left: 60px;
+	}
+
+	.listbom>span:first-of-type:hover span {
+		color: red;
+	}
+
+	.listbom>span:first-of-type:hover i {
+		color: red;
+		border-color: red;
+	}
+
+	.listbom button {
+		float: right;
+		width: 150px;
+		border: 0;
+		height: 100%;
+		background-color: #F42424;
+		color: #fff;
+		line-height: 50px;
+		font-size: 20px;
+		text-align: center;
+		cursor: pointer;
+		outline: none;
+	}
+
+	.listbom>span:last-of-type {
+		float: right;
+		font-size: 14px;
+	}
+
+	#totalpri {
+		height: 50px;
+		padding: 0 20px 0 4px;
+		font-size: 20px;
+		color: #F42424;
+	}
+
+	#emptycar {
+		height: 200px;
+		display: none;
+		position: relative;
+	}
+
+	#emptycar img {
+		position: absolute;
+		top: 50%;
+		margin-top: -47px;
+		left: 310px;
+	}
+
+	#emptycar p {
+		position: absolute;
+		margin-top: 82px;
+		left: 440px;
+		color: #777;
+		font-size: 22px;
 	}
 </style>
