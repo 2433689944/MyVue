@@ -18,9 +18,6 @@
 						<div class="opera" v-cloak @click="deleteRow(index,item.goodsid)">删除</div>
 					</div>
 				</div>
-				<!-- <div v-else> -->
-				<!-- <Empty></Empty> -->
-				<!-- </div> -->
 			</div>
 		</div>
 		<button @click="payfor">结算</button>

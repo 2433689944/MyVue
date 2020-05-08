@@ -1,65 +1,26 @@
 <template>
 	<div id="Settlement">
 		<success v-if="out"></success>
-		<el-page-header @back="goBack" content="填写订单信息" v-if="!out">
-		</el-page-header>
-		<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-if="!out">
-			<el-form-item label="邮箱" prop="email">
-				<el-input v-model="ruleForm.email"></el-input>
-			</el-form-item>
-			<el-form-item label="地址" prop="address">
-				<el-input type="text" v-model="ruleForm.address"></el-input>
-			</el-form-item>
-			<el-form-item label="电话" prop="phone">
-				<el-input type="text" v-model="ruleForm.phone"></el-input>
-			</el-form-item>
-		</el-form>
+		<div class="itemlist">
+			<div class="listtit">
+				<div id="goods">订单信息</div>
+			</div>
+			<div class="orderinfo">
+				<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="170px" class="demo-ruleForm" v-if="!out" size="small">
+					<el-form-item label="收货人姓名:" prop="name">
+						<el-input v-model="ruleForm.name"></el-input>
+					</el-form-item>
+					<el-form-item label="收货人电话:" prop="address">
+						<el-input type="text" v-model="ruleForm.phone"></el-input>
+					</el-form-item>
+					<el-form-item label="收货人地址:" prop="phone">
+						<el-input type="text" v-model="ruleForm.address"></el-input>
+					</el-form-item>
+				</el-form>
 
-
-
-		<!-- <el-table   v-if="!out"
-		     :data="tableData"
-		     style="width: 50% margin-left='200px'">
-		     <el-table-column
-		       fixed
-		       prop="title"
-		       label="商品清单"
-		       width="300px"
-			   >
-				
-				<template slot-scope="scope">
-				        <img :src="scope.row.img.split('-')[0]" class="head_pic" style="width: 150px; height: 150px;"/>
-				    </template>
-		     </el-table-column>
-		     <el-table-column
-		       prop="oldprice"
-		       label=""
-		       width="300px"
-			   class="oldprice"
-			   >
-		     </el-table-column>
-		     <el-table-column
-		       prop="price"
-		       label=""
-		       width="300px">
-		     </el-table-column>
-		   </el-table>
-		   
-		   <div v-if="!out"  class="foot" >
-		   	<span class="price">总价:{{price}}</span> <el-button @click="payfor" class="pay">支付</el-button>
-		   </div> -->
-
-
-		<div class="carbox checkbox" v-if="!out">
-			<div class="boxheader">核对物品清单</div>
-			<div v-for="(item,index) in tableData">
-				<div id="gimg">
-					<img src="item.img.split('-')[0]" />
-				</div>
-				<div id="gtitle">{{item.title}}</div>
-				<div id="gprice">￥{{item.price}}</div>
 			</div>
 		</div>
+		<Car></Car>
 		<div class="pricebox" v-if="!out">
 			<div>
 				<span>总商品金额：</span>
@@ -90,14 +51,14 @@
 				out: false,
 				tableData: "",
 				ruleForm: {
-					email: "",
+					name: "",
 					address: "",
 					phone: "",
 				},
 				rules: {
-					email: [{
+					name: [{
 						required: true,
-						message: '邮箱不能为空',
+						message: '姓名不能为空',
 						trigger: 'blur'
 					}, ],
 					address: [{
@@ -114,6 +75,37 @@
 			};
 		},
 		methods: {
+			//删除商品
+			deleteRow(index, goodsid) {
+				this.$confirm('确认删除该商品吗？删除了无法恢复哦！', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.tableData.splice(index, 1);
+					this.$axios.get("http://localhost:81/removegood", {
+							params: {
+								goodsid: goodsid
+							}
+						})
+						.then((result) => {
+							this.$message({
+								message: '删除成功！',
+								type: 'success',
+								center: true,
+								duration: 1500
+							});
+						})
+				}).catch(() => {
+					this.$message({
+						message: '已取消删除',
+						type: 'info',
+						center: true,
+						duration: 1500
+					});
+				});
+			},
+			//结算购物车
 			payfor() {
 				let ids = "";
 				let formdata = new FormData();
@@ -135,14 +127,9 @@
 					this.out = true;
 				})
 			},
-
-
 			goBack() {
 				this.$router.go(-1);
 			}
-
-
-
 		},
 		mounted() {
 			let that = this;
@@ -160,8 +147,16 @@
 				return sum;
 			}
 		},
+		filters: {
+			//过滤图片地址，只要第一张图片
+			imgtool(arg) {
+				let imgArray = arg.split("-");
+				return imgArray[0]
+			}
+		},
 		components: {
 			success: () => import("@/views/Settlement/success.vue"),
+			Car:()=>import("./Car.vue")
 		}
 	}
 </script>
@@ -201,15 +196,135 @@
 		text-decoration: none;
 	}
 
-
-
-
-
-
 	a:hover {
 		color: #E61414;
 	}
 
+	.itemlist {
+		margin: 101px 0 50px;
+		background-color: #fff;
+		box-sizing: border-box;
+		border-radius: 5px;
+	}
+
+	.listtit {
+		height: 40px;
+		border-bottom: 1px solid #EBEEF5;
+		display: flex;
+	}
+
+	.listtit div {
+		height: 40px;
+		line-height: 40px;
+		font-weight: bold;
+		font-size: 14px;
+		color: #737373;
+	}
+
+	.orderinfo {
+		height: 160px;
+	}
+
+	.orderinfo .el-form .el-form-item .el-input{
+		width: 300px;
+	}
+	.orderinfo .el-form .el-form-item:last-child .el-input{
+		width: 600px;
+	}
+
+	.listtit #goods {
+		margin-left: 46px;
+		width: 600px;
+	}
+
+	.listtit #gprice,
+	#oldgprice,
+	#operate {
+		width: 175px;
+		text-align: center;
+	}
+
+	#operate {
+		width: 155px;
+	}
+
+	.boxcontent {
+		height: 100px;
+		margin: 0px 20px;
+		padding: 15px 0 15px 15px;
+		border-bottom: 1px solid #EBEEF5;
+		display: flex;
+		position: relative;
+	}
+
+	.boxcontent img {
+		height: 100px;
+		width: 90px;
+		margin-left: 10px;
+	}
+
+	.boxcontent .gtitle {
+		display: inline-block;
+		width: 526px;
+		padding-left: 20px;
+		box-sizing: border-box;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 15px;
+		font-weight: bold;
+		color: #555;
+		margin-top: 10px;
+	}
+
+	.gintro {
+		position: absolute;
+		top: 55px;
+		left: 135px;
+		width: 526px;
+		font-size: 14px;
+		color: #666;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+
+	.price1,
+	.price2,
+	.opera {
+		width: 175px;
+		height: 100px;
+		line-height: 100px;
+		text-align: center;
+	}
+
+	.price1 {
+		color: #999999;
+		font-size: 14px;
+		text-decoration: line-through;
+		cursor: default;
+	}
+
+	.opera {
+		font-size: 14px;
+		-moz-user-select: none;
+		/*火狐*/
+		-webkit-user-select: none;
+		/*webkit浏览器*/
+		-ms-user-select: none;
+		/*IE10*/
+		-khtml-user-select: none;
+		/*早期浏览器*/
+		user-select: none;
+	}
+
+	.opera:hover {
+		color: red;
+		cursor: default;
+		text-decoration: underline;
+	}
 
 	.carbox {
 		width: 1180px;
