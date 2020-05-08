@@ -37,7 +37,6 @@
 		mounted() {
 			this.$axios("http://localhost:81/getmyorders")
 				.then((result) => {
-					console.log(result.data)
 					this.ordersArray = result.data;
 				})
 		},
