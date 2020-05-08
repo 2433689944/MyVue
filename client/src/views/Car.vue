@@ -23,6 +23,7 @@
 				<!-- </div> -->
 			</div>
 		</div>
+		<button @click="payfor">结算</button>
 	</div>
 </template>
 
@@ -39,6 +40,7 @@
 			// Empty:()=>import("./Empty.vue")
 		},
 		methods: {
+			//删除商品
 			deleteRow(index, goodsid) {
 				this.$confirm('确认删除该商品吗？删除了无法恢复哦！', '提示', {
 					confirmButtonText: '确定',
@@ -67,6 +69,10 @@
 						duration: 1500
 					});
 				});
+			},
+			//结算购物车
+			payfor(){
+				this.$router.push("/Settlement")
 			}
 		},
 		mounted() {
