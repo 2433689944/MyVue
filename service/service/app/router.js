@@ -27,11 +27,14 @@ module.exports = app => {
   router.get('/getgoodscom', controller.goodscom.getgoodscom);//根据商品id取评论信息
   
 
-
   //个人中心页面接口
   router.get('/getAllinfo', controller.userInfo.getAllinfo);//获取用户所有信息
   router.get('/updateinfo', controller.userInfo.updateinfo);//修改用户信息
+  router.get('/getmymsg', controller.userInfo.getmymsg);//获取消息
+  router.get('/updatamsg', controller.userInfo.updatamsg);//用户已读消息
   router.get('/getmygoods', controller.userInfo.getmygoods);//获取我的商品
+  router.get('/getmyorders', controller.userInfo.getmyorders);//获取我的订单
+  router.get('/getmydyn', controller.userInfo.getmydyn);//获取我的动态
 
   //发布商品页面接口
   router.post('/release', controller.release.release);//发布商品 

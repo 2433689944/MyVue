@@ -28,7 +28,9 @@
 			<el-menu-item index="4" v-else>
 				<router-link to="/login">请登录</router-link>
 			</el-menu-item>
-			<el-avatar :src="this.$store.state.headpic"></el-avatar>
+			<el-badge :is-dot="this.$store.state.unreadmsg.length!=0" class="badges">
+				<el-avatar :src="this.$store.state.headpic"></el-avatar>
+			</el-badge>
 		</el-menu>
 	</div>
 </template>
@@ -59,10 +61,17 @@
 					.then((result) => {
 						//将用户名和头像存入仓库
 						this.$store.commit('getuserInfo', result.data.info[0]);
+
+					})
+				this.$axios("http://localhost:81/getmymsg")
+					.then((result) => {
+						//将用户消息存入仓库
+						this.$store.commit('updatamsg', result.data)
 					})
 			} else {
 				this.flag = false;
 			}
+console.log(this.$store.state.unreadmsg.length)
 		}
 	}
 </script>
@@ -86,10 +95,19 @@
 		height: 50px;
 		line-height: 50px;
 	}
-
-	.box .el-menu-demo>span {
+	
+	.badges{
 		float: right;
+		position: absolute;
+		top: 10px;
+	}
+
+	.box .el-menu-demo .el-avatar {
+		/* float: right; */
 		margin-top: 4px;
+		position: absolute;
+		top: -9px;
+		right: 0;
 	}
 
 	.box .el-menu-demo>li:nth-of-type(4) {
@@ -101,7 +119,6 @@
 		width: 40px;
 		border-radius: 50%;
 	}
-
 	.el-menu-demo>.el-submenu .el-submenu__title {
 		height: 50px !important;
 		line-height: 54px !important;

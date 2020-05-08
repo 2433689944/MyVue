@@ -4,10 +4,10 @@
 			<h2>个人中心</h2>
 			<div class="titlebox">
 				<div @click="myinfo" :class="ind==1?'active':''"><i class="el-icon-s-custom"></i>我的资料</div>
-				<div @click="mymessage" :class="ind==2?'active':''"><i class="el-icon-s-comment"></i>消息通知</div>
+				<div @click="mymessage" :class="ind==2?'active':''"><i class="el-icon-s-comment"></i>我的消息</div>
 				<div @click="mygoods" :class="ind==3?'active':''"><i class="el-icon-s-goods"></i>我的商品</div>
-				<div @click="mydynamic" :class="ind==4?'active':''"><i class="el-icon-picture"></i>我的动态</div>
-				<div @click="myorders" :class="ind==5?'active':''"><i class="el-icon-s-shop"></i>我的订单</div>
+				<div @click="myorders" :class="ind==4?'active':''"><i class="el-icon-s-shop"></i>我的订单</div>
+				<div @click="mydynamic" :class="ind==5?'active':''"><i class="el-icon-picture"></i>我的动态</div>
 			</div>
 		</div>
 		<div class="pright">
@@ -31,8 +31,8 @@
 			return {
 				// ind: 1, //切换右侧选中状态
 				// com: "Myinfo",
-				ind: 3, //切换右侧选中状态
-				com: "Mygoods",
+				ind: 2, //切换右侧选中状态
+				com: "Mymessage",
 			}
 		},
 		methods: {
@@ -48,12 +48,12 @@
 				this.com = "Mygoods";
 				this.ind = 3;
 			},
-			mydynamic() {
-				this.com = "Mydynamic";
-				this.ind = 4;
-			},
 			myorders() {
 				this.com = "Myorders";
+				this.ind = 4;
+			},
+			mydynamic() {
+				this.com = "Mydynamic";
 				this.ind = 5;
 			},
 		}
@@ -95,6 +95,7 @@
 		padding-left: 35px;
 		font-size: 17px;
 		color: #515a6e;
+		cursor: pointer;
 	}
 
 	.pleft .titlebox i {

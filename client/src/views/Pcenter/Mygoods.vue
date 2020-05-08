@@ -96,7 +96,7 @@
 
 	.listcon {
 		height: 440px;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 
 	.boxcontent {
@@ -125,6 +125,8 @@
 		white-space: normal;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		font-size: 14px;
+		font-weight: bold;
 	}
 
 	.boxcontent .goodprice {
