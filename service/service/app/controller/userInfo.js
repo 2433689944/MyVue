@@ -33,20 +33,13 @@ class UserInfoController extends Controller {
         ctx.body = '';
     }
 
-    //获取未读消息
+    //获取消息
     async getmymsg() {
         const { ctx } = this;
         let result = await this.ctx.service.userInfo.getmymsg();
         ctx.body = result;
     }
-
-    //获取已读消息
-    async getmymsg2() {
-        const { ctx } = this;
-        let result = await this.ctx.service.userInfo.getmymsg2();
-        ctx.body = result;
-    }
-
+    
     //用户已读消息
     async updatamsg() {
         const { ctx } = this;

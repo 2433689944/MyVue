@@ -8,6 +8,8 @@ export default new Vuex.Store({
 		username: '', //用户名
 		headpic: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png', //默认头像
 		goodslist: [], //商品数据
+		unreadmsg: [], //未读消息
+		readmsg: [], //已读消息
 	},
 	mutations: {
 		getuserInfo(state, userInfo) {
@@ -20,7 +22,12 @@ export default new Vuex.Store({
 		},
 		getAllGoods(state, allgoods) {
 			state.goodslist = allgoods;
-		}
+		},
+		updatamsg(state, msg) {
+			// console.log(msg)
+			state.unreadmsg = msg.info;
+			state.readmsg = msg.info2;
+		},
 	},
 	actions: {
 

@@ -59,6 +59,12 @@
 					.then((result) => {
 						//将用户名和头像存入仓库
 						this.$store.commit('getuserInfo', result.data.info[0]);
+
+					})
+				this.$axios("http://localhost:81/getmymsg")
+					.then((result) => {
+						//将用户消息存入仓库
+						this.$store.commit('updatamsg', result.data)
 					})
 			} else {
 				this.flag = false;

@@ -21,24 +21,21 @@ class GetUserInfoService extends Service {
         this.app.mysql.query(sql);
     }
 
-    //获取未读消息
+    //获取消息
     async getmymsg() {
+        //获取未读消息
         const sql = `select id,cemail,comdiscuss.content as ct2,comdiscuss.time,community.content from comdiscuss inner join community 
         on comdiscuss.comid = community.comid and email = "${this.ctx.session.email}" and lookflag="0" order by id DESC`;
         const data = await this.app.mysql.query(sql);
-        return data;
-    }
-
-    //获取已读消息
-    async getmymsg2() {
-        const sql = `select id,cemail,comdiscuss.content as ct2,comdiscuss.time,community.content from comdiscuss inner join community 
+        //获取已读消息
+        const sql2 = `select id,cemail,comdiscuss.content as ct2,comdiscuss.time,community.content from comdiscuss inner join community 
         on comdiscuss.comid = community.comid and email = "${this.ctx.session.email}" and lookflag="1" order by id DESC`;
-        const data = await this.app.mysql.query(sql);
-        return data;
+        const data2 = await this.app.mysql.query(sql2);
+        return { info: data, info2: data2 };
     }
 
-     //用户已读消息
-     async updatamsg(cont) {
+    //用户已读消息
+    async updatamsg(cont) {
         const sql = ` update comdiscuss set lookflag="1" where content ="${cont}"`;
         const data = await this.app.mysql.query(sql);
         return data;

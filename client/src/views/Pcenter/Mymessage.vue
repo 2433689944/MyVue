@@ -3,29 +3,25 @@
 		<h3 class="boxtitle">我的消息</h3>
 		<el-collapse accordion>
 			<!-- 未读消息 -->
-			<div @click="findunreadmsg" data-text="mybox">
-				<el-collapse-item title="未读消息" name="1">
-					<el-card class="box-card" shadow="hover" v-for="(item,index) in unreadmsg" :key="index">
-						<div @click="lookit(index,item.ct2)">
-							<el-badge :is-dot="flag" class="item">
-								<p v-cloak>用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你的动态“{{item.content}}”：
-									<span v-cloak>{{item.ct2}}</span>
-								</p>
-							</el-badge>
-						</div>
-					</el-card>
-				</el-collapse-item>
-			</div>
+			<el-collapse-item title="未读消息" name="1">
+				<el-card class="box-card" shadow="hover" v-for="(item,index) in this.$store.state.unreadmsg" :key="index">
+					<div @click="lookit(index,item.ct2)">
+						<el-badge :is-dot="flag" class="item">
+							<p v-cloak>用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你的动态“{{item.content}}”：
+								<span v-cloak>{{item.ct2}}</span>
+							</p>
+						</el-badge>
+					</div>
+				</el-card>
+			</el-collapse-item>
 			<!-- 已读消息 -->
-			<div @click="findreadmsg">
-				<el-collapse-item title="已读消息" name="2">
-					<el-card class="box-card" shadow="hover" v-for="(item,index) in readmsg" :key="index">
-						<p v-cloak class="readmsg">用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你的动态“{{item.content}}”：
-							<span v-cloak>{{item.ct2}}</span>
-						</p>
-					</el-card>
-				</el-collapse-item>
-			</div>
+			<el-collapse-item title="已读消息" name="2">
+				<el-card class="box-card" shadow="hover" v-for="(item,index) in this.$store.state.readmsg" :key="index">
+					<p v-cloak class="readmsg">用户<span v-cloak>{{item.cemail}}</span>于{{item.time}} 评论了你的动态“{{item.content}}”：
+						<span v-cloak>{{item.ct2}}</span>
+					</p>
+				</el-card>
+			</el-collapse-item>
 		</el-collapse>
 	</div>
 </template>
@@ -34,45 +30,29 @@
 	export default {
 		data() {
 			return {
-				goodsArray: [],
-				lookflag: true,
-				unreadmsg: [],
-				readmsg: [],
 				flag: true
 			}
 		},
 		methods: {
-			findunreadmsg(e) {
-				if (e.target.className == "el-collapse-item__header is-active") {
-					this.$axios("http://localhost:81/getmymsg")
-						.then((result) => {
-							this.unreadmsg = result.data;
-						})
-				}
-			},
 			//查看该消息之后在未读消息里面进行删除
 			lookit(index, ct2) {
-				this.unreadmsg.splice(index, 1);
+				//更新仓库数据
+				this.$store.state.readmsg.unshift(this.$store.state.unreadmsg[index]);
+				this.$store.state.unreadmsg.splice(index, 1);
+				//更新数据库数据
 				this.$axios("http://localhost:81/updatamsg", {
 					params: {
 						cont: ct2
 					}
+				}).then((result) => {
+					this.$message({
+						message: '阅读成功！',
+						type: 'success',
+						center: true,
+						duration: 1500
+					});
 				})
-				this.$message({
-					message: '阅读成功！',
-					type: 'success',
-					center: true,
-					duration: 1500
-				});
 			},
-			findreadmsg(e) {
-				if (e.target.className == "el-collapse-item__header is-active") {
-					this.$axios("http://localhost:81/getmymsg2")
-						.then((result) => {
-							this.readmsg = result.data;
-						})
-				}
-			}
 		},
 	}
 </script>
@@ -117,10 +97,10 @@
 
 	.readmsg span {
 		font-weight: bold;
-		color: silver;
+		color: #666;
 	}
 
-	.haslook {
+	.readmsg {
 		text-indent: 2em;
 		color: #908989;
 	}
